@@ -4,14 +4,14 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //$app = new \Slim\App;
 
-// GET Todos los clubes
+// GET User for member code
 $app->get('/api/login/{member_code}', function(Request $request, Response $response){
     $member_code = $request->getAttribute('member_code');
     $message = '';
     $result = 0;
     $member = array();
 
-    $sql = "SELECT * FROM tb_members WHERE member_code = $member_code";
+    $sql = "SELECT * FROM tb_members WHERE member_code = $member_code ORDER BY member_code DESC LIMIT 1";
     try {
         $db = new db();
         $db = $db->dbConnection();

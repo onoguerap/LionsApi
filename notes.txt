@@ -1,0 +1,32 @@
+PARA SUBIR CAMBIOS A MASTER ---------------------------------------------------------------
+- Verificar y traer lo que haya arriba!
+	git fetch
+	git pull origin master
+
+- De haber cambios esto realizara un auto merge, por lo que se deben agregar y subir los nuevos cambios!
+	git add .
+	git commit -m "algun comentario"
+
+- Con todo agregado y commiteado solo queda subir!
+	git push origin master
+
+PARA BAJAR LOS ULTIMOS CAMBIOS DE MASTER ---------------------------------------------------------------
+- Verificar y traer lo que haya arriba!
+	git fetch
+	git pull origin master
+
+PARA SOLO SUBIR EN CASO DE NO HABER CAMBIOS EN MASTER ---------------------------------------------------------------
+- Verificar y traer lo que haya arriba (VERIFICAR QUE NO TRAE NADA)!
+	git fetch
+
+- Agregar y commitear nuestros cambios locales!
+	git add .
+	git commit -m "cambios comentario"
+
+- Con todo agregado y commiteado solo queda subir!
+	git push origin master
+
+PARA REALIZAR UN MERGE DESDE UNA RAMA HACIA MASTER U OTRA RAMA
+- Merge seguro conservando todo lo mas reciente!
+	git merge --no-ff master -m "comentario del merge"
+
