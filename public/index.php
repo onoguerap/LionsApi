@@ -13,6 +13,8 @@ require '../src/rutas/login.php';
 require '../src/rutas/clubes.php';
 // Rutas para miembros
 require '../src/rutas/miembros.php';
+// Rutas para actividades
+require '../src/rutas/actividades.php';
 
 
 $app->run();
