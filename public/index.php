@@ -7,6 +7,10 @@ require '../src/config/db.php';
 
 $app = new \Slim\App;
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: *");
+
 // Rutas para login
 require '../src/rutas/login.php';
 // Rutas para clubes
