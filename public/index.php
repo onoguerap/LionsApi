@@ -15,6 +15,14 @@ require '../src/rutas/clubes.php';
 require '../src/rutas/miembros.php';
 // Rutas para actividades
 require '../src/rutas/actividades.php';
+// Rutas para regiones
+require '../src/rutas/regiones.php';
+// Rutas para zonas
+require '../src/rutas/zonas.php';
+// Rutas para roles
+require '../src/rutas/roles.php';
+// Rutas para tipos
+require '../src/rutas/tipos.php';
 
 
 $app->run();

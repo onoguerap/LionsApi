@@ -5,8 +5,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET User for member code
-$app->get('/api/login/{member_code}', function(Request $request, Response $response){
-    $member_code = $request->getAttribute('member_code');
+$app->get('/api/login', function(Request $request, Response $response){
+    $member_code = $request->getParam('member_code');
     $message = '';
     $result = 0;
     $member = array();

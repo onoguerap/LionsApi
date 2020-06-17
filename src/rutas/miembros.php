@@ -72,13 +72,16 @@ $app->get('/api/miembro', function(Request $request, Response $response){
 			die();
 		}
 		
-		$sql = "SELECT M.*, C.name_club, T.description type_member, R.description rol_member
+		$sql = "SELECT M.*, C.name_club
+    , GROUP_CONCAT(T.description)  type_member
+    , R.description rol_member
 		FROM tb_members M
 		INNER JOIN tb_clubs C ON M.club_code = C.club_code
-		INNER JOIN tb_type_members T ON M.id_type_member = T.id_type_member
-    INNER JOIN tb_rol R ON M.id_rol_member = R.id_rol_member
+		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
+		INNER JOIN tb_type T ON TM.id_type = T.id_type
+		INNER JOIN tb_rol R ON M.id_rol_member = R.id_rol_member
 		WHERE M.status = 1
-		AND M.id_member = $id_member
+		AND M.id_member = 911
 		LIMIT 1;";	
     
     try {
@@ -125,6 +128,76 @@ $app->get('/api/birthdays', function(Request $request, Response $response){
         } else {
             $result = 0;
             $message = "No se encontraron cumpleañeros!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+				$out['data'] = $members;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// GET Obtener los miembros de la Gobernacion
+$app->get('/api/gobernacion', function(Request $request, Response $response){
+		
+    $message = '';
+    $result = 0;
+		$members = array();
+		
+		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description
+		FROM tb_members M
+		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
+		INNER JOIN tb_type T ON TM.id_type = T.id_type
+		WHERE T.isGovernment = 1
+		ORDER BY T.id_type ASC;";	
+    
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->query($sql);
+        if ($resultado->rowCount() > 0) {
+            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
+            $result  = 1;
+        } else {
+            $result = 0;
+            $message = "No se encontraron miembros de gobernación!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+				$out['data'] = $members;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// GET Obtener los miembros Jefes de Region y Zona
+$app->get('/api/jefes', function(Request $request, Response $response){
+		
+    $message = '';
+    $result = 0;
+		$members = array();
+		
+		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description
+		FROM tb_members M
+		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
+		INNER JOIN tb_type T ON TM.id_type = T.id_type
+		WHERE T.isGovernment = 1
+		ORDER BY T.id_type ASC;";	
+    
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->query($sql);
+        if ($resultado->rowCount() > 0) {
+            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
+            $result  = 1;
+        } else {
+            $result = 0;
+            $message = "No se encontraron miembros de gobernación!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
