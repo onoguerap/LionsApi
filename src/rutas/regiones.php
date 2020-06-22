@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET Obtener las regiones por filtro
-$app->get('/api/regiones_search', function(Request $request, Response $response){
+$app->post('/api/regiones_search', function(Request $request, Response $response){
 	$search = $request->getParam('search');
 		$index = $request->getParam('index');
 
@@ -48,7 +48,7 @@ $app->get('/api/regiones_search', function(Request $request, Response $response)
     }
 });
 // GET Obtener las regiones
-$app->get('/api/regiones', function(Request $request, Response $response){
+$app->post('/api/regiones', function(Request $request, Response $response){
 		$index = $request->getParam('index');
 
 		if (!isset($index)){

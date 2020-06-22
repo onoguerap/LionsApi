@@ -50,7 +50,7 @@ $app->get('/api/zonas_search', function(Request $request, Response $response){
 });
 
 // GET Obtener las zonas por filtro
-$app->get('/api/zonas', function(Request $request, Response $response){
+$app->post('/api/zonas', function(Request $request, Response $response){
 		$index = $request->getParam('index');
 
 		if (!isset($index)){
@@ -89,7 +89,7 @@ $app->get('/api/zonas', function(Request $request, Response $response){
 });
 
 // GET Obtener las zonas por region
-$app->get('/api/zonas_region', function(Request $request, Response $response){
+$app->post('/api/zonas_region', function(Request $request, Response $response){
 		$id_region = $request->getParam('id_region');
     $message = '';
     $zonas = array();

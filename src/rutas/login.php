@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET User for member code
-$app->get('/api/login', function(Request $request, Response $response){
+$app->post('/api/login', function(Request $request, Response $response){
 		$member_code = $request->getParam('member_code');
 		$password = $request->getParam('password');
     $message = '';
@@ -23,6 +23,7 @@ $app->get('/api/login', function(Request $request, Response $response){
 			$sql = "SELECT * 
 			FROM tb_members 
 			WHERE member_code = $member_code 
+			AND id_rol_member = 3
 			ORDER BY member_code DESC LIMIT 1";
 		}
 
