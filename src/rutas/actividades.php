@@ -9,7 +9,10 @@ $app->get('/api/actividades', function(Request $request, Response $response){
     $message = '';
     $activities = array();
 
-    $sql = "SELECT * FROM tb_activities ORDER BY schedule DESC";
+    $sql = "SELECT * 
+		FROM tb_activities 
+		WHERE DATE_FORMAT(schedule, '%Y-%m-%d') >= DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+		ORDER BY schedule DESC";
 
     try {
         $db = new db();

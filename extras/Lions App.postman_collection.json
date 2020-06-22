@@ -108,6 +108,53 @@
 					"response": []
 				},
 				{
+					"name": "getMembers_search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search",
+									"value": "aserri",
+									"type": "text"
+								},
+								{
+									"key": "index",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/miembros_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"miembros_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getMember",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -179,6 +226,100 @@
 								"public",
 								"api",
 								"birthdays"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postMiembro",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "member_code",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "club_code",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_rol_member",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_zone",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_type_member",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/postMiembro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"postMiembro"
 							]
 						}
 					},
@@ -320,6 +461,53 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getRegiones_search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search",
+									"value": "A",
+									"type": "text"
+								},
+								{
+									"key": "index",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/regiones_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"regiones_search"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -367,16 +555,254 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getZonas_search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search",
+									"value": "A",
+									"type": "text"
+								},
+								{
+									"key": "index",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/zonas_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"zonas_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getZonas_region",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_region",
+									"value": "A",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/zonas_region",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"zonas_region"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "Gobernacion",
-			"item": []
+			"item": [
+				{
+					"name": "getGobernacion",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/gobernacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"gobernacion"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Eventos",
-			"item": []
+			"item": [
+				{
+					"name": "getActividades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/actividades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"actividades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jefes",
+			"item": [
+				{
+					"name": "getJefes_zona",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/jefes_zona",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"jefes_zona"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getJefes_region",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/jefes_region",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"jefes_region"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asesores",
+			"item": [
+				{
+					"name": "getAsesores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/apiRest/public/api/asesores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRest",
+								"public",
+								"api",
+								"asesores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

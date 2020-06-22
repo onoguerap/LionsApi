@@ -6,12 +6,27 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 // GET User for member code
 $app->get('/api/login', function(Request $request, Response $response){
-    $member_code = $request->getParam('member_code');
+		$member_code = $request->getParam('member_code');
+		$password = $request->getParam('password');
     $message = '';
     $result = 0;
-    $member = array();
+		$member = array();
+		
+		if (strlen($password) > 0){
+			$sql = "SELECT * 
+			FROM tb_members 
+			WHERE member_code = $member_code 
+			AND password = $password
+			AND id_rol_member = 1 OR id_rol_member = 2
+			ORDER BY member_code DESC LIMIT 1";
+		} else {
+			$sql = "SELECT * 
+			FROM tb_members 
+			WHERE member_code = $member_code 
+			ORDER BY member_code DESC LIMIT 1";
+		}
 
-    $sql = "SELECT * FROM tb_members WHERE member_code = $member_code ORDER BY member_code DESC LIMIT 1";
+    
     try {
         $db = new db();
         $db = $db->dbConnection();
