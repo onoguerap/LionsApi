@@ -5,14 +5,14 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET User for member code
-$app->post('/api/login', function(Request $request, Response $response){
-		$member_code = $request->getParam('member_code');
-		$password = $request->getParam('password');
+$app->get('/api/login/{member_code}/{password}', function(Request $request, Response $response, array $args){
+		$member_code = $args['member_code'];
+		$password = $args['password'];
     $message = '';
     $result = 0;
 		$member = array();
 		
-		if (strlen($password) > 0){
+		if ($password != 0) {
 			$sql = "SELECT * 
 			FROM tb_members 
 			WHERE member_code = $member_code 

@@ -5,9 +5,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET Obtener los miembros por filtro
-$app->post('/api/miembros_search', function(Request $request, Response $response){
-		$search = $request->getParam('search');
-		$index = $request->getParam('index');
+$app->get('/api/miembros_search/{search}/{index}', function(Request $request, Response $response, array $args){
+		$search = $args['search'];
+		$index = $args['index'];
 
 		if (!isset($index)){
 			$index = 0;
@@ -50,8 +50,8 @@ $app->post('/api/miembros_search', function(Request $request, Response $response
 });
 
 // GET Obtener los miembros
-$app->post('/api/miembros', function(Request $request, Response $response){
-		$index = $request->getParam('index');
+$app->get('/api/miembros/{index}', function(Request $request, Response $response, array $args){
+		$index = $args['index'];
 
 		if (!isset($index)){
 			$index = 0;
@@ -88,8 +88,8 @@ $app->post('/api/miembros', function(Request $request, Response $response){
 });
 
 // GET Obtener la información del miembro
-$app->post('/api/miembro', function(Request $request, Response $response){
-		$id_member = $request->getParam('id_member');
+$app->get('/api/miembro/{id_member}', function(Request $request, Response $response, array $args){
+		$id_member = $args['id_member'];
     $message = '';
     $result = 0;
 		$members = array();
@@ -137,7 +137,7 @@ $app->post('/api/miembro', function(Request $request, Response $response){
 });
 
 // GET Obtener los miembros por filtro o la totalidad
-$app->post('/api/birthdays', function(Request $request, Response $response){
+$app->get('/api/birthdays', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
@@ -171,7 +171,7 @@ $app->post('/api/birthdays', function(Request $request, Response $response){
 });
 
 // GET Obtener los miembros de la Gobernacion
-$app->post('/api/gobernacion', function(Request $request, Response $response){
+$app->get('/api/gobernacion', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
@@ -206,7 +206,7 @@ $app->post('/api/gobernacion', function(Request $request, Response $response){
 });
 
 // GET Obtener los miembros Jefes de Zona
-$app->post('/api/jefes_region', function(Request $request, Response $response){
+$app->get('/api/jefes_region', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
@@ -241,7 +241,7 @@ $app->post('/api/jefes_region', function(Request $request, Response $response){
 });
 
 // GET Obtener los miembros Jefes de Zona
-$app->post('/api/jefes_zona', function(Request $request, Response $response){
+$app->get('/api/jefes_zona', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
@@ -276,7 +276,7 @@ $app->post('/api/jefes_zona', function(Request $request, Response $response){
 });
 
 // GET Obtener los miembros Asesores
-$app->post('/api/asesores', function(Request $request, Response $response){
+$app->get('/api/asesores', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;

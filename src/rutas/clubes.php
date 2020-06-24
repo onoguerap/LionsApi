@@ -5,9 +5,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET Obtener los clubes por filtro o la totalidad
-$app->post('/api/clubes_search', function(Request $request, Response $response){
-		$search = $request->getParam('search');
-		$index = $request->getParam('index');
+$app->get('/api/clubes_search/{search}/{index}', function(Request $request, Response $response, array $args){
+		$search = $args['search'];
+		$index = $args['index'];
 
 		if (!isset($index)){
 			$index = 0;
@@ -49,8 +49,8 @@ $app->post('/api/clubes_search', function(Request $request, Response $response){
 });
 
 // GET Obtener los clubes
-$app->post('/api/clubes', function(Request $request, Response $response){
-		$index = $request->getParam('index');
+$app->get('/api/clubes/{index}', function(Request $request, Response $response, array $args){
+		$index = $args['index'];
 
 		if (!isset($index)){
 			$index = 0;
@@ -89,8 +89,8 @@ $app->post('/api/clubes', function(Request $request, Response $response){
 });
 
 // GET Obtener la información del miembro
-$app->post('/api/club', function(Request $request, Response $response){
-		$id_club = $request->getParam('id_club');
+$app->get('/api/club/{id_club}', function(Request $request, Response $response, array $args){
+		$id_club = $args['id_club'];
     $message = '';
     $result = 0;
 		$clubs = array();

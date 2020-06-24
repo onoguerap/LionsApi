@@ -5,9 +5,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //$app = new \Slim\App;
 
 // GET Obtener las zonas por filtro
-$app->get('/api/zonas_search', function(Request $request, Response $response){
-		$search = $request->getParam('search');
-		$index = $request->getParam('index');
+$app->get('/api/zonas_search/{search}/{index}', function(Request $request, Response $response, array $args){
+		$search = $args['search'];
+		$index = $args['index'];
 
 		if (!isset($index)){
 			$index = 0;
@@ -50,8 +50,8 @@ $app->get('/api/zonas_search', function(Request $request, Response $response){
 });
 
 // GET Obtener las zonas por filtro
-$app->post('/api/zonas', function(Request $request, Response $response){
-		$index = $request->getParam('index');
+$app->get('/api/zonas/{index}', function(Request $request, Response $response, array $args){
+		$index = $args['index'];
 
 		if (!isset($index)){
 			$index = 0;
@@ -89,8 +89,8 @@ $app->post('/api/zonas', function(Request $request, Response $response){
 });
 
 // GET Obtener las zonas por region
-$app->post('/api/zonas_region', function(Request $request, Response $response){
-		$id_region = $request->getParam('id_region');
+$app->get('/api/zonas_region/{id_region}', function(Request $request, Response $response, array $args){
+		$id_region = $args['id_region'];
     $message = '';
     $zonas = array();
 
