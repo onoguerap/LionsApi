@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 22, 2020 at 03:44 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.0
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 28-06-2020 a las 21:00:16
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lionsdb`
+-- Base de datos: `lionsdb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_activities`
+-- Estructura de tabla para la tabla `tb_activities`
 --
 
 CREATE TABLE `tb_activities` (
@@ -39,7 +38,7 @@ CREATE TABLE `tb_activities` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_clubs`
+-- Estructura de tabla para la tabla `tb_clubs`
 --
 
 CREATE TABLE `tb_clubs` (
@@ -58,7 +57,7 @@ CREATE TABLE `tb_clubs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_clubs`
+-- Volcado de datos para la tabla `tb_clubs`
 --
 
 INSERT INTO `tb_clubs` (`id_club`, `name_club`, `club_code`, `creation_date`, `meeting_date`, `meeting_hour`, `id_region`, `id_zone`, `GMT`, `GLT`, `GST`, `LCIF`) VALUES
@@ -137,7 +136,7 @@ INSERT INTO `tb_clubs` (`id_club`, `name_club`, `club_code`, `creation_date`, `m
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_members`
+-- Estructura de tabla para la tabla `tb_members`
 --
 
 CREATE TABLE `tb_members` (
@@ -155,14 +154,14 @@ CREATE TABLE `tb_members` (
   `admission_date` datetime DEFAULT NULL,
   `id_zone` varchar(45) DEFAULT NULL,
   `last_view` datetime DEFAULT NULL,
-  `status` tinyint(4) DEFAULT '1',
-  `id_type_member` int(11) DEFAULT '8',
+  `status` tinyint(4) DEFAULT 1,
+  `id_type_member` int(11) DEFAULT 8,
   `img_url` varchar(200) NOT NULL,
   `password` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_members`
+-- Volcado de datos para la tabla `tb_members`
 --
 
 INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
@@ -2099,17 +2098,17 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_region`
+-- Estructura de tabla para la tabla `tb_region`
 --
 
 CREATE TABLE `tb_region` (
   `id_region` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
   `description` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1'
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_region`
+-- Volcado de datos para la tabla `tb_region`
 --
 
 INSERT INTO `tb_region` (`id_region`, `description`, `status`) VALUES
@@ -2123,7 +2122,7 @@ INSERT INTO `tb_region` (`id_region`, `description`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_rol`
+-- Estructura de tabla para la tabla `tb_rol`
 --
 
 CREATE TABLE `tb_rol` (
@@ -2133,7 +2132,7 @@ CREATE TABLE `tb_rol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_rol`
+-- Volcado de datos para la tabla `tb_rol`
 --
 
 INSERT INTO `tb_rol` (`id_rol_member`, `description`, `status`) VALUES
@@ -2144,41 +2143,50 @@ INSERT INTO `tb_rol` (`id_rol_member`, `description`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_type`
+-- Estructura de tabla para la tabla `tb_type`
 --
 
 CREATE TABLE `tb_type` (
   `id_type` int(11) NOT NULL,
   `description` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
-  `isGovernment` int(11) NOT NULL DEFAULT '0'
+  `isGovernment` int(11) NOT NULL DEFAULT 0,
+  `isClub` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_type`
+-- Volcado de datos para la tabla `tb_type`
 --
 
-INSERT INTO `tb_type` (`id_type`, `description`, `isGovernment`) VALUES
-(1, 'Gobernador', 1),
-(2, 'Familia', 1),
-(3, 'PPG', 1),
-(4, 'PVG', 1),
-(5, 'Secretario', 1),
-(6, 'Tesorero', 1),
-(7, 'ID', 1),
-(8, 'Miembro', 0),
-(9, 'Otro', 0),
-(10, 'Jefe Region', 0),
-(11, 'Jefe Zona', 0),
-(12, 'Asesor', 0),
-(17, 'GST', 1),
-(18, 'GLT', 1),
-(19, 'GMT', 1),
-(20, 'LCIF', 1);
+INSERT INTO `tb_type` (`id_type`, `description`, `isGovernment`, `isClub`) VALUES
+(1, 'Gobernador', 1, 0),
+(2, 'Familia', 1, 0),
+(3, 'PPG', 1, 0),
+(4, 'PVG', 1, 0),
+(5, 'Secretario', 1, 0),
+(6, 'Tesorero', 1, 0),
+(7, 'ID', 1, 0),
+(8, 'Miembro', 0, 0),
+(9, 'Otro', 0, 0),
+(10, 'Jefe Region', 0, 0),
+(11, 'Jefe Zona', 0, 0),
+(12, 'Asesor', 0, 0),
+(17, 'GST', 1, 0),
+(18, 'GLT', 1, 0),
+(19, 'GMT', 1, 0),
+(20, 'LCIF', 1, 0),
+(21, 'Presidente Club', 0, 1),
+(22, 'Tesorero Club', 0, 1),
+(23, 'Secretario Club', 0, 1),
+(24, 'GST Club', 0, 1),
+(25, 'GLT Club', 0, 1),
+(26, 'GMT Club', 0, 1),
+(27, 'Mercadotecnia Club', 0, 1),
+(28, 'LCIF Club', 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_type_members`
+-- Estructura de tabla para la tabla `tb_type_members`
 --
 
 CREATE TABLE `tb_type_members` (
@@ -2188,7 +2196,7 @@ CREATE TABLE `tb_type_members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_type_members`
+-- Volcado de datos para la tabla `tb_type_members`
 --
 
 INSERT INTO `tb_type_members` (`id_type`, `member_code`, `info`) VALUES
@@ -4142,23 +4150,523 @@ INSERT INTO `tb_type_members` (`id_type`, `member_code`, `info`) VALUES
 (17, 89754, ''),
 (18, 3263156, ''),
 (19, 4496003, ''),
-(20, 137920, '');
+(20, 137920, ''),
+(21, 3776179, ''),
+(21, 3279000, ''),
+(21, 349227, ''),
+(21, 3531082, ''),
+(21, 2720366, ''),
+(21, 137920, ''),
+(21, 2568640, ''),
+(21, 3268868, ''),
+(21, 4605879, ''),
+(21, 4755692, ''),
+(21, 5290419, ''),
+(21, 2618504, ''),
+(21, 1798602, ''),
+(21, 3633315, ''),
+(21, 3491646, ''),
+(21, 1295994, ''),
+(21, 3672765, ''),
+(21, 250499, ''),
+(21, 5187422, ''),
+(21, 843904, ''),
+(21, 4414610, ''),
+(21, 4657034, ''),
+(21, 5226900, ''),
+(21, 5292415, ''),
+(21, 3380298, ''),
+(21, 2334305, ''),
+(21, 243387, ''),
+(21, 527248, ''),
+(21, 1397169, ''),
+(21, 3619498, ''),
+(21, 4771905, ''),
+(21, 3758309, ''),
+(21, 4789355, ''),
+(21, 4401469, ''),
+(21, 4320323, ''),
+(21, 3017606, ''),
+(21, 3821543, ''),
+(21, 1450043, ''),
+(21, 3111966, ''),
+(21, 4768660, ''),
+(21, 872603, ''),
+(21, 4508681, ''),
+(21, 4300927, ''),
+(21, 261232, ''),
+(21, 423707, ''),
+(21, 3556493, ''),
+(21, 4742722, ''),
+(21, 4168053, ''),
+(21, 4926256, ''),
+(21, 3606663, ''),
+(21, 4965827, ''),
+(21, 4604810, ''),
+(21, 89753, ''),
+(21, 4996156, ''),
+(21, 4173214, ''),
+(21, 1300192, ''),
+(21, 4743475, ''),
+(21, 5011371, ''),
+(21, 4869877, ''),
+(21, 3943584, ''),
+(21, 5167965, ''),
+(21, 823095, ''),
+(21, 1098061, ''),
+(21, 3486397, ''),
+(21, 5267952, ''),
+(21, 3263141, ''),
+(21, 386299, ''),
+(21, 2012531, ''),
+(22, 4864210, ''),
+(22, 5161802, ''),
+(22, 343851, ''),
+(22, 5281402, ''),
+(22, 2720354, ''),
+(22, 4768579, ''),
+(22, 4493405, ''),
+(22, 4891102, ''),
+(22, 4756496, ''),
+(22, 5290413, ''),
+(22, 2934861, ''),
+(22, 3736106, ''),
+(22, 170048, ''),
+(22, 3837641, ''),
+(22, 5167337, ''),
+(22, 3857274, ''),
+(22, 3420421, ''),
+(22, 3733533, ''),
+(22, 4657137, ''),
+(22, 5294580, ''),
+(22, 3420425, ''),
+(22, 3012305, ''),
+(22, 5234801, ''),
+(22, 2465304, ''),
+(22, 3616290, ''),
+(22, 4268299, ''),
+(22, 1867318, ''),
+(22, 5270341, ''),
+(22, 527247, ''),
+(22, 5011407, ''),
+(22, 3581056, ''),
+(22, 5103534, ''),
+(22, 1018935, ''),
+(22, 5141778, ''),
+(22, 2513360, ''),
+(22, 3821536, ''),
+(22, 3842599, ''),
+(22, 3914321, ''),
+(22, 5085363, ''),
+(22, 5297688, ''),
+(22, 4330848, ''),
+(22, 2764370, ''),
+(22, 4904865, ''),
+(22, 4167956, ''),
+(22, 3556488, ''),
+(22, 266591, ''),
+(22, 3770569, ''),
+(22, 277325, ''),
+(22, 4179644, ''),
+(22, 3606658, ''),
+(22, 2980561, ''),
+(22, 4604814, ''),
+(22, 5011372, ''),
+(22, 89754, ''),
+(22, 5018176, ''),
+(22, 3976165, ''),
+(22, 5076701, ''),
+(22, 3809335, ''),
+(22, 390168, ''),
+(22, 5240448, ''),
+(22, 3844010, ''),
+(22, 2599026, ''),
+(22, 5162053, ''),
+(22, 4125037, ''),
+(22, 5267502, ''),
+(22, 5135536, ''),
+(22, 3987230, ''),
+(22, 4543320, ''),
+(23, 4864210, ''),
+(23, 4630085, ''),
+(23, 343848, ''),
+(23, 5281405, ''),
+(23, 2720355, ''),
+(23, 3268897, ''),
+(23, 4328768, ''),
+(23, 4891107, ''),
+(23, 4756510, ''),
+(23, 5291821, ''),
+(23, 5128752, ''),
+(23, 4052719, ''),
+(23, 2354719, ''),
+(23, 288051, ''),
+(23, 1301364, ''),
+(23, 4233465, ''),
+(23, 5027567, ''),
+(23, 5268795, ''),
+(23, 4656903, ''),
+(23, 5292416, ''),
+(23, 1661576, ''),
+(23, 3634073, ''),
+(23, 5259648, ''),
+(23, 3460308, ''),
+(23, 4961981, ''),
+(23, 4574932, ''),
+(23, 3117756, ''),
+(23, 4631211, ''),
+(23, 532629, ''),
+(23, 5011374, ''),
+(23, 3581050, ''),
+(23, 5103536, ''),
+(23, 4599329, ''),
+(23, 4401260, ''),
+(23, 3017591, ''),
+(23, 3821546, ''),
+(23, 4927113, ''),
+(23, 3914328, ''),
+(23, 5063856, ''),
+(23, 3074558, ''),
+(23, 4926928, ''),
+(23, 4768643, ''),
+(23, 4696709, ''),
+(23, 4167951, ''),
+(23, 4938304, ''),
+(23, 4961227, ''),
+(23, 4742728, ''),
+(23, 4910791, ''),
+(23, 5082638, ''),
+(23, 5241976, ''),
+(23, 4642612, ''),
+(23, 4604805, ''),
+(23, 5016279, ''),
+(23, 1951943, ''),
+(23, 5018174, ''),
+(23, 4840976, ''),
+(23, 5099367, ''),
+(23, 3650388, ''),
+(23, 384798, ''),
+(23, 3468389, ''),
+(23, 325672, ''),
+(23, 302041, ''),
+(23, 5025898, ''),
+(23, 5340888, ''),
+(23, 5267928, ''),
+(23, 5300656, ''),
+(23, 4746327, ''),
+(23, 3263156, ''),
+(24, 5161802, ''),
+(24, 1854149, ''),
+(24, 4900114, ''),
+(24, 4921623, ''),
+(24, 345061, ''),
+(24, 148622, ''),
+(24, 3998147, ''),
+(24, 4797171, ''),
+(24, 5290435, ''),
+(24, 4605861, ''),
+(24, 3491644, ''),
+(24, 2994726, ''),
+(24, 293412, ''),
+(24, 4878231, ''),
+(24, 3420421, ''),
+(24, 5294543, ''),
+(24, 4578724, ''),
+(24, 843901, ''),
+(24, 5234309, ''),
+(24, 363288, ''),
+(24, 4055392, ''),
+(24, 4574940, ''),
+(24, 1397166, ''),
+(24, 4636014, ''),
+(24, 3335150, ''),
+(24, 5315297, ''),
+(24, 4771899, ''),
+(24, 4841118, ''),
+(24, 383995, ''),
+(24, 4962268, ''),
+(24, 2495032, ''),
+(24, 4874781, ''),
+(24, 4188685, ''),
+(24, 5005577, ''),
+(24, 5222819, ''),
+(24, 4798623, ''),
+(24, 261234, ''),
+(24, 2827929, ''),
+(24, 4362910, ''),
+(24, 3018851, ''),
+(24, 4388672, ''),
+(24, 5016283, ''),
+(24, 4347412, ''),
+(24, 5066845, ''),
+(24, 2525410, ''),
+(24, 5229438, ''),
+(24, 3556137, ''),
+(24, 5218898, ''),
+(24, 5167819, ''),
+(24, 3943584, ''),
+(24, 4881963, ''),
+(24, 823095, ''),
+(24, 3762067, ''),
+(24, 5267955, ''),
+(24, 3277709, ''),
+(24, 386297, ''),
+(24, 4051208, ''),
+(25, 4112811, ''),
+(25, 4630085, ''),
+(25, 349224, ''),
+(25, 1992086, ''),
+(25, 2720348, ''),
+(25, 345068, ''),
+(25, 4328766, ''),
+(25, 164675, ''),
+(25, 5024887, ''),
+(25, 5290426, ''),
+(25, 4964148, ''),
+(25, 4821241, ''),
+(25, 175414, ''),
+(25, 2346799, ''),
+(25, 4878231, ''),
+(25, 4889666, ''),
+(25, 1849728, ''),
+(25, 5297348, ''),
+(25, 3691936, ''),
+(25, 849301, ''),
+(25, 5259652, ''),
+(25, 3460304, ''),
+(25, 3723703, ''),
+(25, 248752, ''),
+(25, 5013130, ''),
+(25, 5270345, ''),
+(25, 3335150, ''),
+(25, 2611551, ''),
+(25, 3581059, ''),
+(25, 3972208, ''),
+(25, 4815348, ''),
+(25, 4885190, ''),
+(25, 4072248, ''),
+(25, 4921813, ''),
+(25, 4697057, ''),
+(25, 1433989, ''),
+(25, 4874781, ''),
+(25, 3809848, ''),
+(25, 4188685, ''),
+(25, 4329877, ''),
+(25, 5090560, ''),
+(25, 4798619, ''),
+(25, 3108133, ''),
+(25, 5018158, ''),
+(25, 418332, ''),
+(25, 4179642, ''),
+(25, 661197, ''),
+(25, 4866289, ''),
+(25, 5016297, ''),
+(25, 4347403, ''),
+(25, 4869958, ''),
+(25, 1294813, ''),
+(25, 4173212, ''),
+(25, 3556166, ''),
+(25, 395547, ''),
+(25, 5167950, ''),
+(25, 325676, ''),
+(25, 302047, ''),
+(25, 3540279, ''),
+(25, 1092681, ''),
+(25, 5267948, ''),
+(25, 2012562, ''),
+(25, 2531916, ''),
+(25, 5161944, ''),
+(26, 4864210, ''),
+(26, 4630085, ''),
+(26, 343848, ''),
+(26, 5281405, ''),
+(26, 2720355, ''),
+(26, 3268897, ''),
+(26, 4328768, ''),
+(26, 4891107, ''),
+(26, 4756510, ''),
+(26, 5291821, ''),
+(26, 5128752, ''),
+(26, 4052719, ''),
+(26, 2354719, ''),
+(26, 288051, ''),
+(26, 1301364, ''),
+(26, 4233465, ''),
+(26, 5027567, ''),
+(26, 5268795, ''),
+(26, 4656903, ''),
+(26, 5292416, ''),
+(26, 1661576, ''),
+(26, 3634073, ''),
+(26, 5259648, ''),
+(26, 3460308, ''),
+(26, 4961981, ''),
+(26, 4574932, ''),
+(26, 3117756, ''),
+(26, 4631211, ''),
+(26, 532629, ''),
+(26, 5011374, ''),
+(26, 3581050, ''),
+(26, 5103536, ''),
+(26, 4599329, ''),
+(26, 4401260, ''),
+(26, 3017591, ''),
+(26, 3821546, ''),
+(26, 4927113, ''),
+(26, 3914328, ''),
+(26, 5063856, ''),
+(26, 3074558, ''),
+(26, 4926928, ''),
+(26, 4768643, ''),
+(26, 4696709, ''),
+(26, 4167951, ''),
+(26, 4938304, ''),
+(26, 4961227, ''),
+(26, 4742728, ''),
+(26, 4910791, ''),
+(26, 5082638, ''),
+(26, 5241976, ''),
+(26, 4642612, ''),
+(26, 4604805, ''),
+(26, 5016279, ''),
+(26, 1951943, ''),
+(26, 5018174, ''),
+(26, 4840976, ''),
+(26, 5099367, ''),
+(26, 3650388, ''),
+(26, 384798, ''),
+(26, 3468389, ''),
+(26, 325672, ''),
+(26, 302041, ''),
+(26, 5025898, ''),
+(26, 5340888, ''),
+(26, 5267928, ''),
+(26, 5300656, ''),
+(26, 4746327, ''),
+(26, 3263156, ''),
+(27, 4191467, ''),
+(27, 5281397, ''),
+(27, 349227, ''),
+(27, 5353096, ''),
+(27, 4328766, ''),
+(27, 3420356, ''),
+(27, 3468368, ''),
+(27, 4964148, ''),
+(27, 4756497, ''),
+(27, 5290460, ''),
+(27, 3061563, ''),
+(27, 288051, ''),
+(27, 4233465, ''),
+(27, 4124825, ''),
+(27, 5328406, ''),
+(27, 5086367, ''),
+(27, 3819135, ''),
+(27, 4884872, ''),
+(27, 3007592, ''),
+(27, 5234379, ''),
+(27, 5294612, ''),
+(27, 5270345, ''),
+(27, 5107174, ''),
+(27, 5008137, ''),
+(27, 532625, ''),
+(27, 3619498, ''),
+(27, 4607538, ''),
+(27, 5311995, ''),
+(27, 2013670, ''),
+(27, 1439347, ''),
+(27, 4711247, ''),
+(27, 418332, ''),
+(27, 3556485, ''),
+(27, 4635810, ''),
+(27, 3588255, ''),
+(27, 5018126, ''),
+(27, 5218909, ''),
+(27, 1792817, ''),
+(27, 4840976, ''),
+(27, 3732493, ''),
+(27, 5272431, ''),
+(27, 4869877, ''),
+(27, 2728811, ''),
+(27, 5167303, ''),
+(27, 5025898, ''),
+(27, 3762066, ''),
+(27, 3486397, ''),
+(27, 5267925, ''),
+(27, 3988657, ''),
+(27, 4127042, ''),
+(27, 3277709, ''),
+(28, 1963590, ''),
+(28, 314921, ''),
+(28, 3763050, ''),
+(28, 4128238, ''),
+(28, 4373668, ''),
+(28, 3268897, ''),
+(28, 137926, ''),
+(28, 4891107, ''),
+(28, 4756496, ''),
+(28, 5286091, ''),
+(28, 4939378, ''),
+(28, 3736106, ''),
+(28, 2618504, ''),
+(28, 293411, ''),
+(28, 5328405, ''),
+(28, 3420421, ''),
+(28, 5294533, ''),
+(28, 250509, ''),
+(28, 849308, ''),
+(28, 5279374, ''),
+(28, 3748323, ''),
+(28, 3616290, ''),
+(28, 2726713, ''),
+(28, 1397161, ''),
+(28, 527250, ''),
+(28, 4329745, ''),
+(28, 5313893, ''),
+(28, 4884858, ''),
+(28, 4367900, ''),
+(28, 5107891, ''),
+(28, 1428633, ''),
+(28, 4913977, ''),
+(28, 4300927, ''),
+(28, 4168050, ''),
+(28, 3556485, ''),
+(28, 5204928, ''),
+(28, 5018158, ''),
+(28, 2540505, ''),
+(28, 4635810, ''),
+(28, 4582376, ''),
+(28, 4866295, ''),
+(28, 5016279, ''),
+(28, 5018174, ''),
+(28, 1300193, ''),
+(28, 753051, ''),
+(28, 3556197, ''),
+(28, 1886038, ''),
+(28, 5167838, ''),
+(28, 2410834, ''),
+(28, 4496003, ''),
+(28, 1801699, ''),
+(28, 5252480, ''),
+(28, 5135539, ''),
+(28, 4746327, ''),
+(28, 3509677, ''),
+(28, 4373668, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_zone`
+-- Estructura de tabla para la tabla `tb_zone`
 --
 
 CREATE TABLE `tb_zone` (
   `id_zone` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
   `id_region` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
   `description` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1'
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_zone`
+-- Volcado de datos para la tabla `tb_zone`
 --
 
 INSERT INTO `tb_zone` (`id_zone`, `id_region`, `description`, `status`) VALUES
@@ -4178,72 +4686,72 @@ INSERT INTO `tb_zone` (`id_zone`, `id_region`, `description`, `status`) VALUES
 ('F2', 'F', 'F2', 1);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `tb_activities`
+-- Indices de la tabla `tb_activities`
 --
 ALTER TABLE `tb_activities`
   ADD PRIMARY KEY (`id_activity`);
 
 --
--- Indexes for table `tb_clubs`
+-- Indices de la tabla `tb_clubs`
 --
 ALTER TABLE `tb_clubs`
   ADD PRIMARY KEY (`id_club`);
 
 --
--- Indexes for table `tb_members`
+-- Indices de la tabla `tb_members`
 --
 ALTER TABLE `tb_members`
   ADD PRIMARY KEY (`id_member`);
 
 --
--- Indexes for table `tb_rol`
+-- Indices de la tabla `tb_rol`
 --
 ALTER TABLE `tb_rol`
   ADD PRIMARY KEY (`id_rol_member`);
 
 --
--- Indexes for table `tb_type`
+-- Indices de la tabla `tb_type`
 --
 ALTER TABLE `tb_type`
   ADD PRIMARY KEY (`id_type`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `tb_activities`
+-- AUTO_INCREMENT de la tabla `tb_activities`
 --
 ALTER TABLE `tb_activities`
   MODIFY `id_activity` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tb_clubs`
+-- AUTO_INCREMENT de la tabla `tb_clubs`
 --
 ALTER TABLE `tb_clubs`
   MODIFY `id_club` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
--- AUTO_INCREMENT for table `tb_members`
+-- AUTO_INCREMENT de la tabla `tb_members`
 --
 ALTER TABLE `tb_members`
   MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1925;
 
 --
--- AUTO_INCREMENT for table `tb_rol`
+-- AUTO_INCREMENT de la tabla `tb_rol`
 --
 ALTER TABLE `tb_rol`
   MODIFY `id_rol_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tb_type`
+-- AUTO_INCREMENT de la tabla `tb_type`
 --
 ALTER TABLE `tb_type`
-  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
