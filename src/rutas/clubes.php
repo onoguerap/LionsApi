@@ -109,7 +109,7 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
 		FROM tb_clubs C
 		INNER JOIN tb_region R ON C.id_region = R.id_region
 		INNER JOIN tb_zone Z ON C.id_zone = Z.id_zone
-		WHERE C.club_code = $id_club
+		WHERE C.id_club = $id_club
         LIMIT 1;";
         
         $sql2 = "SELECT T.description cargo, CONCAT_WS(' ', M.name, M.last_name) name
@@ -117,7 +117,7 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         INNER JOIN tb_type T ON TM.id_type = T.id_type
         INNER JOIN tb_members M ON TM.member_code = M.member_code
         INNER JOIN tb_clubs C ON M.club_code = C.club_code
-        WHERE C.club_code = $id_club
+        WHERE C.id_club = $id_club
         AND T.isClub = 1;";
     
     try {
@@ -139,8 +139,8 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-        $out['data'] = $clubs;
-        $out['data2'] = $club_government;
+        $out['data']['info'] = $clubs;
+        $out['data']['administracion'] = $club_government;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
