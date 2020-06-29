@@ -112,7 +112,7 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
 		INNER JOIN tb_type T ON TM.id_type = T.id_type
 		INNER JOIN tb_rol R ON M.id_rol_member = R.id_rol_member
 		WHERE M.status = 1
-		AND M.id_member = 911
+		AND M.id_member = $id_member
 		LIMIT 1;";	
     
     try {
