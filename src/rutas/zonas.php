@@ -121,3 +121,106 @@ $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
 });
+
+// POST Agregar una zona
+$app->post('/api/zona_add', function(Request $request, Response $response){
+    $description = $request->getParam('description');
+    $id_region = $request->getParam('id_region');
+    
+
+    $sql = "INSERT INTO tb_zone (id_zone, description, id_region)
+    VALUES (:id_zone, :description, :id_region);";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':id_zone', $description);
+        $resultado->bindParam(':description', $description);
+        $resultado->bindParam(':id_region', $id_region);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Zona Agregada Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible agregar la zona!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// PUT Editar una zona
+$app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
+    $id_zone = $request->getAttribute('id');
+    $description = $request->getParam('description');
+    $id_region = $request->getParam('id_region');
+
+    $sql = "UPDATE tb_zone SET 
+    description = :description
+    ,id_region = :id_region
+    WHERE id_zone = '$id_zone'
+    LIMIT 1";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':description', $description);
+        $resultado->bindParam(':id_region', $id_region);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Zona Editada Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible editar la zona!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// PUT Editar status de una zona
+$app->put('/api/zona_delete/{id}', function(Request $request, Response $response){
+    $id_zone = $request->getAttribute('id');
+    $status = 0;
+
+    $sql = "UPDATE tb_zone SET 
+    status = :status
+    WHERE id_zone = '$id_zone'
+    LIMIT 1";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':status',$status);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Region Eliminada Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible eliminar el region!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});

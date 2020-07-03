@@ -85,3 +85,99 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
 });
+// POST Agregar una region
+$app->post('/api/region_add', function(Request $request, Response $response){
+    $description = $request->getParam('description');
+
+    $sql = "INSERT INTO tb_region (id_region, description)
+    VALUES (:id_region, :description);";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':id_region', $description);
+        $resultado->bindParam(':description', $description);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Region Agregada Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible agregar la region!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// PUT Editar una region
+$app->put('/api/region_edit/{id}', function(Request $request, Response $response){
+    $id_region = $request->getAttribute('id');
+    $description = $request->getParam('description');
+
+    $sql = "UPDATE tb_region SET 
+    description = :description
+    WHERE id_region = '$id_region'
+    LIMIT 1";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':description', $description);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Region Editada Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible editar la region!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// PUT Editar status de una region
+$app->put('/api/region_delete/{id}', function(Request $request, Response $response){
+    $id_region = $request->getAttribute('id');
+    $status = 0;
+
+    $sql = "UPDATE tb_region SET 
+    status = :status
+    WHERE id_region = '$id_region'
+    LIMIT 1";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':status',$status);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Region Eliminada Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible eliminar el region!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});

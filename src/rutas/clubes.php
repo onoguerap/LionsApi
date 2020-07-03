@@ -25,6 +25,7 @@ $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Resp
 			INNER JOIN tb_region R ON C.id_region = R.id_region
 			INNER JOIN tb_zone Z ON C.id_zone = Z.id_zone
 			WHERE C.name_club LIKE '%$search%' OR C.id_region LIKE '%$search%' OR C.id_zone LIKE '%$search%' OR C.id_club LIKE '%$search%'
+            AND C.status = 1
 			LIMIT 10 OFFSET $index;";
     
     try {
@@ -64,6 +65,7 @@ $app->get('/api/clubes/{index}', function(Request $request, Response $response, 
 			FROM tb_clubs C
 			INNER JOIN tb_region R ON C.id_region = R.id_region
 			INNER JOIN tb_zone Z ON C.id_zone = Z.id_zone
+            WHERE C.status = 1
 			LIMIT 10 OFFSET $index;";	
 		
     
@@ -141,6 +143,129 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         $out['message'] = $message;
         $out['data']['info'] = $clubs;
         $out['data']['administracion'] = $club_government;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// POST Agregar un club
+$app->post('/api/club_add', function(Request $request, Response $response){
+    $name_club = $request->getParam('name_club');
+    $club_code = $request->getParam('club_code');
+    $meeting_date = $request->getParam('meeting_date');
+    $meeting_hour = $request->getParam('meeting_hour');
+    $id_region = $request->getParam('id_region');
+    $id_zone = $request->getParam('id_zone');
+    $today = date('Y-m-d h:i:s');
+
+    $sql = "INSERT INTO tb_clubs (id_club, name_club, club_code, creation_date, meeting_date, meeting_hour, id_region, id_zone)
+    VALUES (null, :name_club, :club_code, :creation_date, :meeting_date, :meeting_hour, :id_region, :id_zone);";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':name_club', $name_club);
+        $resultado->bindParam(':club_code', $club_code);
+        $resultado->bindParam(':creation_date', $today);
+        $resultado->bindParam(':meeting_date', $meeting_date);
+        $resultado->bindParam(':meeting_hour', $meeting_hour);
+        $resultado->bindParam(':id_region', $id_region);
+        $resultado->bindParam(':id_zone', $id_zone);
+
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Club Agregado Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible agregar el club!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// PUT Editar un club
+$app->put('/api/club_edit/{id}', function(Request $request, Response $response){
+    $id_club = $request->getAttribute('id');
+    $name_club = $request->getParam('name_club');
+    $club_code = $request->getParam('club_code');
+    $meeting_date = $request->getParam('meeting_date');
+    $meeting_hour = $request->getParam('meeting_hour');
+    $id_region = $request->getParam('id_region');
+    $id_zone = $request->getParam('id_zone');
+
+    $sql = "UPDATE tb_clubs SET 
+    name_club = :name_club, 
+    club_code = :club_code, 
+    meeting_date = :meeting_date, 
+    meeting_hour = :meeting_hour, 
+    id_region = :id_region,
+    id_zone = :id_zone
+    WHERE id_club = $id_club
+    LIMIT 1";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':name_club', $name_club);
+        $resultado->bindParam(':club_code', $club_code);
+        $resultado->bindParam(':meeting_date', $meeting_date);
+        $resultado->bindParam(':meeting_hour', $meeting_hour);
+        $resultado->bindParam(':id_region', $id_region);
+        $resultado->bindParam(':id_zone', $id_zone);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Club Editado Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible editar el club!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+});
+
+// PUT Editar status de un club
+$app->put('/api/club_delete/{id}', function(Request $request, Response $response){
+    $id_club = $request->getAttribute('id');
+    $status = 0;
+
+    $sql = "UPDATE tb_clubs SET 
+    status = :status
+    WHERE id_club = $id_club";
+
+    try {
+        $db = new db();
+        $db = $db->dbConnection();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':status',$status);
+
+        if ($resultado->execute()) {
+            $result = 1;
+            $message = "Club Eliminado Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible eliminar el club!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
