@@ -1,8 +1,12 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\UploadedFile;
 
 //$app = new \Slim\App;
+
+$container = $app->getContainer();
+$container['upload_directory'] = __DIR__ . '/uploads/miembros';
 
 // GET Obtener los miembros por filtro
 $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Response $response, array $args){
@@ -310,66 +314,101 @@ $app->get('/api/asesores', function(Request $request, Response $response){
 });
 
 //POST Insertar Miembro
-$app->post('/api/agregar_miembro', function(Request $request, Response $response){
-		$name = $request->getParam('name');
-		$last_name = $request->getParam('last_name');
-		$birthday = $request->getParam('birthday');
-		$member_code = $request->getParam('member_code');
-		$club_code = $request->getParam('club_code');
-		$email = $request->getParam('email');
-		$phone = $request->getParam('phone');
-		$cellphone = $request->getParam('cellphone');
-		$id_rol_member = $request->getParam('id_rol_member');
-		$gender = $request->getParam('gender');
-		$id_zone = $request->getParam('id_zone');
-		$id_type_member = $request->getParam('id_type_member');
-		$admission_date = date('Y-m-d h:i:s');
+$app->post('/api/miembro_add', function(Request $request, Response $response){
+    $name = $request->getParam('name');
+    $last_name = $request->getParam('last_name');
+    $birthday = $request->getParam('birthday');
+    $member_code = $request->getParam('member_code');
+    $club_code = $request->getParam('club_code');
+    $email = $request->getParam('email');
+    $phone = $request->getParam('phone');
+    $cellphone = $request->getParam('cellphone');
+    $id_rol_member = $request->getParam('id_rol_member');
+    $gender = $request->getParam('gender');
+    $id_zone = $request->getParam('id_zone');
+    $type_member = $request->getParam('type_member');
+    $admission_date = date('Y-m-d h:i:s');
 
+    $type_member = explode(',', $type_member);
+    
     $message = '';
     $result = 0;
-		
-		
-		$sql = "INSERT INTO tb_members (id_member, name, last_name, birthday, member_code, club_code
-		, email, phone, cellphone, id_rol_member, gender, admission_date, id_zone, last_view, status, id_type_member, img_url) 
-		VALUES (:id_member, :name, :last_name, :birthday, :member_code, :club_code, :email, :phone, :cellphone, :id_rol_member, :gender
-		, :admission_date, :id_zone, :last_view, :status, :id_type_member, img_url);";	
     
+    
+    $sql = "INSERT INTO tb_members (id_member, name, last_name, birthday, member_code, club_code
+    , email, phone, cellphone, id_rol_member, gender, admission_date, id_zone) 
+    VALUES (NULL, :name, :last_name, :birthday, :member_code, :club_code, :email, :phone, :cellphone, :id_rol_member, :gender
+    , :admission_date, :id_zone);";	
+
+        
     try {
         $db = new db();
         $db = $db->dbConnection();
-				$resultado = $db->prepare($sql);
-				
-				$resultado->bindParam(':id_member', null);
-				$resultado->bindParam(':name', $name);
-				$resultado->bindParam(':last_name', $last_name);
-				$resultado->bindParam(':birthday', $birthday);
-				$resultado->bindParam(':member_code', $member_code);
-				$resultado->bindParam(':club_code', $club_code);
-				$resultado->bindParam(':email', $email);
-				$resultado->bindParam(':phone', $phone);
-				$resultado->bindParam(':cellphone', $cellphone);
-				$resultado->bindParam(':id_rol_member', $id_rol_member);
-				$resultado->bindParam(':gender', $gender);
-				$resultado->bindParam(':admission_date', $admission_date);
-				$resultado->bindParam(':id_zone', $id_zone);
-				$resultado->bindParam(':last_view', null);
-				$resultado->bindParam(':status', null);
-				$resultado->bindParam(':id_type_member', $id_type_member);
-				$resultado->bindParam(':img_url', null);
-			
-				//uncompleted
+        $resultado = $db->prepare($sql);
 
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
+        $resultado->bindParam(':name', $name);
+        $resultado->bindParam(':last_name', $last_name);
+        $resultado->bindParam(':birthday', $birthday);
+        $resultado->bindParam(':member_code', $member_code);
+        $resultado->bindParam(':club_code', $club_code);
+        $resultado->bindParam(':email', $email);
+        $resultado->bindParam(':phone', $phone);
+        $resultado->bindParam(':cellphone', $cellphone);
+        $resultado->bindParam(':id_rol_member', $id_rol_member);
+        $resultado->bindParam(':gender', $gender);
+        $resultado->bindParam(':admission_date', $admission_date);
+        $resultado->bindParam(':id_zone', $id_zone);
+
+        $directory = $this->get('upload_directory');
+        $uploadedFiles = $request->getUploadedFiles();
+        // handle single input with single file upload
+        if(!isset($uploadedFiles['files'])) {
             $result = 0;
-            $message = "No se encontraron miembros de gobernación!";
+            $message = "No ha sido posible agregar la actividad, imagen no enviada!";
+        } else {
+            $uploadedFile = $uploadedFiles['files'];
+
+            $db->beginTransaction();
+
+            if ($resultado->execute()) {
+                //
+                if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                    $filename = moveUploadedFile($directory, $uploadedFile);
+
+                    $image_path = $directory.'/'.$filename;
+                    $lastInsertId = $db->lastInsertId();
+                    $sql = "UPDATE tb_members
+                    SET image_url = :image_url
+                    WHERE id_member = $lastInsertId
+                    LIMIT 1";
+
+                    $resultado = $db->prepare($sql);
+                    $resultado->bindParam(':image_url', $image_path);
+
+                    if ($resultado->execute()) {
+                        $db->commit();
+                        $result = 1;
+                        $message = "Miembro Agregado Exitosamente!";
+                    } else {
+                        $result = 0;
+                        $message = "No ha sido posible agregar el miembro!";
+                        $db->rollBack();
+                    }
+                } else {
+                    $result = 0;
+                    $message = "No ha sido posible agregar el miembro!";
+                    $db->rollBack();
+                }
+                //
+            } else {
+                $db->rollBack();
+                $result = 0;
+                $message = "No ha sido posible agregar el miembro!";
+            }
         }
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';

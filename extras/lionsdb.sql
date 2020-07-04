@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-06-2020 a las 21:00:16
+-- Tiempo de generación: 04-07-2020 a las 23:19:07
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -53,85 +53,87 @@ CREATE TABLE `tb_clubs` (
   `GMT` varchar(100) NOT NULL,
   `GLT` varchar(100) NOT NULL,
   `GST` varchar(100) NOT NULL,
-  `LCIF` varchar(100) NOT NULL
+  `LCIF` varchar(100) NOT NULL,
+  `status` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `tb_clubs`
 --
 
-INSERT INTO `tb_clubs` (`id_club`, `name_club`, `club_code`, `creation_date`, `meeting_date`, `meeting_hour`, `id_region`, `id_zone`, `GMT`, `GLT`, `GST`, `LCIF`) VALUES
-(1, 'SABANA', '61512', '1999-02-05 00:00:00', '1 y 3 lunes', 'Sin definir', 'A', 'A1', '3', '9', '3', '500 dlrs'),
-(2, 'SAN JOSÉ', '15597', '1944-01-21 00:00:00', '2 miercoles', 'Sin definir', 'A', 'A1', '2', '12', '4', '500 dlrs'),
-(3, 'GONZALEZ LAHMANN', '53618', '1992-08-31 00:00:00', '3ER SABADO', 'Sin definir', 'A', 'A1', '2', '10', '4', '500 dlrs'),
-(4, 'ROHRMOSER', '32322', '1975-05-28 00:00:00', '1° y 3° viernes', 'Sin definir', 'A', 'A1', '2', '12', '5', '500 dlrs'),
-(5, 'SANTA MARTA', '100162', '2007-09-10 00:00:00', '2° y 4° viernes', '', 'A', 'A1', '2', '9', '4', '500 dlrs'),
-(6, 'ASERRI', '34183', '1977-06-25 00:00:00', '3° JUEVES', '', 'A', 'A2', '5', '8', '3', '500 dlrs'),
-(7, 'CURRIDABAT', '15577', '1972-06-06 00:00:00', 'Todos miercoles ', '', 'A', 'A2', '2', '11', '9', '500 dlrs'),
-(8, 'SAN JUAN DE DIOS', '133084', '1917-11-21 00:00:00', '4° jueves ', '7pm', 'A', 'A2', '5', '9', '3', '500 dlrs'),
-(9, 'DESAMPARADOS', '15578', '1966-06-21 00:00:00', '2° y 4° miercoles y 4 ° jueves', '6:30pm', 'A', 'A2', '6', '21', '13', '500 dlrs'),
-(10, 'SAN FRANCISCO', '49761', '1989-07-26 00:00:00', '2° y 4° miercoles', '', 'A', 'A2', '2', '10', '2', '500 dlrs'),
-(11, 'ABOGADOS', '140603', '2020-01-22 00:00:00', 'Sin definir', 'Sin definir', '', '', '2', '14', '4', '500 dlrs'),
-(12, 'CIUDAD COLON', '56667', '1995-03-20 00:00:00', '1° Y 3° LUNES', '', 'A', 'A3', '4', '14', '9', '500 dlrs'),
-(13, 'ESCAZÚ', '15579', '1970-10-13 00:00:00', '1° y 3° ', '', 'A', 'A3', '4', '8', '5', '500 dlrs'),
-(14, 'PURISCAL', '15594', '1971-08-17 00:00:00', 'Sin definir', '', 'A', 'A3', '4', '7', '5', '500 dlrs'),
-(15, 'SAN RAFAEL ESCAZÚ', '60871', '1998-06-11 00:00:00', '1° Y 3° MIERCOLES', '7:30pm', 'A', 'A3', '2', '15', '7', '500 dlrs'),
-(16, 'SANTA ANA', '40126', '1981-06-14 00:00:00', '2° y 4° jueves ', '', 'A', 'A3', '3', '8', '3', '500 dlrs'),
-(17, 'VASQUEZ DE CORONADO ', '59548', '1997-05-15 00:00:00', '2° y 4° martes', '', 'B', 'B1', '3', '9', '6', '500 dlrs'),
-(18, 'GUADALUPE', '15583', '1968-11-13 00:00:00', 'todos los jueves', '', 'B', 'B1', '3', '11', '12', '500 dlrs'),
-(19, 'LIMON ', '131536', '2017-06-21 00:00:00', '1° y 3° viernes ', '', 'B', 'B1', '3', '8', '2', '500 dlrs'),
-(20, 'MATINA', '140674', '2020-01-24 00:00:00', 'Sin definir', 'Sin definir', 'B', 'B1', '2', '14', '3', '500 dlrs'),
-(21, 'MORAVIA', '15589', '1970-10-17 00:00:00', 'todos los jueves ', '7: 30pm', 'B', 'B1', '2', '17', '5', '500 dlrs'),
-(22, 'POCOCI', '55501', '1994-04-08 00:00:00', '2° y 4° martes', '', 'B', 'B1', '5', '7', '3', '500 dlrs'),
-(23, 'BIKERS', '139715', '2019-09-23 00:00:00', '1° martes', '', 'B', 'B1', '2', '10', '3', '500 dlrs'),
-(24, 'TIBAS', '15603', '1971-05-06 00:00:00', '2° y 4° viernes', '', 'B', 'B1', '2', '25', '15', '500 dlrs'),
-(25, 'ALAJUELITA', '117235', '2012-06-20 00:00:00', 'todos los sabados', '9:30am.', 'B', 'B2', '3', '8', '15', '500 dlrs'),
-(26, 'BARRIO CORDOBA', '36812', '1979-03-29 00:00:00', '2° y 4° jueves', '', 'B', 'B2', '2', '11', '7', '500 dlrs'),
-(27, 'CENARE', '63064', '2000-04-13 00:00:00', '4° sabado', '', 'B', 'B2', '3', '7', '2', '500 dlrs'),
-(28, 'HATILLO', '29639', '1974-07-29 00:00:00', '3° viernes ', '', 'B', 'B2', '7', '6', '6', '500 dlrs'),
-(29, 'URUCA', '49195', '1989-02-06 00:00:00', 'Sin definir', '', 'B', 'B2', '2', '8', '2', '500 dlrs'),
-(30, 'SAN SEBASTIAN', '34092', '1977-06-20 00:00:00', '3° sabado', '', 'B', 'B2', '3', '14', '5', '500 dlrs'),
-(31, 'HOJANCHA ', '119512', '2013-06-05 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C1', '2', '9', '2', '500 dlrs'),
-(32, 'JICARAL', '122462', '2014-06-19 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C1', '3', '10', '3', '500 dlrs'),
-(33, 'NICOYA ', '45499', '1985-11-06 00:00:00', 'todos los lunes', '7:30pm', 'C', 'C1', '2', '23', '8', '500 dlrs'),
-(34, 'SANTA CRUZ', '135008', '2018-06-20 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C1', '8', '6', '2', '500 dlrs'),
-(35, 'BAGACES', '44637', '1985-02-06 00:00:00', 'todos los sabados ', '', 'C', 'C2', '5', '6', '3', '500 dlrs'),
-(36, 'GUAYABO', '120025', '2013-09-20 00:00:00', '2° y 4° sabados', '', 'C', 'C2', '3', '11', '2', '500 dlrs'),
-(37, 'LA CRUZ ', '120405', '2013-11-19 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C2', '5', '6', '1', '500 dlrs'),
-(38, 'LIBERIA', '15586', '1957-03-14 00:00:00', 'todos los viernes', '7:pm', 'C', 'C2', '2', '17', '4', '500 dlrs'),
-(39, 'ALAJUELA', '15571', '1952-06-20 00:00:00', 'todos los lunes', '', 'D', 'D1', '2', '21', '6', '500 dlrs'),
-(40, 'AEROPUERTO', '36811', '1979-03-28 00:00:00', '1° y 3° martes', '', 'D', 'D1', '3', '8', '10', '500 dlrs'),
-(41, 'ATENAS', '36381', '1978-12-29 00:00:00', '2° y 4° lunes', '', 'D', 'D1', '2', '12', '8', '500 dlrs'),
-(42, 'GRECIA', '15582', '1966-04-13 00:00:00', '2° y 4°lunes', '', 'D', 'D1', '2', '25', '10', '500 dlrs'),
-(43, 'SAN PEDRO POAS ', '34761', '1977-12-12 00:00:00', '2° y 4° miercoles', '', 'D', 'D1', '3', '8', '2', '500 dlrs'),
-(44, 'SARCHI', '97194', '2006-05-26 00:00:00', '2° y 4° miercoles', '', 'D', 'D1', '2', '10', '8', '500 dlrs'),
-(45, 'ESPARZA ', '124848', '2015-05-14 00:00:00', '2° martes', '', 'D', 'D2', '5', '6', '2', '500 dlrs'),
-(46, 'MONTEVERDE', '116569', '2012-04-17 00:00:00', 'sabados', '', 'D', 'D2', '4', '7', '2', '500 dlrs'),
-(47, 'OROTINA', '15590', '1973-03-29 00:00:00', 'todos los jueves', '', 'D', 'D2', '2', '8', '2', '500 dlrs'),
-(48, 'PALMARES', '119404', '2013-05-17 00:00:00', '1° y 3° miercoles', '', 'D', 'D2', '4', '7', '4', '500 dlrs'),
-(49, 'PUNTARENAS', '15593', '1957-03-19 00:00:00', '2° y 4°  miercoles y viernes', '', 'D', 'D2', '2', '8', '5', '500 dlrs'),
-(50, 'SAN RAMON', '125065', '2015-06-05 00:00:00', '2° y 4° jueves', '', 'D', 'D2', '3', '17', '25', '500 dlrs'),
-(51, 'CIUDAD QUESAD ', '15573', '1957-05-09 00:00:00', 'todos los lunes', '', 'D', 'D3', '3', '25', '6', '500 dlrs'),
-(52, 'NARANJO ', '52610', '1992-03-04 00:00:00', '2° y 4° martes', '', 'D', 'D3', '3', '12', '3', '500 dlrs'),
-(53, 'UPALA', '134877', '2018-05-31 00:00:00', '1° y 4° sabados', '', 'D', 'D3', '3', '8', '2', '500 dlrs'),
-(54, 'ZARCERO', '134688', '2018-05-31 00:00:00', '1° y 3° martes', '', 'D', 'D3', '9', '4', '3', '500 dlrs'),
-(55, 'CACHI', '136526', '2018-10-02 00:00:00', 'Sin definir', 'Sin definir', 'E', 'E1', '3', '8', '3', '500 dlrs'),
-(56, 'CARTAGO', '15572', '1965-12-10 00:00:00', 'todos los lunes', '', 'E', 'E1', '3', '13', '6', '500 dlrs'),
-(57, 'OROSI', '136584', '2018-11-27 00:00:00', '3 °  viernes', '', 'E', 'E1', '3', '7', '3', '500 dlrs'),
-(58, 'PACAYAS', '64060', '2001-03-09 00:00:00', '1° y 3° viernes ', '', 'E', 'E1', '2', '8', '4', '500 dlrs'),
-(59, 'PARAISO', '49541', '1989-05-26 00:00:00', '4° viernes', '', 'E', 'E1', '3', '15', '15', '500 dlrs'),
-(60, 'GUARCO', '116542', '2012-04-24 00:00:00', '1° y 3° lunes', '', 'E', 'E1', '2', '13', '17', '500 dlrs'),
-(61, 'TURRIABA', '15606', '1946-11-28 00:00:00', 'todos los viernes', '', 'E', 'E1', '2', '10', '6', '500 dlrs'),
-(62, 'BUENOS AIRES', '111283', '2011-06-08 00:00:00', 'Sin definir', 'Sin definir', 'E', 'E2', '2', '8', '2', '500 dlrs'),
-(63, 'QUEPOS', '138764', '2019-06-25 00:00:00', 'todos los domingos', '', 'E', 'E2', '2', '10', '2', '500 dlrs'),
-(64, 'SAN ISIDRO GENERAL', '15598', '1969-08-01 00:00:00', 'todos los viernes', '', 'E', 'E2', '2', '16', '4', '500 dlrs'),
-(65, 'BARVA', '34013', '1977-06-13 00:00:00', '2° y 4° sabados', '', 'F', 'F1', '2', '16', '11', '500 dlrs'),
-(66, 'HEREDIA', '15584', '1954-01-15 00:00:00', '3° sabados', '', 'F', 'F1', '3', '12', '17', '500 dlrs'),
-(67, 'SAN JOAQUIN ', '30637', '1975-04-29 00:00:00', '2° y 4° jueves', '', 'F', 'F1', '7', '6', '2', '500 dlrs'),
-(68, 'SAN PABLO', '140093', '2019-11-18 00:00:00', 'Sin definir', 'Sin definir', 'F', 'F1', '2', '8', '2', '500 dlrs'),
-(69, 'ZURQUI', '83142', '2004-07-30 00:00:00', '1° y 4° lunes', '', 'F', 'F2', '2', '10', '3', '500 dlrs'),
-(70, 'SAN RAFAEL DE HEREDIA', '57927', '1996-02-28 00:00:00', '1° y 4°martes', '', 'F', 'F2', '2', '12', '4', '500 dlrs'),
-(71, 'SANTO DOMINGO', '15601', '1972-01-26 00:00:00', '4° lunes', '', 'F', 'F2', '2', '14', '15', '500 dlrs');
+INSERT INTO `tb_clubs` (`id_club`, `name_club`, `club_code`, `creation_date`, `meeting_date`, `meeting_hour`, `id_region`, `id_zone`, `GMT`, `GLT`, `GST`, `LCIF`, `status`) VALUES
+(1, 'SABANA', '61512', '1999-02-05 00:00:00', '1 y 3 lunes', 'Sin definir', 'A', 'A1', '3', '9', '3', '500 dlrs', 1),
+(2, 'SAN JOSÉ', '15597', '1944-01-21 00:00:00', '2 miercoles', 'Sin definir', 'A', 'A1', '2', '12', '4', '500 dlrs', 1),
+(3, 'GONZALEZ LAHMANN', '53618', '1992-08-31 00:00:00', '3ER SABADO', 'Sin definir', 'A', 'A1', '2', '10', '4', '500 dlrs', 1),
+(4, 'ROHRMOSER', '32322', '1975-05-28 00:00:00', '1° y 3° viernes', 'Sin definir', 'A', 'A1', '2', '12', '5', '500 dlrs', 1),
+(5, 'SANTA MARTA', '100162', '2007-09-10 00:00:00', '2° y 4° viernes', '', 'A', 'A1', '2', '9', '4', '500 dlrs', 1),
+(6, 'ASERRI', '34183', '1977-06-25 00:00:00', '3° JUEVES', '', 'A', 'A2', '5', '8', '3', '500 dlrs', 1),
+(7, 'CURRIDABAT', '15577', '1972-06-06 00:00:00', 'Todos miercoles ', '', 'A', 'A2', '2', '11', '9', '500 dlrs', 1),
+(8, 'SAN JUAN DE DIOS', '133084', '1917-11-21 00:00:00', '4° jueves ', '7pm', 'A', 'A2', '5', '9', '3', '500 dlrs', 1),
+(9, 'DESAMPARADOS', '15578', '1966-06-21 00:00:00', '2° y 4° miercoles y 4 ° jueves', '6:30pm', 'A', 'A2', '6', '21', '13', '500 dlrs', 1),
+(10, 'SAN FRANCISCO', '49761', '1989-07-26 00:00:00', '2° y 4° miercoles', '', 'A', 'A2', '2', '10', '2', '500 dlrs', 1),
+(11, 'ABOGADOS', '140603', '2020-01-22 00:00:00', 'Sin definir', 'Sin definir', '', '', '2', '14', '4', '500 dlrs', 1),
+(12, 'CIUDAD COLON', '56667', '1995-03-20 00:00:00', '1° Y 3° LUNES', '', 'A', 'A3', '4', '14', '9', '500 dlrs', 1),
+(13, 'ESCAZÚ', '15579', '1970-10-13 00:00:00', '1° y 3° ', '', 'A', 'A3', '4', '8', '5', '500 dlrs', 1),
+(14, 'PURISCAL', '15594', '1971-08-17 00:00:00', 'Sin definir', '', 'A', 'A3', '4', '7', '5', '500 dlrs', 1),
+(15, 'SAN RAFAEL ESCAZÚ', '60871', '1998-06-11 00:00:00', '1° Y 3° MIERCOLES', '7:30pm', 'A', 'A3', '2', '15', '7', '500 dlrs', 1),
+(16, 'SANTA ANA', '40126', '1981-06-14 00:00:00', '2° y 4° jueves ', '', 'A', 'A3', '3', '8', '3', '500 dlrs', 1),
+(17, 'VASQUEZ DE CORONADO ', '59548', '1997-05-15 00:00:00', '2° y 4° martes', '', 'B', 'B1', '3', '9', '6', '500 dlrs', 1),
+(18, 'GUADALUPE', '15583', '1968-11-13 00:00:00', 'todos los jueves', '', 'B', 'B1', '3', '11', '12', '500 dlrs', 1),
+(19, 'LIMON ', '131536', '2017-06-21 00:00:00', '1° y 3° viernes ', '', 'B', 'B1', '3', '8', '2', '500 dlrs', 1),
+(20, 'MATINA', '140674', '2020-01-24 00:00:00', 'Sin definir', 'Sin definir', 'B', 'B1', '2', '14', '3', '500 dlrs', 1),
+(21, 'MORAVIA', '15589', '1970-10-17 00:00:00', 'todos los jueves ', '7: 30pm', 'B', 'B1', '2', '17', '5', '500 dlrs', 1),
+(22, 'POCOCI', '55501', '1994-04-08 00:00:00', '2° y 4° martes', '', 'B', 'B1', '5', '7', '3', '500 dlrs', 1),
+(23, 'BIKERS', '139715', '2019-09-23 00:00:00', '1° martes', '', 'B', 'B1', '2', '10', '3', '500 dlrs', 1),
+(24, 'TIBAS', '15603', '1971-05-06 00:00:00', '2° y 4° viernes', '', 'B', 'B1', '2', '25', '15', '500 dlrs', 1),
+(25, 'ALAJUELITA', '117235', '2012-06-20 00:00:00', 'todos los sabados', '9:30am.', 'B', 'B2', '3', '8', '15', '500 dlrs', 1),
+(26, 'BARRIO CORDOBA', '36812', '1979-03-29 00:00:00', '2° y 4° jueves', '', 'B', 'B2', '2', '11', '7', '500 dlrs', 1),
+(27, 'CENARE', '63064', '2000-04-13 00:00:00', '4° sabado', '', 'B', 'B2', '3', '7', '2', '500 dlrs', 1),
+(28, 'HATILLO', '29639', '1974-07-29 00:00:00', '3° viernes ', '', 'B', 'B2', '7', '6', '6', '500 dlrs', 1),
+(29, 'URUCA', '49195', '1989-02-06 00:00:00', 'Sin definir', '', 'B', 'B2', '2', '8', '2', '500 dlrs', 1),
+(30, 'SAN SEBASTIAN', '34092', '1977-06-20 00:00:00', '3° sabado', '', 'B', 'B2', '3', '14', '5', '500 dlrs', 1),
+(31, 'HOJANCHA ', '119512', '2013-06-05 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C1', '2', '9', '2', '500 dlrs', 1),
+(32, 'JICARAL', '122462', '2014-06-19 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C1', '3', '10', '3', '500 dlrs', 1),
+(33, 'NICOYA ', '45499', '1985-11-06 00:00:00', 'todos los lunes', '7:30pm', 'C', 'C1', '2', '23', '8', '500 dlrs', 1),
+(34, 'SANTA CRUZ', '135008', '2018-06-20 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C1', '8', '6', '2', '500 dlrs', 1),
+(35, 'BAGACES', '44637', '1985-02-06 00:00:00', 'todos los sabados ', '', 'C', 'C2', '5', '6', '3', '500 dlrs', 1),
+(36, 'GUAYABO', '120025', '2013-09-20 00:00:00', '2° y 4° sabados', '', 'C', 'C2', '3', '11', '2', '500 dlrs', 1),
+(37, 'LA CRUZ ', '120405', '2013-11-19 00:00:00', 'Sin definir', 'Sin definir', 'C', 'C2', '5', '6', '1', '500 dlrs', 1),
+(38, 'LIBERIA', '15586', '1957-03-14 00:00:00', 'todos los viernes', '7:pm', 'C', 'C2', '2', '17', '4', '500 dlrs', 1),
+(39, 'ALAJUELA', '15571', '1952-06-20 00:00:00', 'todos los lunes', '', 'D', 'D1', '2', '21', '6', '500 dlrs', 1),
+(40, 'AEROPUERTO', '36811', '1979-03-28 00:00:00', '1° y 3° martes', '', 'D', 'D1', '3', '8', '10', '500 dlrs', 1),
+(41, 'ATENAS', '36381', '1978-12-29 00:00:00', '2° y 4° lunes', '', 'D', 'D1', '2', '12', '8', '500 dlrs', 1),
+(42, 'GRECIA', '15582', '1966-04-13 00:00:00', '2° y 4°lunes', '', 'D', 'D1', '2', '25', '10', '500 dlrs', 1),
+(43, 'SAN PEDRO POAS ', '34761', '1977-12-12 00:00:00', '2° y 4° miercoles', '', 'D', 'D1', '3', '8', '2', '500 dlrs', 1),
+(44, 'SARCHI', '97194', '2006-05-26 00:00:00', '2° y 4° miercoles', '', 'D', 'D1', '2', '10', '8', '500 dlrs', 1),
+(45, 'ESPARZA ', '124848', '2015-05-14 00:00:00', '2° martes', '', 'D', 'D2', '5', '6', '2', '500 dlrs', 1),
+(46, 'MONTEVERDE', '116569', '2012-04-17 00:00:00', 'sabados', '', 'D', 'D2', '4', '7', '2', '500 dlrs', 1),
+(47, 'OROTINA', '15590', '1973-03-29 00:00:00', 'todos los jueves', '', 'D', 'D2', '2', '8', '2', '500 dlrs', 1),
+(48, 'PALMARES', '119404', '2013-05-17 00:00:00', '1° y 3° miercoles', '', 'D', 'D2', '4', '7', '4', '500 dlrs', 1),
+(49, 'PUNTARENAS', '15593', '1957-03-19 00:00:00', '2° y 4°  miercoles y viernes', '', 'D', 'D2', '2', '8', '5', '500 dlrs', 1),
+(50, 'SAN RAMON', '125065', '2015-06-05 00:00:00', '2° y 4° jueves', '', 'D', 'D2', '3', '17', '25', '500 dlrs', 1),
+(51, 'CIUDAD QUESAD ', '15573', '1957-05-09 00:00:00', 'todos los lunes', '', 'D', 'D3', '3', '25', '6', '500 dlrs', 1),
+(52, 'NARANJO ', '52610', '1992-03-04 00:00:00', '2° y 4° martes', '', 'D', 'D3', '3', '12', '3', '500 dlrs', 1),
+(53, 'UPALA', '134877', '2018-05-31 00:00:00', '1° y 4° sabados', '', 'D', 'D3', '3', '8', '2', '500 dlrs', 1),
+(54, 'ZARCERO', '134688', '2018-05-31 00:00:00', '1° y 3° martes', '', 'D', 'D3', '9', '4', '3', '500 dlrs', 1),
+(55, 'CACHI', '136526', '2018-10-02 00:00:00', 'Sin definir', 'Sin definir', 'E', 'E1', '3', '8', '3', '500 dlrs', 1),
+(56, 'CARTAGO', '15572', '1965-12-10 00:00:00', 'todos los lunes', '', 'E', 'E1', '3', '13', '6', '500 dlrs', 1),
+(57, 'OROSI', '136584', '2018-11-27 00:00:00', '3 °  viernes', '', 'E', 'E1', '3', '7', '3', '500 dlrs', 1),
+(58, 'PACAYAS', '64060', '2001-03-09 00:00:00', '1° y 3° viernes ', '', 'E', 'E1', '2', '8', '4', '500 dlrs', 1),
+(59, 'PARAISO', '49541', '1989-05-26 00:00:00', '4° viernes', '', 'E', 'E1', '3', '15', '15', '500 dlrs', 1),
+(60, 'GUARCO', '116542', '2012-04-24 00:00:00', '1° y 3° lunes', '', 'E', 'E1', '2', '13', '17', '500 dlrs', 1),
+(61, 'TURRIABA', '15606', '1946-11-28 00:00:00', 'todos los viernes', '', 'E', 'E1', '2', '10', '6', '500 dlrs', 1),
+(62, 'BUENOS AIRES', '111283', '2011-06-08 00:00:00', 'Sin definir', 'Sin definir', 'E', 'E2', '2', '8', '2', '500 dlrs', 1),
+(63, 'QUEPOS', '138764', '2019-06-25 00:00:00', 'todos los domingos', '', 'E', 'E2', '2', '10', '2', '500 dlrs', 1),
+(64, 'SAN ISIDRO GENERAL', '15598', '1969-08-01 00:00:00', 'todos los viernes', '', 'E', 'E2', '2', '16', '4', '500 dlrs', 1),
+(65, 'BARVA', '34013', '1977-06-13 00:00:00', '2° y 4° sabados', '', 'F', 'F1', '2', '16', '11', '500 dlrs', 1),
+(66, 'HEREDIA', '15584', '1954-01-15 00:00:00', '3° sabados', '', 'F', 'F1', '3', '12', '17', '500 dlrs', 1),
+(67, 'SAN JOAQUIN ', '30637', '1975-04-29 00:00:00', '2° y 4° jueves', '', 'F', 'F1', '7', '6', '2', '500 dlrs', 1),
+(68, 'SAN PABLO', '140093', '2019-11-18 00:00:00', 'Sin definir', 'Sin definir', 'F', 'F1', '2', '8', '2', '500 dlrs', 1),
+(69, 'ZURQUI', '83142', '2004-07-30 00:00:00', '1° y 4° lunes', '', 'F', 'F2', '2', '10', '3', '500 dlrs', 1),
+(70, 'SAN RAFAEL DE HEREDIA', '57927', '1996-02-28 00:00:00', '1° y 4°martes', '', 'F', 'F2', '2', '12', '4', '500 dlrs', 1),
+(71, 'SANTO DOMINGO', '15601', '1972-01-26 00:00:00', '4° lunes', '', 'F', 'F2', '2', '14', '15', '500 dlrs', 1),
+(73, 'Club Test Edit', '7777', '2020-06-30 09:42:59', 'Viernes', '19:00', 'A', 'A1', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -2112,6 +2114,7 @@ CREATE TABLE `tb_region` (
 --
 
 INSERT INTO `tb_region` (`id_region`, `description`, `status`) VALUES
+('1', 'AAAA', 0),
 ('A', 'A', 1),
 ('B', 'B', 1),
 ('C', 'C', 1),
@@ -4673,6 +4676,7 @@ INSERT INTO `tb_zone` (`id_zone`, `id_region`, `description`, `status`) VALUES
 ('A1', 'A', 'A1', 1),
 ('A2', 'A', 'A2', 1),
 ('A3', 'A', 'A3', 1),
+('AAA1', 'D', 'AAA2', 0),
 ('B1', 'B', 'B1', 1),
 ('B2', 'B', 'B2', 1),
 ('C1', 'C', 'C1', 1),
@@ -4708,6 +4712,12 @@ ALTER TABLE `tb_members`
   ADD PRIMARY KEY (`id_member`);
 
 --
+-- Indices de la tabla `tb_region`
+--
+ALTER TABLE `tb_region`
+  ADD PRIMARY KEY (`id_region`);
+
+--
 -- Indices de la tabla `tb_rol`
 --
 ALTER TABLE `tb_rol`
@@ -4720,6 +4730,12 @@ ALTER TABLE `tb_type`
   ADD PRIMARY KEY (`id_type`);
 
 --
+-- Indices de la tabla `tb_zone`
+--
+ALTER TABLE `tb_zone`
+  ADD PRIMARY KEY (`id_zone`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -4727,13 +4743,13 @@ ALTER TABLE `tb_type`
 -- AUTO_INCREMENT de la tabla `tb_activities`
 --
 ALTER TABLE `tb_activities`
-  MODIFY `id_activity` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_activity` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_clubs`
 --
 ALTER TABLE `tb_clubs`
-  MODIFY `id_club` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id_club` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_members`
