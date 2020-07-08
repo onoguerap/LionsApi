@@ -28,5 +28,5 @@ require '../src/rutas/roles.php';
 // Rutas para tipos
 require '../src/rutas/tipos.php';
 
-
 $app->run();
+

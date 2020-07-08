@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-07-2020 a las 23:19:07
+-- Tiempo de generación: 08-07-2020 a las 03:28:34
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `lionsdb`
+-- Base de datos: `lionsdbcrc`
 --
 
 -- --------------------------------------------------------
@@ -132,8 +132,7 @@ INSERT INTO `tb_clubs` (`id_club`, `name_club`, `club_code`, `creation_date`, `m
 (68, 'SAN PABLO', '140093', '2019-11-18 00:00:00', 'Sin definir', 'Sin definir', 'F', 'F1', '2', '8', '2', '500 dlrs', 1),
 (69, 'ZURQUI', '83142', '2004-07-30 00:00:00', '1° y 4° lunes', '', 'F', 'F2', '2', '10', '3', '500 dlrs', 1),
 (70, 'SAN RAFAEL DE HEREDIA', '57927', '1996-02-28 00:00:00', '1° y 4°martes', '', 'F', 'F2', '2', '12', '4', '500 dlrs', 1),
-(71, 'SANTO DOMINGO', '15601', '1972-01-26 00:00:00', '4° lunes', '', 'F', 'F2', '2', '14', '15', '500 dlrs', 1),
-(73, 'Club Test Edit', '7777', '2020-06-30 09:42:59', 'Viernes', '19:00', 'A', 'A1', '', '', '', '', 0);
+(71, 'SANTO DOMINGO', '15601', '1972-01-26 00:00:00', '4° lunes', '', 'F', 'F2', '2', '14', '15', '500 dlrs', 1);
 
 -- --------------------------------------------------------
 
@@ -431,7 +430,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (262, 'Marco', 'Gomez Herrera', '1963-10-24 00:00:00', 89753, '15572', 'marcogomezhe@gmail.com', '', '506-2591-1363', 3, 'Varón', '1987-03-01 00:00:00', 'E1', NULL, 1, 8, '', 0),
 (263, 'Milena', 'Marin Cordero', '1964-02-18 00:00:00', 1951943, '15572', 'mmarincor@hotmail.com', '', '506-2591-1363', 3, 'Mujer', '2004-04-01 00:00:00', 'E1', NULL, 1, 8, '', 0),
 (264, 'William', 'Quiros Rojas', '1967-01-01 00:00:00', 4347412, '15572', 'aerepuestos@hotmail.com', '', '506-6040-8644', 3, 'Varón', '2016-03-19 00:00:00', 'E1', NULL, 1, 8, '', 0),
-(265, 'Ninnette', 'Apuy Cabalceta', '1933-02-28 00:00:00', 3736106, '56667', 'maminegra2007@hotmail.com', '506-506-89-22-43-98', '506-506-22-49-34-12', 3, 'Mujer', '2013-04-29 00:00:00', 'A3', NULL, 1, 11, '', 0),
+(265, 'Ninnette', 'Apuy Cabalceta', '1933-02-28 00:00:00', 3736106, '56667', 'maminegra2007@hotmail.com', '506-506-89-22-43-98', '506-506-22-49-34-12', 3, 'Mujer', '2013-04-29 00:00:00', 'A3', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/07efd13df371de49.png', 0),
 (266, 'MARIELA', 'DURAN', '1934-01-01 00:00:00', 364944, '56667', 'mavila@cfia.or.cr', '', '506-2249-1134', 3, 'Mujer', '1998-04-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (267, 'JULIO', 'FERNANDEZ', '1958-01-01 00:00:00', 364945, '56667', 'juliofq@lacanteracr.com', '506-83294242', '506-22490070', 3, 'Varón', '1995-03-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (268, 'ROSA', 'OCAMPO', '1900-01-01 00:00:00', 370319, '56667', '', '', '', 3, 'Mujer', '1995-03-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
@@ -571,13 +570,13 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (401, 'Luis', 'Andrade Páez', '1991-01-01 00:00:00', 4627341, '15577', 'mrpaper15@hotmail.com', '506-71141448', '', 3, 'Varón', '2017-06-05 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (402, 'Stephanie', 'Melara Rodríguez', '1994-01-01 00:00:00', 4627368, '15577', 'fannymel7@hotmail.com', '506-87316922', '', 3, 'Mujer', '2017-06-05 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (403, 'Marta', 'Avendano Herrera', '1935-01-01 00:00:00', 4941033, '15577', '21abril72@gmail.com', '', '506-506-21-00-95-00', 3, 'Mujer', '2018-06-28 00:00:00', 'A2', NULL, 1, 8, '', 0),
-(404, 'Luis Diego', 'Aguilar Castillo', '1972-09-29 00:00:00', 137920, '15577', 'luisdiegoac@gmail.com', '1-506-83795007', '', 3, 'Varón', '1994-09-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
+(404, 'Luis Diego', 'Aguilar Castillo', '1972-09-29 00:00:00', 137920, '15577', 'luisdiegoac@gmail.com', '1-506-83795007', '', 3, 'Varón', '1994-09-01 00:00:00', 'A2', NULL, 1, 8, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/0a071177384e85e2.png', 0),
 (405, 'GERARDO', 'UJUETA SOTO', '1945-01-01 00:00:00', 148622, '15577', '', '', '', 3, 'Varón', '1995-07-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (406, 'María ', 'Torres Granados', '1977-03-15 00:00:00', 4328768, '15577', 'mariatorresgranados@yahoo.es', '506-50688831463', '506-506-2551-6756', 3, 'Mujer', '2016-01-15 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (407, 'Viria de Jesus', 'Castillo Solis', '1950-01-01 00:00:00', 3156332, '15577', 'viriadejesus@gmail.com', '506-8631-5955', '506-2272-1235', 3, 'Mujer', '2010-02-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (408, 'Luis', 'Aguilar Castillo', '1977-05-11 00:00:00', 4328766, '15577', 'clubdeleonescurridabat@yahoo.com', '506-6050-1933', '506-2272-3346', 3, 'Varón', '2016-01-15 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (409, 'Edwin', 'Vega Bermúdez ', '1963-01-01 00:00:00', 4493405, '15577', 'evegabermudez@gmail.com', '89-92-31-95', '', 3, 'Varón', '2016-10-08 00:00:00', 'A2', NULL, 1, 8, '', 0),
-(410, 'Ingrid', 'Coto Villarevia', '1979-11-12 00:00:00', 4891107, '15578', 'imcotov@gmail.com', '50660664748', '', 3, 'Mujer', '2018-06-08 00:00:00', 'A2', NULL, 1, 11, '', 0),
+(410, 'Ingrid', 'Coto Villarevia', '1979-11-12 00:00:00', 4891107, '15578', 'imcotov@gmail.com', '50660664748', '', 3, 'Mujer', '2018-06-08 00:00:00', 'A2', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/c1eafb37b1a98770.png', 0),
 (411, 'LORENA', 'FLORES RETANA', '1962-01-01 00:00:00', 3420356, '15578', '', '506-8380-5757', '506-2259-6070', 3, 'Mujer', '2011-07-02 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (412, 'JOSE', 'ARGUEDAS CARVAJAL', '1940-01-01 00:00:00', 148629, '15578', '', '506-372-6291', '506-259-4460', 3, 'Varón', '1979-03-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (413, 'JOSE', 'CASTRO AGUILERA', '1940-01-01 00:00:00', 153982, '15578', '', '', '', 3, 'Varón', '1984-06-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
@@ -687,7 +686,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (517, 'Dinorah', 'Zamora G', '1947-03-06 00:00:00', 4168031, '124848', '', '506-00-87730051', '506-00-26352258', 3, 'Mujer', '2015-05-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (518, 'Jorge', 'Esquivel Guevara', '1955-09-08 00:00:00', 5128821, '15582', 'antenadeoccidente@gmail.com', '', '506-89238666', 3, 'Varón', '2019-04-24 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (519, 'Laura', 'Murrillo Madrigal', '1962-10-12 00:00:00', 4926928, '15582', 'Imurillo27@gmail.com', '506-88304661', '', 3, 'Mujer', '2018-06-26 00:00:00', 'D1', NULL, 1, 8, '', 0),
-(520, 'Kattia', 'Ulate Alvarado', '1968-12-27 00:00:00', 3111966, '15582', 'kataliaulate@hotmail.com', '506-8362 9697', '506-2494 8902', 3, 'Mujer', '2009-12-14 00:00:00', 'D1', NULL, 1, 8, '', 0),
+(520, 'Kattia', 'Ulate Alvarado', '1968-12-27 00:00:00', 3111966, '15582', 'kataliaulate@hotmail.com', '506-8362 9697', '506-2494 8902', 3, 'Mujer', '2009-12-14 00:00:00', 'D1', NULL, 1, 8, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/349ab4929349936b.png', 0),
 (521, 'Robert', 'Thomas Zamora', '1990-12-14 00:00:00', 4645541, '15582', 'thomcr@gmail.com', '506-72433615', '', 3, 'Varón', '2017-06-09 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (522, 'Irene', 'Araya Biolley', '1989-01-21 00:00:00', 4153211, '15582', 'irenearbio@gmail.com', '506-8847 9126', '', 3, 'Mujer', '2015-04-13 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (523, 'Guillermo', 'Guerrero Acuña', '1967-05-11 00:00:00', 180767, '15582', 'guerreroarquitectura@gmail.com', '506-88438459', '506-2-24948902', 3, 'Varón', '2001-08-01 00:00:00', 'D1', NULL, 1, 8, '', 0),
@@ -739,15 +738,15 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (569, 'Angie', 'Azofeifa Rojas', '1978-12-08 00:00:00', 5173938, '15582', '', '', '', 3, 'Mujer', '2019-06-26 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (570, 'Ana', 'Porras Benavides', '1986-01-29 00:00:00', 5173962, '15582', '', '506-83124071', '', 3, 'Mujer', '2019-06-26 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (571, 'Jose', 'Acuña Corrales', '1967-04-02 00:00:00', 2894600, '15582', 'josetravel67@hotmail.com', '506-8-88267855', '506-2-24945978', 3, 'Varón', '2008-09-08 00:00:00', 'D1', NULL, 1, 8, '', 0),
-(572, 'Melissa', 'Lara Barquero', '1979-12-09 00:00:00', 3984411, '15582', 'meli.larab@hotmail.com', '506-85086262', '2444 47 86', 3, 'Mujer', '2014-07-01 00:00:00', 'D1', NULL, 1, 11, '', 0),
+(572, 'Melissa', 'Lara Barquero', '1979-12-09 00:00:00', 3984411, '15582', 'meli.larab@hotmail.com', '506-85086262', '2444 47 86', 3, 'Mujer', '2014-07-01 00:00:00', 'D1', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/37d573cebc0632d2.png', 0),
 (573, 'Jeannette', 'Viquez Oviedo', '1964-03-02 00:00:00', 3302286, '15582', 'yanetica02@hotmail.com', '506-2-8998 79 79', '506-2-2494 80 80', 3, 'Mujer', '2010-12-13 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (574, 'Carlos ', 'Morales Sarria', '1976-10-18 00:00:00', 4330848, '15582', 'viajespoas@hotmail.com', '596-8-89967584', '', 3, 'Varón', '2016-02-17 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (575, 'Yendry', 'Acuña Corrales', '1979-02-13 00:00:00', 4861953, '15582', 'yenac13@gmail.com', '506-88229997', '', 3, 'Mujer', '2018-04-09 00:00:00', 'D1', NULL, 1, 8, '', 0),
 (576, 'Daniela', 'Campos Barrantes', '1994-04-05 00:00:00', 4861954, '15582', 'danicb05@hotmail.com', '506-83320916', '', 3, 'Mujer', '2018-04-09 00:00:00', 'D1', NULL, 1, 8, '', 0),
-(577, 'Fernando', 'Miranda Bogantes', '1964-02-17 00:00:00', 1969299, '15582', 'fmiranda017@gmail.com', '', '', 3, 'Varón', '2004-05-01 00:00:00', 'D1', NULL, 1, 8, '', 0),
-(578, 'Adriana', 'Ramírez Álvarez', '1971-12-01 00:00:00', 4992844, '15582', 'ramiadri@gmail.com', '506-83603130', '', 3, 'Mujer', '2018-08-20 00:00:00', 'D1', NULL, 1, 8, '', 0),
-(579, 'MARIA MAYELA', 'SOTO CALVO', '1949-01-01 00:00:00', 2001434, '15583', '', '506-00-83413082', '506-00-22367942', 3, 'Mujer', '2004-06-01 00:00:00', 'B1', NULL, 1, 8, '', 0);
+(577, 'Fernando', 'Miranda Bogantes', '1964-02-17 00:00:00', 1969299, '15582', 'fmiranda017@gmail.com', '', '', 3, 'Varón', '2004-05-01 00:00:00', 'D1', NULL, 1, 8, '', 0);
 INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
+(578, 'Adriana', 'Ramírez Álvarez', '1971-12-01 00:00:00', 4992844, '15582', 'ramiadri@gmail.com', '506-83603130', '', 3, 'Mujer', '2018-08-20 00:00:00', 'D1', NULL, 1, 8, '', 0),
+(579, 'MARIA MAYELA', 'SOTO CALVO', '1949-01-01 00:00:00', 2001434, '15583', '', '506-00-83413082', '506-00-22367942', 3, 'Mujer', '2004-06-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (580, 'Carla', 'Trejos Prior', '1985-08-18 00:00:00', 3733533, '15583', 'carlatrejos.leon@gmail.com', '506-88241203', '', 3, 'Mujer', '2013-04-15 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (581, 'Nuria', 'Ramirez Sanchez', '1944-11-09 00:00:00', 108459, '15583', 'nuriarasa@hotmail.com', '506-000-87187179', '506-000-2225-4378', 3, 'Mujer', '2000-04-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (582, 'Margarita', 'Del Barco Garron', '1947-05-02 00:00:00', 103106, '15583', 'mayibaldares@racsa.co.cr', '506-011-8811-8931', '506-011-2225-7002', 3, 'Mujer', '2003-01-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
@@ -802,7 +801,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (631, 'Ana Isabel', 'Berrocal Loría', '1948-01-01 00:00:00', 3539193, '15584', 'isabella28@costarricense.cr', '506-88166414', '506-22626570', 3, 'Mujer', '2012-03-24 00:00:00', 'F1', NULL, 1, 8, '', 0),
 (632, 'Shyam S', 'Nandwani', '1947-08-13 00:00:00', 2062737, '15584', 'snandwan@yahoo.com', '', '', 3, 'Varón', '2004-12-01 00:00:00', 'F1', NULL, 1, 8, '', 0),
 (633, 'Nidia', 'Ramírez Arrieta', '1940-01-01 00:00:00', 4891238, '15584', '', '', '00-506-22600319', 3, 'Mujer', '2018-06-08 00:00:00', 'F1', NULL, 1, 8, '', 0),
-(634, 'Jorge', 'Rojas Villalobos', '1974-05-01 00:00:00', 5025898, '15584', 'jorge.rojasv@grupofarocr.com', '00506-00000-50683100281', '00506-0000-22607462', 3, 'Varón', '2018-10-01 00:00:00', 'F1', NULL, 1, 10, '', 0),
+(634, 'Jorge', 'Rojas Villalobos', '1974-05-01 00:00:00', 5025898, '15584', 'jorge.rojasv@grupofarocr.com', '00506-00000-50683100281', '00506-0000-22607462', 3, 'Varón', '2018-10-01 00:00:00', 'F1', NULL, 1, 10, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/eb4b7e8543d53369.png', 0),
 (635, 'Edwin', 'Salas Zamora', '1947-11-19 00:00:00', 4186195, '15584', '24560@hotmail.es', '00506-50687244111', '00506-22631401', 3, 'Varón', '2015-06-19 00:00:00', 'F1', NULL, 1, 8, '', 0),
 (636, 'Olivia', 'Jiménez Hernández', '1975-01-01 00:00:00', 4614144, '15584', '', '506-83142317', '', 3, 'Mujer', '2017-05-27 00:00:00', 'F1', NULL, 1, 8, '', 0),
 (637, 'FRANKLIN', 'BENAVIDES SANCHEZ', '1940-01-01 00:00:00', 207591, '15584', '', '506-83186161', '506-22621110', 3, 'Varón', '1976-08-01 00:00:00', 'F1', NULL, 1, 8, '', 0),
@@ -908,11 +907,11 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (737, 'Darwin', 'Arellano Varas', '1974-09-09 00:00:00', 3531082, '61512', 'arellanodarwin@hotmail.com', '506-60599090', '506-22906397', 3, 'Varón', '2012-03-05 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (738, 'Virginia', 'Monges Rojas', '1948-05-24 00:00:00', 3921702, '61512', 'govarjl@hotmail.com', '', '506-2232-1661', 3, 'Mujer', '2014-03-17 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (739, 'Mariana', 'Osegueda López', '1946-01-01 00:00:00', 4112811, '61512', 'arellanodarwin74@gmail.com', '506-8509-7149', '506-2520-2016', 3, 'Mujer', '2015-02-06 00:00:00', 'A1', NULL, 1, 8, '', 0),
-(740, 'Yamilette', 'Prado', '1953-02-25 00:00:00', 1117816, '61512', 'yamipradom@hotmail.com', '506-88601715', '506-22325484', 3, 'Mujer', '1999-10-01 00:00:00', 'A1', NULL, 1, 11, '', 0),
+(740, 'Yamilette', 'Prado', '1953-02-25 00:00:00', 1117816, '61512', 'yamipradom@hotmail.com', '506-88601715', '506-22325484', 3, 'Mujer', '1999-10-01 00:00:00', 'A1', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/c2ddad3d293d51c4.png', 0),
 (741, 'FERNANDO', 'SALAZAR PAIZ', '1932-01-01 00:00:00', 1350987, '61512', 'jfersalazarp@yahoo.com', '506-86424696', '506-22965172', 3, 'Varón', '1980-10-01 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (742, 'Jose', 'Ramirez', '1965-01-01 00:00:00', 4864210, '61512', 'jramirezguillen@gmail.com', '50688179591', '', 3, 'Varón', '2018-04-16 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (743, 'MANUEL', 'CARRILLO AGUIRRE', '1938-01-01 00:00:00', 223682, '15586', 'manuelcarrillo23@gmail.com', '506-88151995', '506-2666-0518', 3, 'Varón', '1972-10-01 00:00:00', 'C2', NULL, 1, 8, '', 0),
-(744, 'Francisco', 'Alvarado', '1966-08-26 00:00:00', 4629437, '15586', 'franciscoalvarado1966@yahoo.com', '506-8470-7197', '506-2666-0221', 3, 'Varón', '2017-06-01 00:00:00', 'C2', NULL, 1, 11, '', 0),
+(744, 'Francisco', 'Alvarado', '1966-08-26 00:00:00', 4629437, '15586', 'franciscoalvarado1966@yahoo.com', '506-8470-7197', '506-2666-0221', 3, 'Varón', '2017-06-01 00:00:00', 'C2', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/9ce76739594215c7.png', 0),
 (745, 'Francisco', 'Matamoros Hernández', '1976-01-12 00:00:00', 4320323, '15586', 'fmatamoros1@hotmail.com', '88301095', '', 3, 'Varón', '2016-01-28 00:00:00', 'C2', NULL, 1, 8, '', 0),
 (746, 'Rolando', 'Alvarado Miranda', '1940-04-21 00:00:00', 218317, '15586', 'rolavar66@yahoo.es', '', '26663531', 3, 'Varón', '1980-10-01 00:00:00', 'C2', NULL, 1, 8, '', 0),
 (747, 'JOSE JOAQUIN', 'APUY ACHIO', '1941-01-01 00:00:00', 218318, '15586', 'joaquinapuy@gmail.com', '', '506-2666-5375', 3, 'Varón', '1987-02-01 00:00:00', 'C2', NULL, 1, 8, '', 0),
@@ -1025,11 +1024,11 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (854, 'MARIO', 'ROJAS UMAÑA', '1927-01-01 00:00:00', 255871, '15589', '', '', '506-2235-6562', 3, 'Varón', '1970-10-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (855, 'JOHN', 'TURNER', '1943-01-01 00:00:00', 261227, '15589', 'jacksito1@yahoo.com', '506-000-8350-1616', '506-000-2297-5065', 3, 'Varón', '1995-04-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (856, 'LAURA', 'TURNER', '1944-01-01 00:00:00', 261228, '15589', 'rosalred2001@yahoo.com', '506-000-8494-5688', '506-000-22975065', 3, 'Mujer', '2003-04-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
-(857, 'ALLEN', 'ROJAS RODRIGUEZ', '1934-01-01 00:00:00', 314916, '15589', '', '506-83847753', '506-22369036', 3, 'Varón', '1990-03-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
+(857, 'ALLEN', 'ROJAS RODRIGUEZ', '1934-01-01 00:00:00', 314916, '15589', '', '506-83847753', '506-22369036', 3, 'Varón', '1990-03-01 00:00:00', 'B1', NULL, 1, 8, '', 0);
+INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
 (858, 'ANA VICTORIA', 'AGUILAR TRIGUEROS', '1948-04-28 00:00:00', 412956, '15589', 'taguilarana@yahoo.com', '506-000-8828-9978', '506-000-2297-3954', 3, 'Mujer', '1997-06-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (859, 'ISABEL', 'SOTELA CASTRO', '1944-01-01 00:00:00', 2343516, '15589', 'isasotela@gmail.com', '506-506-8814-8775', '506-506-4030-1334', 3, 'Mujer', '2005-04-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
-(860, 'Carmen', 'Rivera Lobo', '1962-12-13 00:00:00', 2368658, '15589', 'criveracr@hotmail.com', '506-000-8827-7260', '506-000-2240-9376', 3, 'Mujer', '2005-06-01 00:00:00', 'B1', NULL, 1, 8, '', 0);
-INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
+(860, 'Carmen', 'Rivera Lobo', '1962-12-13 00:00:00', 2368658, '15589', 'criveracr@hotmail.com', '506-000-8827-7260', '506-000-2240-9376', 3, 'Mujer', '2005-06-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (861, 'Luz Esmeralda', 'Rodriguez Zamora', '1960-06-07 00:00:00', 2444154, '15589', 'luzesmerz@gmail.com', '506-506-8375-69-80', '', 3, 'Mujer', '2005-12-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (862, 'Errol', 'Gutiérrez Abarca', '1973-03-15 00:00:00', 3006137, '15589', 'disofi30@hotmail.com', '506-506-8385-4459', '', 3, 'Varón', '2009-05-12 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (863, 'ALCIRA', 'SALGADO', '1960-01-01 00:00:00', 3154960, '15589', 'johnagoodman@aol.com', '506-89329339', '506-22855231', 3, 'Mujer', '2010-02-23 00:00:00', 'B1', NULL, 1, 8, '', 0),
@@ -1064,7 +1063,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (892, 'Andrea', 'Gonzalez Vindas', '1975-07-04 00:00:00', 1661576, '15589', 'agonzalez3024@gmail.com', '506-506-8723-0808', '506-506-2229-5115', 3, 'Mujer', '2003-12-01 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (893, 'MARIA ', 'ARTAVIA SALAZAR', '1946-05-08 00:00:00', 4269739, '15589', 'mariaisabelartavia@gmail.com', '506-506-7010-9179', '', 3, 'Mujer', '2015-10-24 00:00:00', 'B1', NULL, 1, 8, '', 0),
 (894, 'Cindy', 'Pacheco Vásquez', '1982-04-28 00:00:00', 5018126, '52610', 'cindypacheco13@hotymail.com', '506-506-87187171', '', 3, 'Mujer', '2018-10-02 00:00:00', 'D3', NULL, 1, 8, '', 0),
-(895, 'Rodrigo', 'Herrera Perez', '1960-05-05 00:00:00', 655819, '52610', 'clrodrigoherrera@gmail.com', '506-50688155659', '506-506-24514060', 1, 'Varón', '1995-06-01 00:00:00', 'D3', NULL, 1, 1, '', 0),
+(895, 'Rodrigo', 'Herrera Perez', '1960-05-05 00:00:00', 655819, '52610', 'clrodrigoherrera@gmail.com', '506-50688155659', '506-506-24514060', 1, 'Varón', '1995-06-01 00:00:00', 'D3', NULL, 1, 1, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/a2b31104bd4b3b4d.png', 0),
 (896, 'JORGE', 'ALFARO BARRIENTOS', '1955-09-11 00:00:00', 650441, '52610', 'leonesnaranjo@hotmail.com', '506-506-88702514', '506-506-24504374', 3, 'Varón', '2001-10-01 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (897, 'GUIDO', 'ARROYO FUENTES', '1956-09-12 00:00:00', 650444, '52610', 'guido.arroyo@gmail.com', '506-83962641', '', 3, 'Varón', '2013-02-27 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (898, 'OLIVIA', 'BARQUERO RODRIGUEZ', '1939-12-22 00:00:00', 650445, '52610', 'leonesnaranjo@hotmail.com', '506-506-84444704', '', 3, 'Mujer', '1993-07-01 00:00:00', 'D3', NULL, 1, 8, '', 0),
@@ -1079,8 +1078,8 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (907, 'Violeta', 'Echandi Echeverria.', '1948-06-20 00:00:00', 2835275, '52610', 'violeta_ma2@hotmail.com', '506-506-88467352', '506-506-24510603', 3, 'Mujer', '2008-06-01 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (908, 'Lubín', 'Corrales Blanco', '1950-01-16 00:00:00', 2893471, '52610', 'leonesnaranjo@hotmail.com', '506-86369922', '2451-5168', 3, 'Varón', '2008-09-09 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (909, 'MIREYA', 'CASCANTE FONSECA', '1960-10-22 00:00:00', 2980554, '52610', 'mcascantef@cfia.or.cr', '506-88118080', '506-24514646', 3, 'Mujer', '2009-03-24 00:00:00', 'D3', NULL, 1, 8, '', 0),
-(910, 'Olga', 'Ramírez H', '1966-05-16 00:00:00', 3634599, '52610', 'roalsa@ice.co.cr', '506-88356505', '506-2451 4060', 3, 'Mujer', '2012-09-26 00:00:00', 'D3', NULL, 1, 2, '', 0),
-(911, 'Alejandro', 'Herrera Ramírez', '1992-06-11 00:00:00', 3634614, '52610', 'aleherrera104@hotmail.com', '506-8349 9410', '', 3, 'Varón', '2012-09-26 00:00:00', 'D3', NULL, 1, 2, '', 0),
+(910, 'Olga', 'Ramírez H', '1966-05-16 00:00:00', 3634599, '52610', 'roalsa@ice.co.cr', '506-88356505', '506-2451 4060', 3, 'Mujer', '2012-09-26 00:00:00', 'D3', NULL, 1, 2, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/67f717b47ef345c4.png', 0),
+(911, 'Alejandro', 'Herrera Ramírez', '1992-06-11 00:00:00', 3634614, '52610', 'aleherrera104@hotmail.com', '506-8349 9410', '', 3, 'Varón', '2012-09-26 00:00:00', 'D3', NULL, 1, 2, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/c3d7e384a206d298.png', 0),
 (912, 'Karina', 'Alfaro Herrera', '1986-07-28 00:00:00', 4399105, '52610', 'karinaalfaroh@gmail.com', '506-506-86499669', '', 3, 'Mujer', '2016-06-14 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (913, 'Olman', 'Montero Murillo', '1985-09-23 00:00:00', 4399107, '52610', 'omontero23@gmail.com', '506-88570438', '', 3, 'Varón', '2016-06-14 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (914, 'Roy', 'Hernandez Chaves', '1966-08-18 00:00:00', 4582376, '52610', 'rhernandezchaves@gmail.com', '50683799650', '', 3, 'Varón', '2017-03-21 00:00:00', 'D3', NULL, 1, 8, '', 0),
@@ -1133,9 +1132,9 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (961, 'Leonel ', 'Padilla Hernández', '1953-07-19 00:00:00', 5325508, '45499', 'leovicep@gmail.com', '506-60159784', '', 3, 'Varón', '2020-03-02 00:00:00', 'C1', NULL, 1, 8, '', 0),
 (962, 'María ', 'Rodríguez Pérez', '1987-09-03 00:00:00', 5343331, '45499', 'mafe169@gmail.com', '506-83153277', '', 3, 'Mujer', '2020-05-04 00:00:00', 'C1', NULL, 1, 8, '', 0),
 (963, 'CLAUDIA', 'HERNANDEZ HERNANDEZ', '1952-01-01 00:00:00', 1013547, '45499', '', '506-88770996', '', 3, 'Mujer', '2002-04-01 00:00:00', 'C1', NULL, 1, 8, '', 0),
-(964, 'Lauren', 'Díaz Gutiérrez', '1981-02-22 00:00:00', 4815366, '45499', 'lau.diaz2202@gmail.com', '506-88987555', '', 3, 'Mujer', '2018-02-12 00:00:00', 'C1', NULL, 1, 11, '', 0),
+(964, 'Lauren', 'Díaz Gutiérrez', '1981-02-22 00:00:00', 4815366, '45499', 'lau.diaz2202@gmail.com', '506-88987555', '', 3, 'Mujer', '2018-02-12 00:00:00', 'C1', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/2ee537165bb972c9.png', 0),
 (965, 'Martin', 'Reyes Salinas ', '1986-10-10 00:00:00', 3952796, '45499', 'resama@hotmail.com', '506-88134369', '', 3, 'Varón', '2014-04-01 00:00:00', 'C1', NULL, 1, 8, '', 0),
-(966, 'Daniel', 'Porras Nema', '1979-07-31 00:00:00', 4733604, '45499', 'dapn3107@hotmail.com', '506-83228485', '', 3, 'Varón', '2017-10-03 00:00:00', 'C1', NULL, 1, 10, '', 0),
+(966, 'Daniel', 'Porras Nema', '1979-07-31 00:00:00', 4733604, '45499', 'dapn3107@hotmail.com', '506-83228485', '', 3, 'Varón', '2017-10-03 00:00:00', 'C1', NULL, 1, 10, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/77c714ef48d74149.png', 0),
 (967, 'Diana', 'Cortez Abarca', '1964-01-01 00:00:00', 4815348, '45499', 'las3di@hotmail.com', '506-88155927', '', 3, 'Mujer', '2018-02-05 00:00:00', 'C1', NULL, 1, 8, '', 0),
 (968, 'Mariel', 'Rodríguez Leal', '1977-01-17 00:00:00', 4599329, '45499', 'marielrodriguez1977@gmail.com', '506-84746500', '', 3, 'Mujer', '2017-04-24 00:00:00', 'C1', NULL, 1, 8, '', 0),
 (969, 'Marjorie', 'Torres Villegas', '1948-01-01 00:00:00', 1018935, '45499', 'midge129@gmail.com', '506-86019310', '506-25855376', 3, 'Mujer', '1996-04-01 00:00:00', 'C1', NULL, 1, 8, '', 0),
@@ -1299,13 +1298,13 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1127, 'JORGE', 'ROJAS CORTES', '1928-01-01 00:00:00', 293416, '15594', '', '', '', 3, 'Varón', '1974-10-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1128, 'MARIA', 'VARGAS CHAVARRIA', '1925-01-01 00:00:00', 293418, '15594', '', '', '', 3, 'Mujer', '2000-05-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1129, 'OSCAR', 'VILLEGAS CHAVEZ', '1938-01-01 00:00:00', 293419, '15594', '', '', '', 3, 'Varón', '1974-11-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
-(1130, 'MARIA ELENA CASCANTE', 'HERNANDEZ', '1944-01-01 00:00:00', 2613121, '15594', 'cascante44@yahoo.com', '', '', 3, 'Mujer', '2006-12-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
+(1130, 'MARIA ELENA CASCANTE', 'HERNANDEZ', '1944-01-01 00:00:00', 2613121, '15594', 'cascante44@yahoo.com', '', '', 3, 'Mujer', '2006-12-01 00:00:00', 'A3', NULL, 1, 8, '', 0);
+INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
 (1131, 'Xinia', 'Rojas Charpentier', '1968-01-01 00:00:00', 3621489, '15594', '', '506-89193109', '', 3, 'Mujer', '2012-08-16 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1132, 'SONIA', 'RAMIREZ ARAYA', '1957-05-03 00:00:00', 5129690, '15594', 'sonramireza@gmail.com', '', '', 3, 'Mujer', '2019-04-26 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1133, 'MONICA', 'HERNANDEZ GUTIERREZ', '1980-10-31 00:00:00', 5319591, '15594', 'monicahernandez_1980@hotmail.com', '', '', 3, 'Mujer', '2020-02-25 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1134, 'Maria Aracelly', 'Mora Herrera', '1947-05-02 00:00:00', 1798602, '15594', 'titaracelly47@gmail.com', '50686344251', '506-416 6162', 3, 'Mujer', '2003-06-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
-(1135, 'ROSAURA', 'GUTIERREZ JIMENEZ', '1948-01-01 00:00:00', 4843432, '15594', 'monicahernandez_1980@hotmail.com', '506-10401-84879513', '', 3, 'Mujer', '2018-03-30 00:00:00', 'A3', NULL, 1, 8, '', 0);
-INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
+(1135, 'ROSAURA', 'GUTIERREZ JIMENEZ', '1948-01-01 00:00:00', 4843432, '15594', 'monicahernandez_1980@hotmail.com', '506-10401-84879513', '', 3, 'Mujer', '2018-03-30 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1136, 'VIRGINIA ', 'ARAYA HERRERA', '1959-01-01 00:00:00', 2346799, '15594', 'virginiaarayaclpuriscal@gmail.com', '', '506-24166729', 3, 'Mujer', '2005-04-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1137, 'DEYANIRA', 'JIMENEZ VINDAS', '1953-01-01 00:00:00', 293411, '15594', 'deyanirajimenezv2009@hotmail.com', '506-83931126', '506-24167005', 3, 'Mujer', '1989-06-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1138, 'Danilo', 'Boza Mora', '1945-06-11 00:00:00', 288051, '15594', 'famboza@hotmail.com', '506-01-8856 9920', '506-01-2416-6162', 3, 'Varón', '1974-03-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
@@ -1340,7 +1339,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1167, 'GILBERTO', 'ARAYA SOTO', '1942-11-24 00:00:00', 320293, '15598', 'garrobos@gmail.com', '506-000-83788338', '506-000-27710728', 3, 'Varón', '2009-10-28 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1168, 'JUAN', 'CAMPOS BARRANTES', '1947-05-05 00:00:00', 320299, '15598', '', '506-000-83444240', '506-000-27710909', 3, 'Varón', '1980-10-01 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1169, 'ALEXIS', 'ELIZONDO CALDERON', '1945-02-06 00:00:00', 325669, '15598', '', '506-000-83249446', '506-000-27718187', 3, 'Varón', '1977-05-01 00:00:00', 'E2', NULL, 1, 8, '', 0),
-(1170, 'OSCAR', 'LOPEZ ARAYA', '1953-11-24 00:00:00', 325671, '15598', 'oscarlopez.1416@hotmail.com', '506-000-83072612', '506-000-27718711', 3, 'Varón', '2003-01-01 00:00:00', 'E2', NULL, 1, 10, '', 0),
+(1170, 'OSCAR', 'LOPEZ ARAYA', '1953-11-24 00:00:00', 325671, '15598', 'oscarlopez.1416@hotmail.com', '506-000-83072612', '506-000-27718711', 3, 'Varón', '2003-01-01 00:00:00', 'E2', NULL, 1, 10, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/9ed2f77c6abac883.png', 0),
 (1171, 'LUIS', 'GARCIA ROSES', '1956-03-06 00:00:00', 2728811, '15598', 'campingantorchas@yahoo.es', '506-00-8262444', '506-00-27711827', 3, 'Varón', '2007-10-01 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1172, 'Erick Alexander', 'Muñoz Linkemer', '1971-01-16 00:00:00', 4745163, '15598', 'ericklinkimer@hotmail.com', '506-000-83239751', '506-000-27705825', 3, 'Varón', '2017-10-06 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1173, 'Jahel', 'Lizano Barrantes', '1951-06-19 00:00:00', 3202039, '15598', 'lizanobarrantes.jahel@gmail.com', '506-000-83388587', '506-000-27716114', 3, 'Mujer', '2010-05-15 00:00:00', 'E2', NULL, 1, 8, '', 0),
@@ -1370,7 +1369,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1197, 'Kerry', 'Salisbury', '1964-09-14 00:00:00', 5093800, '15598', 'rickersalis@gmail.com', '506-000-85246327', '', 3, 'Mujer', '2019-02-08 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1198, 'Richard', 'Salisbury', '1954-11-30 00:00:00', 5093801, '15598', 'rickersalis@gmail.com', '', '506-000-27702805', 3, 'Varón', '2019-02-08 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1199, 'EDGAR', 'QUIROS ABARCA', '1958-12-10 00:00:00', 5200758, '15598', 'edgarquirosabarca@gmail.com', '506-00-60953790', '', 3, 'Varón', '2019-07-19 00:00:00', 'E2', NULL, 1, 8, '', 0),
-(1200, 'HENRY', 'ACUÑA QUIROS', '1966-08-12 00:00:00', 2410834, '15598', 'hacuna1208@yahoo.com', '506-000-383653356', '506-000-27715362', 3, 'Varón', '2005-09-01 00:00:00', 'E2', NULL, 1, 8, '', 0),
+(1200, 'HENRY', 'ACUÑA QUIROS', '1966-08-12 00:00:00', 2410834, '15598', 'hacuna1208@yahoo.com', '506-000-383653356', '506-000-27715362', 3, 'Varón', '2005-09-01 00:00:00', 'E2', NULL, 1, 8, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/57895e2e5a408af5.png', 0),
 (1201, 'LUIS ', 'AGUERO CORDERO', '1963-09-15 00:00:00', 4152141, '15598', '', '506-000-83152080', '', 3, 'Varón', '2015-04-10 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1202, 'Maria', 'Madrigal', '1956-02-28 00:00:00', 325672, '15598', 'mariaceciliamadrigal@gmail.com', '506-000-88119731', '506-000-27710243', 3, 'Mujer', '1999-04-01 00:00:00', 'E2', NULL, 1, 8, '', 0),
 (1203, 'Melissa', 'Matamoros Madrigal', '1981-01-08 00:00:00', 4044781, '15598', 'melissa.matamoros485@gmail.com', '506-000-88609855', '', 3, 'Mujer', '2014-10-10 00:00:00', 'E2', NULL, 1, 8, '', 0),
@@ -1440,7 +1439,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1267, 'JOSE', 'SOTO BALLESTEROS', '1939-01-01 00:00:00', 314921, '15597', 'soto.josef@gmail.com', '', '506-22960110', 3, 'Varón', '1987-06-01 00:00:00', 'A1', NULL, 1, 7, '', 0),
 (1268, 'Iris', 'Espinoza Monterrosa', '1976-11-10 00:00:00', 4472689, '15597', 'iris@ahorrosyfuturo.com', '506-60514952', '506-22886765', 3, 'Mujer', '2016-09-01 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (1269, 'Gustavo ', 'Rozencwaig Lustig', '1971-07-04 00:00:00', 4472686, '15597', 'gustavo@ahorrosyfuturo.com', '506-60591200', '506-22886765', 3, 'Varón', '2016-09-01 00:00:00', 'A1', NULL, 1, 8, '', 0),
-(1270, 'Walter', 'Rodríguez Monturiol', '1973-06-13 00:00:00', 4191467, '15597', 'repuestosryz@hotmail.com', '506-88199797', '', 3, 'Varón', '2015-06-23 00:00:00', 'A1', NULL, 1, 5, '', 0),
+(1270, 'Walter', 'Rodríguez Monturiol', '1973-06-13 00:00:00', 4191467, '15597', 'repuestosryz@hotmail.com', '506-88199797', '', 3, 'Varón', '2015-06-23 00:00:00', 'A1', NULL, 1, 5, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/cdadd3c5aaa47385.png', 0),
 (1271, 'Nuria', 'Monturiol Calderón  ', '1947-07-09 00:00:00', 3776179, '15597', 'nmonturiol09@gmail.com', '506-83492000', '506-22316197', 3, 'Mujer', '2013-06-17 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (1272, 'Norma', 'Blando Zamora', '1976-02-19 00:00:00', 4630714, '15597', 'normabz18@hotmail.com', '506-83728642', '', 3, 'Mujer', '2017-06-01 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (1273, 'MARILYN', 'JAMES PINNOCK', '1976-09-10 00:00:00', 5290463, '140603', 'mjames@abogados.or.cr', '506-506-87127689', '', 3, 'Mujer', '2020-01-22 00:00:00', 'A2', NULL, 1, 8, '', 0),
@@ -1571,14 +1570,14 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1398, 'Xinia', 'Quirós Castillo', '1953-01-01 00:00:00', 4636014, '29639', 'xiniaq@hotmail.com', '506-87066234', '506-22315248', 3, 'Mujer', '2017-06-07 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1399, 'Alba', 'González Santamaría', '1964-03-10 00:00:00', 4631211, '29639', 'albag2014@gmail.com', '506-506-60249390', '', 3, 'Mujer', '2017-06-07 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1400, 'LUZ MARY', 'ARIAS OCAMPO', '1960-01-01 00:00:00', 3380298, '29639', 'luzmarias2407@gmail.com', '506-6141 9199', '', 3, 'Mujer', '2011-05-11 00:00:00', 'B2', NULL, 1, 8, '', 0),
-(1401, 'ROSARIO', 'CASTANEDA RAMIREZ', '1931-01-01 00:00:00', 1087145, '29639', 'freleaca@ice.co.cr', '506-506-83657419', '506-506-22547410', 3, 'Mujer', '1998-08-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
+(1401, 'ROSARIO', 'CASTANEDA RAMIREZ', '1931-01-01 00:00:00', 1087145, '29639', 'freleaca@ice.co.cr', '506-506-83657419', '506-506-22547410', 3, 'Mujer', '1998-08-01 00:00:00', 'B2', NULL, 1, 8, '', 0);
+INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
 (1402, 'ADILIO', 'LEANDRO SANCHEZ', '1934-01-01 00:00:00', 1092530, '29639', '', '83657419', '22547410', 3, 'Varón', '1977-07-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1403, 'JUSTO', 'OROZCO ALVAREZ', '1950-01-01 00:00:00', 1092534, '29639', '', '', '506-22543651', 3, 'Varón', '1994-02-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1404, 'CARLOS', 'SOLIS AGUILAR', '1948-01-01 00:00:00', 1092538, '29639', '', '', '22544046', 3, 'Varón', '1999-04-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1405, 'MARIA CRISTINA', 'MARTINEZ MARTINEZ', '1939-01-01 00:00:00', 2001424, '29639', '', '', '22523295', 3, 'Mujer', '2004-06-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1406, 'Maria del Carmen', 'Camacho Vargas', '1948-07-16 00:00:00', 5270341, '29639', 'ccamachov09@gmail.com', '506-506-88464795', '', 3, 'Mujer', '2019-11-08 00:00:00', 'B2', NULL, 1, 8, '', 0),
-(1407, 'Javier', 'Quiros Mayorga', '1974-03-08 00:00:00', 5270345, '29639', 'javiquiros08@gmail.com', '506-506-70221304', '', 3, 'Varón', '2019-11-08 00:00:00', 'B2', NULL, 1, 8, '', 0);
-INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
+(1407, 'Javier', 'Quiros Mayorga', '1974-03-08 00:00:00', 5270345, '29639', 'javiquiros08@gmail.com', '506-506-70221304', '', 3, 'Varón', '2019-11-08 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1408, 'Iriabel', 'Leal Ruiz', '1950-04-24 00:00:00', 5322122, '29639', 'iriabel.leal@gmail.com', '506-506-87918265', '', 3, 'Mujer', '2020-02-26 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1409, 'Alvaro', 'Umana Chinchilla', '1959-11-26 00:00:00', 5322126, '29639', 'alvaroumana@hotmail.com', '506-506-83729777', '', 3, 'Varón', '2020-02-26 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1410, 'Ricardo', 'Vindas Vindas', '1964-05-27 00:00:00', 5322129, '29639', '', '506-506-83208677', '', 3, 'Varón', '2020-02-26 00:00:00', 'B2', NULL, 1, 8, '', 0),
@@ -1632,7 +1631,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1458, 'Maritza', 'Salas Campos', '1969-01-01 00:00:00', 4900114, '32322', 'maritzasalas44@hotmail.com', '506-10109-84235004', '506-10109-22966916', 3, 'Mujer', '2018-06-15 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (1459, 'María Teresita', 'Focone de D’Alessio', '1940-09-28 00:00:00', 1952472, '32322', 'teresita@dalessio.tv', '506-50683951111', '506-506-22961776', 3, 'Mujer', '2004-04-01 00:00:00', 'A1', NULL, 1, 8, '', 0),
 (1460, 'Vilma', 'Charpentier Marin', '1945-01-01 00:00:00', 2878886, '49761', 'vilmacharpentier@gmail.com', '', '506-22886341', 3, 'Mujer', '2008-08-22 00:00:00', 'A2', NULL, 1, 8, '', 0),
-(1461, 'JULIO', 'LEITON BADILLA', '1967-07-06 00:00:00', 339688, '49761', 'jleiton67@gmail.com', '506-506-83842625', '', 3, 'Varón', '1998-10-01 00:00:00', 'A2', NULL, 1, 10, '', 0),
+(1461, 'JULIO', 'LEITON BADILLA', '1967-07-06 00:00:00', 339688, '49761', 'jleiton67@gmail.com', '506-506-83842625', '', 3, 'Varón', '1998-10-01 00:00:00', 'A2', NULL, 1, 10, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/0750a866466fea59.png', 0),
 (1462, 'Brígida', 'Chinchilla Barrantes', '1937-01-01 00:00:00', 812297, '49761', '', '', '', 3, 'Mujer', '1989-10-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (1463, 'WILLIAM', 'DEL VALLE FLORES', '1946-01-01 00:00:00', 812299, '49761', '', '', '506-22194739', 3, 'Varón', '1997-05-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (1464, 'RAYMOND', 'SCOTT DAVIS', '1930-01-01 00:00:00', 823096, '49761', '', '', '', 3, 'Varón', '1993-11-01 00:00:00', 'A2', NULL, 1, 8, '', 0),
@@ -1655,7 +1654,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1481, 'María', 'Contreras Vásquez', '1950-10-31 00:00:00', 4605861, '49761', 'marita3110@yahoo.com', '506-83486326', '506-22198497', 3, 'Mujer', '2017-05-10 00:00:00', 'A2', NULL, 1, 8, '', 0),
 (1482, 'Octavio', 'Villalta Carmona', '1960-06-25 00:00:00', 3958733, '34092', 'octaviovillalta23@hotmail.com', '50688403470', '', 3, 'Varón', '2014-05-28 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1483, 'Maria Eugenia', 'Bustos Viales', '1947-01-01 00:00:00', 3619504, '34092', 'clsansebastian@yahoo.com', '506-83967683', '506-22525226', 3, 'Mujer', '2012-08-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
-(1484, 'Jorge Arturo', 'Peña  Montero', '1972-05-19 00:00:00', 2334305, '34092', 'jopena2@yahoo.com', '506-83505666', '', 3, 'Varón', '2005-03-01 00:00:00', 'B2', NULL, 1, 10, '', 0),
+(1484, 'Jorge Arturo', 'Peña  Montero', '1972-05-19 00:00:00', 2334305, '34092', 'jopena2@yahoo.com', '506-83505666', '', 3, 'Varón', '2005-03-01 00:00:00', 'B2', NULL, 1, 10, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/1aa13bd80adeacaf.png', 0),
 (1485, 'Maria', 'Brenes Rojas', '1961-03-16 00:00:00', 5011374, '34092', 'brenesrojasmaria@gmail.com', '50688476610', '', 3, 'Mujer', '2018-09-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1486, 'NIDIA TERESA', 'BARBOZA CAMPOS', '1933-01-01 00:00:00', 958481, '34092', '', '506-89988401', '506-22860327', 3, 'Mujer', '1995-06-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1487, 'LUIS', 'BONILLA GOMEZ', '1933-01-01 00:00:00', 958482, '34092', 'clsansebastian@yahoo.com', '', '506-22260572', 3, 'Varón', '1977-06-01 00:00:00', 'B2', NULL, 1, 8, '', 0),
@@ -1675,7 +1674,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1501, 'ALEJANDRA', 'PEÑA CHAVES', '1993-01-01 00:00:00', 3432764, '34092', 'alewpena1793@gmail.com', '506-8320-4258', '506-2227-0656', 3, 'Mujer', '2019-09-02 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1502, 'Jose Guillermo', 'Esquivel Solis', '1944-01-01 00:00:00', 3567836, '34092', 'jgesquivels@yahoo.com', '506-6076-0465', '506-2274-1650', 3, 'Varón', '2012-05-15 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1503, 'Marco Antonio', 'Nuñez Mayorga', '1974-01-01 00:00:00', 3839276, '34092', 'sonidovibraciones@gmail.com', '', '', 3, 'Varón', '2013-10-22 00:00:00', 'B2', NULL, 1, 8, '', 0),
-(1504, 'Jorge', 'Peña Chaves', '1997-01-22 00:00:00', 4329745, '34092', 'joorgeep22@gmail.com', '506-8434-3721', '', 3, 'Varón', '2016-02-13 00:00:00', 'B2', NULL, 1, 11, '', 0),
+(1504, 'Jorge', 'Peña Chaves', '1997-01-22 00:00:00', 4329745, '34092', 'joorgeep22@gmail.com', '506-8434-3721', '', 3, 'Varón', '2016-02-13 00:00:00', 'B2', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/91d63173d46cee0b.png', 0),
 (1505, 'Jorge', 'Arias Rojas', '1960-01-01 00:00:00', 4329753, '34092', 'adeamapedpuriscal@gmail.com', '506-84461129', '506-24166343', 3, 'Varón', '2016-02-15 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1506, 'Maria', 'Mora Perez', '1963-01-01 00:00:00', 4329757, '34092', 'adeamapedpuriscal@gmail.com', '506-88246111', '506-24166343', 3, 'Mujer', '2016-02-15 00:00:00', 'B2', NULL, 1, 8, '', 0),
 (1507, 'Mario', 'Rodríguez Carmona', '1945-01-01 00:00:00', 4604326, '34092', '', '506-60931581', '', 3, 'Varón', '2017-05-03 00:00:00', 'B2', NULL, 1, 8, '', 0),
@@ -1782,7 +1781,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1608, 'Adita', 'Méndez Arrieta', '1938-03-03 00:00:00', 1295994, '60871', 'adita.mendez@yahoo.com', '506-83165318', '506-22281719', 3, 'Mujer', '1991-04-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1609, 'Randall', 'Masís Ureña', '1978-06-04 00:00:00', 4878231, '60871', 'randallmasis@costarricense.cr', '506-0-8376 8490', '', 3, 'Varón', '2018-05-05 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1610, 'Vanessa', 'Hernández Arguedas', '1973-12-21 00:00:00', 4746327, '57927', 'vmhernandez@senasa.go.cr', '506-8367-0693', '506-2237-6166', 3, 'Mujer', '2017-10-24 00:00:00', 'F2', NULL, 1, 8, '', 0),
-(1611, 'Marco', 'Hernández Ramírez', '1951-12-02 00:00:00', 4127042, '57927', 'marhdzra@gmail.com', '506-8331-6731', '506-2237-6166', 3, 'Varón', '2015-03-03 00:00:00', 'F2', NULL, 1, 8, '', 0),
+(1611, 'Marco', 'Hernández Ramírez', '1951-12-02 00:00:00', 4127042, '57927', 'marhdzra@gmail.com', '506-8331-6731', '506-2237-6166', 3, 'Varón', '2015-03-03 00:00:00', 'F2', NULL, 1, 8, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/724e797c8e347f61.png', 0),
 (1612, 'Alcira ', 'Barquero Chavarría', '1956-08-26 00:00:00', 3987230, '57927', 'alcirabch@yahoo.es', '506-50689382814', '506-22381072', 3, 'Mujer', '2014-07-01 00:00:00', 'F2', NULL, 1, 8, '', 0),
 (1613, 'ANDREA', 'CASTRO SOLIS', '1954-01-01 00:00:00', 386297, '57927', 'clubdeleones.sanrafaelhdia@gmail.com', '506-87796260', '506-22607078', 3, 'Mujer', '2003-05-01 00:00:00', 'F2', NULL, 1, 8, '', 0),
 (1614, 'Miriam', 'Barquero Chavarria', '1962-01-01 00:00:00', 4904933, '57927', '', '', '', 3, 'Mujer', '2018-06-19 00:00:00', 'F2', NULL, 1, 8, '', 0),
@@ -1809,8 +1808,8 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1635, 'ELIDA ', 'ACUÑA CHAVARRIA', '1948-01-01 00:00:00', 386299, '57927', '', '', '506-22378779', 3, 'Mujer', '2000-05-01 00:00:00', 'F2', NULL, 1, 8, '', 0),
 (1636, 'JOSE', 'JIMENEZ GAMBOA', '1944-01-01 00:00:00', 391670, '57927', 'topografiarafaeljimenez@gmail.com', '506-83807411', '506-22381876', 3, 'Varón', '1996-02-01 00:00:00', 'F2', NULL, 1, 8, '', 0),
 (1637, 'ALBERTO', 'VARGAS ESQUIVEL', '1942-01-01 00:00:00', 397049, '57927', 'alberto.vargas.e@gmail.com', '506-61183244', '506-22377056', 3, 'Varón', '1996-02-01 00:00:00', 'F2', NULL, 1, 8, '', 0),
-(1638, 'Felix', 'Esquivel Murillo', '1978-11-13 00:00:00', 4635810, '125065', 'faemarquitecto@yahoo.com', '88427134', '24458407', 3, 'Varón', '2017-06-07 00:00:00', 'D2', NULL, 1, 6, '', 0),
-(1639, 'Willian ', 'Picado Vega', '1952-08-22 00:00:00', 4926256, '125065', 'wilipive@hotmail.com', '506-0-87300899', '', 3, 'Varón', '2018-06-26 00:00:00', 'D2', NULL, 1, 11, '', 0),
+(1638, 'Felix', 'Esquivel Murillo', '1978-11-13 00:00:00', 4635810, '125065', 'faemarquitecto@yahoo.com', '88427134', '24458407', 3, 'Varón', '2017-06-07 00:00:00', 'D2', NULL, 1, 6, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/496b1f7e3d8af872.png', 0),
+(1639, 'Willian ', 'Picado Vega', '1952-08-22 00:00:00', 4926256, '125065', 'wilipive@hotmail.com', '506-0-87300899', '', 3, 'Varón', '2018-06-26 00:00:00', 'D2', NULL, 1, 11, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/0b0fc78822553189.png', 0),
 (1640, 'Jose Manuel', 'Alvarez Cruz', '1960-01-01 00:00:00', 4179644, '125065', 'jmalvarez9@hotmail.com', '', '', 3, 'Varón', '2015-06-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1641, 'Flory', 'Arias Hidalgo', '1956-01-01 00:00:00', 4179641, '125065', 'floryarias@gmail.com', '', '', 3, 'Mujer', '2015-06-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1642, 'Celimo', 'Guido Cruz', '1951-01-01 00:00:00', 4179626, '125065', 'celimoguido@yahoo.es', '', '', 3, 'Varón', '2015-06-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
@@ -1831,7 +1830,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1657, 'Emanuelle', 'Quirós  Rojas', '2000-01-01 00:00:00', 4627589, '125065', 'ema183113@gmail.com', '506-0-60263833', '', 3, 'Varón', '2017-06-05 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1658, 'Ana', 'Lizano Esquivel', '1948-01-01 00:00:00', 4635823, '125065', 'lizanoanamaria@gmail.com', '88294568', '24450013', 3, 'Mujer', '2017-06-05 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1659, 'Diney', 'Navarro Soto', '1968-01-01 00:00:00', 4635848, '125065', '', '85007137', '', 3, 'Mujer', '2017-06-07 00:00:00', 'D2', NULL, 1, 8, '', 0),
-(1660, 'Gladys', 'Araya Ugalde', '1949-10-22 00:00:00', 4179628, '125065', 'g.arayau@hotmail.com', '50688763866', '', 3, 'Mujer', '2015-06-01 00:00:00', 'D2', NULL, 1, 10, '', 0),
+(1660, 'Gladys', 'Araya Ugalde', '1949-10-22 00:00:00', 4179628, '125065', 'g.arayau@hotmail.com', '50688763866', '', 3, 'Mujer', '2015-06-01 00:00:00', 'D2', NULL, 1, 10, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/92ec52140cbb6150.png', 0),
 (1661, 'Yolanda ', 'Bolaños Molina', '1957-01-01 00:00:00', 4775300, '125065', '', '', '', 3, 'Mujer', '2017-12-05 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1662, 'Maria ', 'Hidalgo Ramirez', '1965-01-01 00:00:00', 4775302, '125065', '', '506-0-83807244', '', 3, 'Mujer', '2017-12-05 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1663, 'Guillermo', 'Quiros Madrigal ', '1950-01-01 00:00:00', 4775306, '125065', 'guillermo.quiros@hotmail.com', '506-0-84185464', '', 3, 'Varón', '2017-12-05 00:00:00', 'D2', NULL, 1, 8, '', 0),
@@ -1848,7 +1847,8 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1674, 'Nicolas', 'Sánchez Rodríguez ', '1992-02-28 00:00:00', 5135861, '125065', 'nkrod28@gmail.com', '506-0-70262885', '', 3, 'Varón', '2019-05-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1675, 'Elvia', 'Rodríguez Rodríguez ', '1954-12-16 00:00:00', 5135868, '125065', '', '506-0-83171965', '', 3, 'Mujer', '2019-05-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1676, 'Daniel', 'Valencia Chacón', '1986-03-03 00:00:00', 5266860, '125065', 'd.e.valencia@gmail.com', '506-0-88692275', '506-0-24479312', 3, 'Varón', '2019-11-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
-(1677, 'Fainier', 'Martínez Araya', '1959-05-27 00:00:00', 5266874, '125065', 'famaraya@hotmail.es', '506-0-83379850', '506-0-24470207', 3, 'Mujer', '2019-11-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
+(1677, 'Fainier', 'Martínez Araya', '1959-05-27 00:00:00', 5266874, '125065', 'famaraya@hotmail.es', '506-0-83379850', '506-0-24470207', 3, 'Mujer', '2019-11-01 00:00:00', 'D2', NULL, 1, 8, '', 0);
+INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
 (1678, 'Ana Yisenia', 'Blanco Moreno', '1972-06-23 00:00:00', 4179642, '125065', 'anayi72@hotmail.com', '88142844', '', 3, 'Mujer', '2015-06-01 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1679, 'Arlette', 'Orozco Muñoz', '1988-03-30 00:00:00', 5082638, '125065', 'arlette.biotec@gmail.com', '506-0-88517804', '', 3, 'Mujer', '2019-01-30 00:00:00', 'D2', NULL, 1, 8, '', 0),
 (1680, 'Cecilia', 'Rojas Castri', '1950-01-01 00:00:00', 4362910, '125065', 'cecirojas@gmail.com', '88779889', '24474340', 3, 'Mujer', '2016-04-15 00:00:00', 'D2', NULL, 1, 8, '', 0),
@@ -1856,8 +1856,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1682, 'Oscar', 'Aguilar Guillen ', '1957-01-01 00:00:00', 3633315, '40126', 'o.aguilarg@outlook.com', '506-8862-2379', '', 3, 'Varón', '2012-09-18 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1683, 'Geoffrey', 'Davis Kelly', '1951-06-11 00:00:00', 1223120, '40126', 'gdavis@securecostarica.com', '506-88125092', '506-2282-6644', 3, 'Varón', '1981-09-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1684, 'Ana Isabel', 'Chavarria', '1949-01-01 00:00:00', 4351557, '40126', 'anaisabelchavarriavillalobos@gmail.com', '', '506-22034744', 3, 'Mujer', '2016-02-28 00:00:00', 'A3', NULL, 1, 8, '', 0),
-(1685, 'Diana', 'Aguilar', '1992-05-03 00:00:00', 4233465, '40126', 'diana_aguilar@outlook.com', '506-8894-5939', '', 3, 'Mujer', '2015-08-25 00:00:00', 'A3', NULL, 1, 8, '', 0);
-INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_code`, `club_code`, `email`, `phone`, `cellphone`, `id_rol_member`, `gender`, `admission_date`, `id_zone`, `last_view`, `status`, `id_type_member`, `img_url`, `password`) VALUES
+(1685, 'Diana', 'Aguilar', '1992-05-03 00:00:00', 4233465, '40126', 'diana_aguilar@outlook.com', '506-8894-5939', '', 3, 'Mujer', '2015-08-25 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1686, 'Fernando', 'Acosta Jimenez ', '1966-01-01 00:00:00', 3857274, '40126', '', '', '', 3, 'Varón', '2013-11-05 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1687, 'SEIDY', 'HERRERA ALVARADO', '1964-01-01 00:00:00', 2334665, '40126', 'complejocedic@hotmail.com', '506-83856808', '506-22033246', 3, 'Mujer', '2005-03-01 00:00:00', 'A3', NULL, 1, 8, '', 0),
 (1688, 'Alvaro', 'Cubillo Aguilar', '1984-04-16 00:00:00', 4693876, '40126', 'acubillo84@hotmail.com', '506-83722955', '', 3, 'Varón', '2017-07-18 00:00:00', 'A3', NULL, 1, 8, '', 0),
@@ -1889,7 +1888,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1714, 'Iveth ', 'Sánchez Villafuerte', '1958-01-01 00:00:00', 4631126, '135008', 'ivethsanchezvillafuerte@gmail.com', '001-506-83147507', '', 3, 'Mujer', '2017-06-03 00:00:00', 'C1', NULL, 1, 8, '', 0),
 (1715, 'Nayudel', 'Guadamuz R', '1962-07-25 00:00:00', 4401260, '135008', 'nayugr62@yahoo.com', '001-506-8756 7495', '', 3, 'Mujer', '2016-06-10 00:00:00', 'C1', NULL, 1, 8, '', 0),
 (1716, 'Rodolfo ', 'Gonzales Serrano', '1960-01-01 00:00:00', 4631269, '135008', '', '', '86091030', 3, 'Varón', '2017-06-07 00:00:00', 'C1', NULL, 1, 8, '', 0),
-(1717, 'Grettel', 'Romero Fallas', '1968-01-28 00:00:00', 3263156, '15601', 'grettelromero@gmail.com', '506-8872-4399', '506-2244-3904', 3, 'Mujer', '2010-09-23 00:00:00', 'F2', NULL, 1, 8, '', 0),
+(1717, 'Grettel', 'Romero Fallas', '1968-01-28 00:00:00', 3263156, '15601', 'grettelromero@gmail.com', '506-8872-4399', '506-2244-3904', 3, 'Mujer', '2010-09-23 00:00:00', 'F2', NULL, 1, 8, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/f17a6998724b5d35.png', 0),
 (1718, 'Luis', 'Rivera Romero', '1953-05-01 00:00:00', 3263141, '15601', 'riveraromeroluis@gmail.com', '506-8872-4430', '506-2244-3904', 3, 'Varón', '2010-09-23 00:00:00', 'F2', NULL, 1, 8, '', 0),
 (1719, 'Henry', 'Vega Vega', '1956-01-01 00:00:00', 3117478, '15601', 'hvegav@sfe.go.cr', '506-88249004', '506-22444998', 3, 'Varón', '2009-12-04 00:00:00', 'F2', NULL, 1, 8, '', 0),
 (1720, 'Nidia', 'Bolaños Barrantes', '1951-08-11 00:00:00', 3904738, '15601', 'nybola@gmail.com', '506-40302-88057940', '506-40302-22441424', 3, 'Mujer', '2014-01-27 00:00:00', 'F2', NULL, 1, 8, '', 0),
@@ -2094,8 +2093,7 @@ INSERT INTO `tb_members` (`id_member`, `name`, `last_name`, `birthday`, `member_
 (1919, 'Miguel ', 'Varela Castro', '1962-01-01 00:00:00', 4604827, '134688', '', '', '', 3, 'Varón', '2017-05-10 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (1920, 'LEONARDO ', 'CASTRO RODRIGUEZ', '1978-01-01 00:00:00', 4866286, '134688', '', '506-506-8851-8523', '', 3, 'Varón', '2018-05-31 00:00:00', 'D3', NULL, 1, 8, '', 0),
 (1921, 'Marco', 'Giutta Gonzalez', '1972-11-24 00:00:00', 4866292, '134688', 'mgiutta@gmail.com', '506-887-07389', '', 3, 'Varón', '2018-05-31 00:00:00', 'D3', NULL, 1, 8, '', 0),
-(1923, 'Kongo', 'Developers', '2020-05-28 00:00:00', 1188, NULL, 'kongodevs@gmail.com', '26614408', '84893351', 1, 'Varón', '2020-05-28 19:33:03', '1', NULL, 1, 8, '', 12345678),
-(1924, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, '', 0);
+(1946, 'Lucia', 'Herrera Ramirez', '2000-01-01 00:00:00', 1, '0', 'Sin definir', '24514060', '84017575', 3, 'Mujer', '2020-07-08 03:23:10', 'D1', NULL, 1, 8, 'C:\\xampp\\htdocs\\LionsApi\\src\\rutas/uploads/miembros/7905596947227e5d.png', 0);
 
 -- --------------------------------------------------------
 
@@ -2114,7 +2112,6 @@ CREATE TABLE `tb_region` (
 --
 
 INSERT INTO `tb_region` (`id_region`, `description`, `status`) VALUES
-('1', 'AAAA', 0),
 ('A', 'A', 1),
 ('B', 'B', 1),
 ('C', 'C', 1),
@@ -4124,8 +4121,6 @@ INSERT INTO `tb_type_members` (`id_type`, `member_code`, `info`) VALUES
 (8, 4604827, ''),
 (8, 4866286, ''),
 (8, 4866292, ''),
-(8, 1188, ''),
-(2, 0, ''),
 (3, 3111966, ''),
 (11, 3634614, ''),
 (11, 4173212, ''),
@@ -4653,7 +4648,8 @@ INSERT INTO `tb_type_members` (`id_type`, `member_code`, `info`) VALUES
 (28, 5135539, ''),
 (28, 4746327, ''),
 (28, 3509677, ''),
-(28, 4373668, '');
+(28, 4373668, ''),
+(2, 1, '');
 
 -- --------------------------------------------------------
 
@@ -4676,7 +4672,6 @@ INSERT INTO `tb_zone` (`id_zone`, `id_region`, `description`, `status`) VALUES
 ('A1', 'A', 'A1', 1),
 ('A2', 'A', 'A2', 1),
 ('A3', 'A', 'A3', 1),
-('AAA1', 'D', 'AAA2', 0),
 ('B1', 'B', 'B1', 1),
 ('B2', 'B', 'B2', 1),
 ('C1', 'C', 'C1', 1),
@@ -4755,7 +4750,7 @@ ALTER TABLE `tb_clubs`
 -- AUTO_INCREMENT de la tabla `tb_members`
 --
 ALTER TABLE `tb_members`
-  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1925;
+  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1947;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_rol`

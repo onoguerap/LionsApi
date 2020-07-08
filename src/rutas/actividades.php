@@ -4,12 +4,14 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use Slim\Http\UploadedFile;
 
 //$app = new \Slim\App;
-
 $container = $app->getContainer();
-$container['upload_directory'] = __DIR__ . '/uploads/actividades';
+$container['upload_directory_activities'] = __DIR__ . '/uploads/actividades';
 
 // GET Obtener los miembros por filtro o la totalidad
 $app->get('/api/actividades', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $message = '';
     $activities = array();
 
@@ -19,7 +21,7 @@ $app->get('/api/actividades', function(Request $request, Response $response){
 		ORDER BY schedule DESC";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -42,6 +44,9 @@ $app->get('/api/actividades', function(Request $request, Response $response){
 
 // POST Agregar una actividad
 $app->post('/api/actividad_add', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $title = $request->getParam('title');
     $schedule = $request->getParam('schedule');
     $description = $request->getParam('description');
@@ -52,7 +57,7 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
     // $this->db->beginTransaction(); , $this->db->commit(); and $this->db->rollBack();
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -60,7 +65,7 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
         $resultado->bindParam(':schedule', $schedule);
         $resultado->bindParam(':description', $description);
 
-        $directory = $this->get('upload_directory');
+        $directory = $this->get('upload_directory_activities');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files'])) {
@@ -118,6 +123,9 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
 
 // PUT Editar una actividad
 $app->post('/api/actividad_edit/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_activity = $request->getAttribute('id');
     $title = $request->getParam('title');
     $schedule = $request->getParam('schedule');
@@ -125,10 +133,10 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
     $image_path = "";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
 
-        $directory = $this->get('upload_directory');
+        $directory = $this->get('upload_directory_activities');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
@@ -151,7 +159,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
             //Comprobacion del upload
             if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
                 //Se mueve el file a la ubicacion
-                $filename = moveUploadedFile($directory, $uploadedFile);
+                $filename = moveUploadedFileActivities($directory, $uploadedFile);
                 //Generacion del nuevo path
                 $image_path = $directory.'/'.$filename;
 
@@ -210,11 +218,14 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
 
 // DELETE Editar status de una zona
 $app->delete('/api/actividad_delete/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_activity = $request->getAttribute('id');
     $status = 0;
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
 
         //Seleccion del path actual
@@ -251,7 +262,7 @@ $app->delete('/api/actividad_delete/{id}', function(Request $request, Response $
 });
 
 
-function moveUploadedFile($directory, UploadedFile $uploadedFile)
+function moveUploadedFileActivities($directory, UploadedFile $uploadedFile)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
     $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php

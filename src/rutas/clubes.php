@@ -6,6 +6,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 // GET Obtener los clubes por filtro o la totalidad
 $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$search = $args['search'];
 		$index = $args['index'];
 
@@ -29,7 +32,7 @@ $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Resp
 			LIMIT 10 OFFSET $index;";
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -51,6 +54,9 @@ $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Resp
 
 // GET Obtener los clubes
 $app->get('/api/clubes/{index}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$index = $args['index'];
 
 		if (!isset($index)){
@@ -70,7 +76,7 @@ $app->get('/api/clubes/{index}', function(Request $request, Response $response, 
 		
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -92,6 +98,9 @@ $app->get('/api/clubes/{index}', function(Request $request, Response $response, 
 
 // GET Obtener la información del club
 $app->get('/api/club/{id_club}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 	$id_club = $args['id_club'];
     $message = '';
     $result = 0;
@@ -123,7 +132,7 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         AND T.isClub = 1;";
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -151,6 +160,9 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
 
 // POST Agregar un club
 $app->post('/api/club_add', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $name_club = $request->getParam('name_club');
     $club_code = $request->getParam('club_code');
     $meeting_date = $request->getParam('meeting_date');
@@ -163,7 +175,7 @@ $app->post('/api/club_add', function(Request $request, Response $response){
     VALUES (null, :name_club, :club_code, :creation_date, :meeting_date, :meeting_hour, :id_region, :id_zone);";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -194,6 +206,9 @@ $app->post('/api/club_add', function(Request $request, Response $response){
 
 // PUT Editar un club
 $app->put('/api/club_edit/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_club = $request->getAttribute('id');
     $name_club = $request->getParam('name_club');
     $club_code = $request->getParam('club_code');
@@ -213,7 +228,7 @@ $app->put('/api/club_edit/{id}', function(Request $request, Response $response){
     LIMIT 1";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -242,6 +257,9 @@ $app->put('/api/club_edit/{id}', function(Request $request, Response $response){
 
 // PUT Editar status de un club
 $app->put('/api/club_delete/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_club = $request->getAttribute('id');
     $status = 0;
 
@@ -250,7 +268,7 @@ $app->put('/api/club_delete/{id}', function(Request $request, Response $response
     WHERE id_club = $id_club";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 

@@ -6,6 +6,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 // GET Obtener las regiones por filtro
 $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 	$search = $args['search'];
 		$index = $args['index'];
 
@@ -27,7 +30,7 @@ $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Re
 		LIMIT 10 OFFSET $index;";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -49,6 +52,9 @@ $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Re
 });
 // GET Obtener las regiones
 $app->get('/api/regiones/{index}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$index = $args['index'];
 
 		if (!isset($index)){
@@ -65,7 +71,7 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
 		LIMIT 10 OFFSET $index;";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -87,13 +93,16 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
 });
 // POST Agregar una region
 $app->post('/api/region_add', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $description = $request->getParam('description');
 
     $sql = "INSERT INTO tb_region (id_region, description)
     VALUES (:id_region, :description);";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -118,6 +127,9 @@ $app->post('/api/region_add', function(Request $request, Response $response){
 
 // PUT Editar una region
 $app->put('/api/region_edit/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_region = $request->getAttribute('id');
     $description = $request->getParam('description');
 
@@ -127,7 +139,7 @@ $app->put('/api/region_edit/{id}', function(Request $request, Response $response
     LIMIT 1";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -151,6 +163,9 @@ $app->put('/api/region_edit/{id}', function(Request $request, Response $response
 
 // PUT Editar status de una region
 $app->put('/api/region_delete/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_region = $request->getAttribute('id');
     $status = 0;
 
@@ -160,7 +175,7 @@ $app->put('/api/region_delete/{id}', function(Request $request, Response $respon
     LIMIT 1";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 

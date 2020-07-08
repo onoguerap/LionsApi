@@ -3,13 +3,16 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 //$app = new \Slim\App;
-
+session_start();
 // GET User for member code
-$app->get('/api/login/{member_code}/{password}', function(Request $request, Response $response, array $args){
+$app->get('/api/login/{member_code}/{password}', function(Request $request, Response $response, array $args)  {
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$member_code = $args['member_code'];
-		$password = $args['password'];
-    $message = '';
-    $result = 0;
+        $password = $args['password'];
+        $message = '';
+        $result = 0;
 		$member = array();
 		
 		if ($password != 0) {
@@ -18,18 +21,20 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
 			WHERE member_code = $member_code 
 			AND password = $password
 			AND id_rol_member = 1 OR id_rol_member = 2
+            AND status = 1
 			ORDER BY member_code DESC LIMIT 1";
 		} else {
 			$sql = "SELECT * 
 			FROM tb_members 
 			WHERE member_code = $member_code 
 			AND id_rol_member = 3
+            AND status = 1
 			ORDER BY member_code DESC LIMIT 1";
 		}
 
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -49,3 +54,4 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
 });
+

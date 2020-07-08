@@ -6,6 +6,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 // GET Obtener las zonas por filtro
 $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$search = $args['search'];
 		$index = $args['index'];
 
@@ -28,7 +31,7 @@ $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Respo
 			LIMIT 10 OFFSET $index;";
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -51,6 +54,9 @@ $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Respo
 
 // GET Obtener las zonas por filtro
 $app->get('/api/zonas/{index}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$index = $args['index'];
 
 		if (!isset($index)){
@@ -67,7 +73,7 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
 			LIMIT 10 OFFSET $index;";
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -90,6 +96,9 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
 
 // GET Obtener las zonas por region
 $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
 		$id_region = $args['id_region'];
     $message = '';
     $zonas = array();
@@ -101,7 +110,7 @@ $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $
 		}
     
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->query($sql);
         if ($resultado->rowCount() > 0) {
@@ -124,6 +133,9 @@ $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $
 
 // POST Agregar una zona
 $app->post('/api/zona_add', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $description = $request->getParam('description');
     $id_region = $request->getParam('id_region');
     
@@ -132,7 +144,7 @@ $app->post('/api/zona_add', function(Request $request, Response $response){
     VALUES (:id_zone, :description, :id_region);";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -158,6 +170,9 @@ $app->post('/api/zona_add', function(Request $request, Response $response){
 
 // PUT Editar una zona
 $app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_zone = $request->getAttribute('id');
     $description = $request->getParam('description');
     $id_region = $request->getParam('id_region');
@@ -169,7 +184,7 @@ $app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
     LIMIT 1";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
@@ -194,6 +209,9 @@ $app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
 
 // PUT Editar status de una zona
 $app->put('/api/zona_delete/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
     $id_zone = $request->getAttribute('id');
     $status = 0;
 
@@ -203,7 +221,7 @@ $app->put('/api/zona_delete/{id}', function(Request $request, Response $response
     LIMIT 1";
 
     try {
-        $db = new db();
+        $db = new db($selecteddb);
         $db = $db->dbConnection();
         $resultado = $db->prepare($sql);
 
