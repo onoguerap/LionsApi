@@ -27,6 +27,8 @@ require '../src/rutas/zonas.php';
 require '../src/rutas/roles.php';
 // Rutas para tipos
 require '../src/rutas/tipos.php';
+// Rutas para tipos
+require '../src/rutas/paises.php';
 
 $app->run();
 

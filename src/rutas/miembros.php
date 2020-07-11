@@ -27,7 +27,7 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
 		
     $message = '';
     $result = 0;
-		$members = array();
+	$members = array();
 	
 			$sql = "SELECT M.*, C.name_club 
 			FROM tb_members M
@@ -56,7 +56,7 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+		$out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
@@ -226,7 +226,6 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
-		
     $message = '';
     $result = 0;
 	$members = array();
@@ -241,35 +240,32 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
-        $base_url = $this->get('base_url_members');
-       
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
-                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-                    $row['img_url'] = $base_url.''.$row['img_url'];
+                // while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
                     $members[] = $row;
-                }
-                $message = 'Si hay gobernación';
+                // }
+                $message = 'Si hay members registradas';
                 $result = 1;
             } else {
             $result  = 0;
-            $message = 'No hay gobernación';
+            $message = 'No hay members registradas';
         }
-        /* liberar el conjunto de resultados */
-        mysqli_free_result($resultado);  
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);  
         }
-        
+
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
         $out['data'] = $members;
-
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
     // Close connection
-    $link->close();
+    $link->close(); 
 });
 
 // GET Obtener los miembros Jefes de Zona

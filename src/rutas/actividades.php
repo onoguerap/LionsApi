@@ -24,9 +24,11 @@ $app->get('/api/actividades', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        $base_url = $this->get('base_url_activities');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['image_path'] = $base_url.''.$row['image_path'];
                     $activities[] = $row;
                 }
                 $message = 'Si hay actividades registradas';
@@ -71,7 +73,7 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
         $link = $db->dbConnection();
 
         // $directory = $this->get('upload_directory_activities');
-        $directory = $this->get('base_url_activities');
+        $directory = $this->get('upload_directory_activities');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
@@ -89,7 +91,7 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
                    
                     $filename = moveUploadedFileActivities($directory, $uploadedFile);
 
-                    $image_path = $directory.''.$filename;
+                    $image_path = $filename;
                     echo $image_path;
                     $lastInsertId = mysqli_insert_id($link);
                     echo $lastInsertId;
@@ -146,7 +148,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
         $link = $db->dbConnection();
 
         // $directory = $this->get('upload_directory_activities');
-        $directory = $this->get('base_url_activities');
+        $directory = $this->get('upload_directory_activities');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
@@ -170,8 +172,6 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
             if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
                 //Se mueve el file a la ubicacion
                 $filename = moveUploadedFileActivities($directory, $uploadedFile);
-                //Generacion del nuevo path
-                $image_path = $directory.''.$filename;
 
                 //Seleccion del path actual
                 $sql = "SELECT image_path
@@ -181,7 +181,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
                 $resultado = mysqli_query($link, $sql);
                 $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
                 // $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
-                unlink($row['image_path']);
+                unlink($directory.'/'.$row['image_path']);
                 mysqli_free_result($resultado);
 
                 //Se elimina el file actual
@@ -191,7 +191,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
                 title = '$title',
                 schedule = '$schedule',
                 description = '$description',
-                image_path = '$image_path'
+                image_path = '$filename'
                 WHERE id_activity = $id_activity
                 LIMIT 1";
 
