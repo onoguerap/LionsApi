@@ -13,8 +13,8 @@ $app->get('/api/paises', function(Request $request, Response $response, array $a
          $country['id'] = '1';
          $country['name'] = 'cr';
          $country['flag'] = 'cr';
-         $country['country']['Port']['id'] = '1';
-         $country['country']['Port']['name'] = 'Costa Rica'; 
+         $country['ports'][0]['id'] = '1';
+         $country['ports'][0]['name'] = 'Costa Rica'; 
 
          $paises[] = $country;
          $result = 1;
