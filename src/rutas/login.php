@@ -7,12 +7,14 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/api/login/{member_code}/{password}', function(Request $request, Response $response, array $args)  {
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
 		$member_code = $args['member_code'];
         $password = $args['password'];
         $message = '';
         $result = 0;
-		$member = array();
+        $member = array();
+        $country = array();
 		
         $sql = "SELECT * 
         FROM tb_members 
