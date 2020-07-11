@@ -12,7 +12,7 @@ $app->get('/api/paises', function(Request $request, Response $response, array $a
     try{
          $country['id'] = '1';
          $country['name'] = 'cr';
-         $country['flag'] = 'cr';
+         $country['flag'] = 'assets/images/flags/4x3/cr.svg';
          $country['ports'][0]['id'] = '1';
          $country['ports'][0]['name'] = 'Costa Rica'; 
 
