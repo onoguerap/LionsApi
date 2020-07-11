@@ -39,6 +39,7 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -88,6 +89,7 @@ $app->get('/api/miembros/{index}', function(Request $request, Response $response
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -143,11 +145,13 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
 		INNER JOIN tb_rol R ON M.id_rol_member = R.id_rol_member
 		WHERE M.status = 1
 		AND M.id_member = $id_member
+        GROUP BY name_club
 		LIMIT 1;";	
     
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         $base_url = $this->get('base_url_members');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
@@ -195,6 +199,7 @@ $app->get('/api/birthdays', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -228,7 +233,7 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
     //
     $message = '';
     $result = 0;
-	$members = array();
+    $members = array();
 		
 		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description, M.img_url
 		FROM tb_members M
@@ -240,12 +245,14 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
+        $base_url = $this->get('base_url_members');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
-                // while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-                    $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['img_url'] = $base_url.''.$row['img_url'];
                     $members[] = $row;
-                // }
+                }
                 $message = 'Si hay members registradas';
                 $result = 1;
             } else {
@@ -288,6 +295,7 @@ $app->get('/api/jefes_region', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         $base_url = $this->get('base_url_members');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
@@ -336,6 +344,7 @@ $app->get('/api/jefes_zona', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         $base_url = $this->get('base_url_members');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
@@ -383,6 +392,7 @@ $app->get('/api/asesores', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         $base_url = $this->get('base_url_members');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
@@ -444,7 +454,7 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
-
+        mysqli_query($link, "SET NAMES 'utf8'");
         $directory = $this->get('upload_directory_members');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
@@ -548,7 +558,7 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
-
+        mysqli_query($link, "SET NAMES 'utf8'");
         $directory = $this->get('upload_directory_members');
         //$directory = $this->get('base_url_members');
         $uploadedFiles = $request->getUploadedFiles();
@@ -586,7 +596,9 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
 
                 $resultado = mysqli_query($link, $sql);
                 $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
-                unlink($directory.'/'.$row['img_url']);
+                if(!$row['img_url'] == 'default.png'){
+                    unlink($directory.'/'.$row['img_url']);
+                }
                 mysqli_free_result($resultado);
 
                 //Se elimina el file actual
@@ -669,6 +681,7 @@ $app->put('/api/miembro_delete/{id}', function(Request $request, Response $respo
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
 
         $sql = "UPDATE tb_members
         SET status = 0

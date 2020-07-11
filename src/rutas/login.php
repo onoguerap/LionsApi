@@ -24,6 +24,7 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         $directory = $this->get('base_url_members');
 
         if ($resultado = mysqli_query($link, $sql)) {

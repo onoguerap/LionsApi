@@ -33,6 +33,7 @@ $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Respo
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -84,6 +85,7 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
         
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -129,6 +131,7 @@ $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -171,6 +174,7 @@ $app->post('/api/zona_add', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Zona agregada exitosamente!";
@@ -207,6 +211,7 @@ $app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Zona editada exitosamente!";
@@ -241,6 +246,7 @@ $app->put('/api/zona_delete/{id}', function(Request $request, Response $response
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Zona eliminada exitosamente!";
