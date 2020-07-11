@@ -34,6 +34,7 @@ $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Resp
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -86,6 +87,7 @@ $app->get('/api/clubes/{index}', function(Request $request, Response $response, 
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -165,6 +167,7 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         // }
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -215,10 +218,13 @@ $app->post('/api/club_add', function(Request $request, Response $response){
 
     $sql = "INSERT INTO tb_clubs (id_club, name_club, club_code, creation_date, meeting_date, meeting_hour, id_region, id_zone)
     VALUES (null, '$name_club', '$club_code', '$today', '$meeting_date', '$meeting_hour', '$id_region', '$id_zone');";
+ 
+ echo $sql;
 
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Club agregado exitosamente!";
@@ -263,6 +269,7 @@ $app->put('/api/club_edit/{id}', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Club editado exitosamente!";
@@ -296,6 +303,7 @@ $app->put('/api/club_delete/{id}', function(Request $request, Response $response
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Club eliminado exitosamente!";

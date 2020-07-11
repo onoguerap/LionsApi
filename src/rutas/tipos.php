@@ -19,6 +19,7 @@ $app->get('/api/tipos', function(Request $request, Response $response, array $ar
         
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {

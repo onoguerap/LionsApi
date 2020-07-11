@@ -24,6 +24,7 @@ $app->get('/api/actividades', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         $base_url = $this->get('base_url_activities');
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
@@ -71,7 +72,7 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
  
         $db = new db($selecteddb);
         $link = $db->dbConnection();
-
+        mysqli_query($link, "SET NAMES 'utf8'");
         // $directory = $this->get('upload_directory_activities');
         $directory = $this->get('upload_directory_activities');
         $uploadedFiles = $request->getUploadedFiles();
@@ -146,7 +147,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
-
+        mysqli_query($link, "SET NAMES 'utf8'");
         // $directory = $this->get('upload_directory_activities');
         $directory = $this->get('upload_directory_activities');
         $uploadedFiles = $request->getUploadedFiles();
@@ -241,7 +242,7 @@ $app->delete('/api/actividad_delete/{id}', function(Request $request, Response $
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
-
+        mysqli_query($link, "SET NAMES 'utf8'");
         //Seleccion del path actual
         $sql = "SELECT image_path
         FROM tb_activities

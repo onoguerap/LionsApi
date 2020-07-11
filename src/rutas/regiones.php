@@ -32,6 +32,7 @@ $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Re
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -118,6 +119,7 @@ $app->post('/api/region_add', function(Request $request, Response $response){
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Region agregada exitosamente!";
@@ -152,6 +154,7 @@ $app->put('/api/region_edit/{id}', function(Request $request, Response $response
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Region editada exitosamente!";
@@ -186,6 +189,7 @@ $app->put('/api/region_delete/{id}', function(Request $request, Response $respon
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Region eliminada exitosamente!";
