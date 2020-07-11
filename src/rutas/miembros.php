@@ -7,6 +7,7 @@ use Slim\Http\UploadedFile;
 
 $container = $app->getContainer();
 $container['upload_directory_members'] = __DIR__ . '/uploads/miembros';
+$container['base_url_members'] = 'http://138.68.239.185/uploads/miembros/';
 
 // GET Obtener los miembros por filtro
 $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Response $response, array $args){
@@ -37,14 +38,20 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros!";
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $members[] = $row;
+                }
+                $message = 'Si hay zonas registradas';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay zonas registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -54,6 +61,8 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los miembros
@@ -78,14 +87,20 @@ $app->get('/api/miembros/{index}', function(Request $request, Response $response
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros!";
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $members[] = $row;
+                }
+                $message = 'Si hay miembros registrados';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay miembros registrados';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -95,6 +110,8 @@ $app->get('/api/miembros/{index}', function(Request $request, Response $response
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener la información del miembro
@@ -102,7 +119,7 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
-		$id_member = $args['id_member'];
+	$id_member = $args['id_member'];
     $message = '';
     $result = 0;
 		$members = array();
@@ -130,23 +147,33 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros con ese ID!";
+        $link = $db->dbConnection();
+        $base_url = $this->get('base_url_members');
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['img_url'] = $base_url.''.$row['img_url'];
+                    $members[] = $row;
+                }
+                $message = 'Si hay miembros registrados';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay miembros registrados';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+		$out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los miembros por filtro o la totalidad
@@ -167,23 +194,31 @@ $app->get('/api/birthdays', function(Request $request, Response $response){
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron cumpleañeros!";
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $members[] = $row;
+                }
+                $message = 'Si hay cumpleañeros';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay cumpleañeros';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+		$out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los miembros de la Gobernacion
@@ -194,9 +229,9 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
-		$members = array();
+	$members = array();
 		
-		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description
+		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description, M.img_url
 		FROM tb_members M
 		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
 		INNER JOIN tb_type T ON TM.id_type = T.id_type
@@ -205,23 +240,36 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros de gobernación!";
+        $link = $db->dbConnection();
+        $base_url = $this->get('base_url_members');
+       
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['img_url'] = $base_url.''.$row['img_url'];
+                    $members[] = $row;
+                }
+                $message = 'Si hay gobernación';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay gobernación';
         }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
+        }
+        
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+        $out['data'] = $members;
+
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los miembros Jefes de Zona
@@ -243,23 +291,33 @@ $app->get('/api/jefes_region', function(Request $request, Response $response){
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros de gobernación!";
+        $link = $db->dbConnection();
+        $base_url = $this->get('base_url_members');
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['img_url'] = $base_url.''.$row['img_url'];
+                    $members[] = $row;
+                }
+                $message = 'Si hay Jefes';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay jefes';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+		$out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los miembros Jefes de Zona
@@ -270,34 +328,44 @@ $app->get('/api/jefes_zona', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
-		$members = array();
+	$members = array();
 		
-		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, IF(T.id_type = 10, CONCAT_WS(' - ', T.description, SUBSTRING(M.id_zone,1,1)) ,CONCAT_WS(' - ', T.description, M.id_zone)) description, M.img_url
-		FROM tb_members M
-		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
-		INNER JOIN tb_type T ON TM.id_type = T.id_type
-		WHERE T.id_type = 11
-		ORDER BY M.id_zone ASC";	
+    $sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, IF(T.id_type = 10, CONCAT_WS(' - ', T.description, SUBSTRING(M.id_zone,1,1)) ,CONCAT_WS(' - ', T.description, M.id_zone)) description, M.img_url
+    FROM tb_members M
+    INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
+    INNER JOIN tb_type T ON TM.id_type = T.id_type
+    WHERE T.id_type = 11
+    ORDER BY M.id_zone ASC";	
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros de gobernación!";
+        $link = $db->dbConnection();
+        $base_url = $this->get('base_url_members');
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['img_url'] = $base_url.''.$row['img_url'];
+                    $members[] = $row;
+                }
+                $message = 'Si hay Jefes';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay Jefes';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+        $out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los miembros Asesores
@@ -308,33 +376,43 @@ $app->get('/api/asesores', function(Request $request, Response $response){
 		
     $message = '';
     $result = 0;
-		$members = array();
-		
-		$sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description, TM.info, M.img_url
-		FROM tb_members M
-		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
-		INNER JOIN tb_type T ON TM.id_type = T.id_type
-		WHERE T.id_type = 12;";	
+    $members = array();
+    
+    $sql = "SELECT CONCAT_WS(' ', M.name, M.last_name) fullname, T.description, TM.info, M.img_url
+    FROM tb_members M
+    INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
+    INNER JOIN tb_type T ON TM.id_type = T.id_type
+    WHERE T.id_type = 12;";	
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $members = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros de gobernación!";
+        $link = $db->dbConnection();
+        $base_url = $this->get('base_url_members');
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['img_url'] = $base_url.''.$row['img_url'];
+                    $members[] = $row;
+                }
+                $message = 'Si hay Asesores';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay Asesores';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-				$out['data'] = $members;
+        $out['data'] = $members;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 //POST Insertar Miembro
@@ -364,42 +442,24 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
     
     $sql = "INSERT INTO tb_members (id_member, name, last_name, birthday, member_code, club_code
     , email, phone, cellphone, id_rol_member, gender, admission_date, id_zone, password) 
-    VALUES (NULL, :name, :last_name, :birthday, :member_code, :club_code, :email, :phone, :cellphone, :id_rol_member, :gender
-    , :admission_date, :id_zone, '0000');";	
+    VALUES (NULL, '$name', '$last_name', '$birthday', '$member_code', '$club_code', '$email', '$phone', '$cellphone', '$id_rol_member', '$gender'
+    , '$admission_date', '$id_zone', '0000');";	
         
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':name', $name);
-        $resultado->bindParam(':last_name', $last_name);
-        $resultado->bindParam(':birthday', $birthday);
-        $resultado->bindParam(':member_code', $member_code);
-        $resultado->bindParam(':club_code', $club_code);
-        $resultado->bindParam(':email', $email);
-        $resultado->bindParam(':phone', $phone);
-        $resultado->bindParam(':cellphone', $cellphone);
-        $resultado->bindParam(':id_rol_member', $id_rol_member);
-        $resultado->bindParam(':gender', $gender);
-        $resultado->bindParam(':admission_date', $admission_date);
-        $resultado->bindParam(':id_zone', $id_zone);
+        $link = $db->dbConnection();
 
         $directory = $this->get('upload_directory_members');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
-            if ($resultado->execute()) {
+            if ($resultado = mysqli_query($link, $sql)) {
                 foreach ($type_member as $value) {
                     # code...
                     $sql = "INSERT INTO tb_type_members
-                    (id_type, member_code) VALUES (:id_type, :member_code)";
+                    (id_type, member_code) VALUES ('$id_type', '$member_code')";
 
-                    $resultado = $db->prepare($sql);
-                    $resultado->bindParam(':id_type', $value);
-                    $resultado->bindParam(':member_code', $member_code);
-
-                    $resultado->execute();
+                    $resultado = mysqli_query($link, $sql);
                 }
                 $result = 1;
                 $message = "Miembro Agregado Exitosamente!";
@@ -410,53 +470,46 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
         } else {
             $uploadedFile = $uploadedFiles['files'];
 
-            $db->beginTransaction();
-
-            if ($resultado->execute()) {
+            mysqli_begin_transaction($link, MYSQLI_TRANS_START_READ_WRITE);
+            if ($resultado = mysqli_query($link, $sql)) {
                 //
                 if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
                     $filename = moveUploadedFileMembers($directory, $uploadedFile);
 
-                    $image_path = $directory.'/'.$filename;
-                    $lastInsertId = $db->lastInsertId();
+                    // $image_path = $directory.'/'.$filename;
+                    $image_path = $filename;
+                    $lastInsertId = mysqli_insert_id($link);
                     $sql = "UPDATE tb_members
-                    SET img_url = :img_url
+                    SET img_url = '$image_path'
                     WHERE id_member = $lastInsertId
                     LIMIT 1";
 
-                    $resultado = $db->prepare($sql);
-                    $resultado->bindParam(':img_url', $image_path);
-
-                    if ($resultado->execute()) {
+                    if ($resultado = mysqli_query($link, $sql)) {
                         foreach ($type_member as $value) {
                             # code...
                             $sql = "INSERT INTO tb_type_members
-                            (id_type, member_code) VALUES (:id_type, :member_code)";
+                            (id_type, member_code) VALUES ('$id_type', '$member_code')";
         
-                            $resultado = $db->prepare($sql);
-                            $resultado->bindParam(':id_type', $value);
-                            $resultado->bindParam(':member_code', $member_code);
-        
-                            $resultado->execute();
+                            $resultado = mysqli_query($link, $sql);
                         }
-                        $db->commit();
+                        mysqli_commit($link);
                         $result = 1;
                         $message = "Miembro Agregado Exitosamente!";
                     } else {
                         $result = 0;
-                        $message = "No ha sido posible agregar el miembro!";
-                        $db->rollBack();
+                        $message = "No ha sido posible agregar el miembro 1!";
+                        mysqli_rollback($link);
                     }
                 } else {
                     $result = 0;
-                    $message = "No ha sido posible agregar el miembro!";
-                    $db->rollBack();
+                    $message = "No ha sido posible agregar el miembro 2!";
+                    mysqli_rollback($link);
                 }
                 //
             } else {
-                $db->rollBack();
+                mysqli_rollback($link);
                 $result = 0;
-                $message = "No ha sido posible agregar el miembro!";
+                $message = "No ha sido posible agregar el miembro 3!";
             }
         }
         $out['ok'] = 1;
@@ -466,6 +519,8 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // PUT Editar un miembro
@@ -496,45 +551,30 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
+        $link = $db->dbConnection();
 
         $directory = $this->get('upload_directory_members');
+        //$directory = $this->get('base_url_members');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
             //Query de edicion sin cambio de imagen
             $sql = "UPDATE tb_members SET
-            name = :name,
-            last_name = :last_name,
-            birthday = :birthday,
-            member_code = :member_code,
-            club_code = :club_code,
-            email = :email,
-            phone = :phone,
-            cellphone = :cellphone,
-            id_rol_member = :id_rol_member,
-            gender = :gender,
-            admission_date = :admission_date,
-            id_zone = :id_zone,
-            password = :password
+            name = '$name',
+            last_name = '$last_name',
+            birthday = '$birthday',
+            member_code = '$member_code',
+            club_code = '$club_code',
+            email = '$email',
+            phone = '$phone',
+            cellphone = '$cellphone',
+            id_rol_member = '$id_rol_member',
+            gender = '$gender',
+            admission_date = '$admission_date',
+            id_zone = '$id_zone',
+            password = '$password'
             WHERE id_member = $id_member
             LIMIT 1";
-
-            $resultado = $db->prepare($sql);
-
-            $resultado->bindParam(':name', $name);
-            $resultado->bindParam(':last_name', $last_name);
-            $resultado->bindParam(':birthday', $birthday);
-            $resultado->bindParam(':member_code', $member_code);
-            $resultado->bindParam(':club_code', $club_code);
-            $resultado->bindParam(':email', $email);
-            $resultado->bindParam(':phone', $phone);
-            $resultado->bindParam(':cellphone', $cellphone);
-            $resultado->bindParam(':id_rol_member', $id_rol_member);
-            $resultado->bindParam(':gender', $gender);
-            $resultado->bindParam(':admission_date', $admission_date);
-            $resultado->bindParam(':id_zone', $id_zone);
-            $resultado->bindParam(':password', $password);
 
         } else {
             $uploadedFile = $uploadedFiles['files'];
@@ -542,55 +582,37 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
             if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
                 //Se mueve el file a la ubicacion
                 $filename = moveUploadedFileMembers($directory, $uploadedFile);
-                //Generacion del nuevo path
-                $image_path = $directory.'/'.$filename;
 
                 //Seleccion del path actual
                 $sql = "SELECT img_url
                 FROM tb_members
                 WHERE id_member = $id_member";
 
-                $resultado = $db->query($sql);
-                $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
-                unlink($oldImagePath[0]->img_url);
+                $resultado = mysqli_query($link, $sql);
+                $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+                unlink($directory.'/'.$row['img_url']);
+                mysqli_free_result($resultado);
 
                 //Se elimina el file actual
 
                 //Query de edicion con cambio de imagen
                 $sql = "UPDATE tb_members SET
-                name = :name,
-                last_name = :last_name,
-                birthday = :birthday,
-                member_code = :member_code,
-                club_code = :club_code,
-                email = :email,
-                phone = :phone,
-                cellphone = :cellphone,
-                id_rol_member = :id_rol_member,
-                gender = :gender,
-                admission_date = :admission_date,
-                id_zone = :id_zone,
-                password = :password,
-                img_url = :image_path
+                name = '$name',
+                last_name = '$last_name',
+                birthday = '$birthday',
+                member_code = '$member_code',
+                club_code = '$club_code',
+                email = '$email',
+                phone = '$phone',
+                cellphone = '$cellphone',
+                id_rol_member = '$id_rol_member',
+                gender = '$gender',
+                admission_date = '$admission_date',
+                id_zone = '$id_zone',
+                password = '$password',
+                img_url = '$filename'
                 WHERE id_member = $id_member
                 LIMIT 1";
-
-                $resultado = $db->prepare($sql);
-
-                $resultado->bindParam(':name', $name);
-                $resultado->bindParam(':last_name', $last_name);
-                $resultado->bindParam(':birthday', $birthday);
-                $resultado->bindParam(':member_code', $member_code);
-                $resultado->bindParam(':club_code', $club_code);
-                $resultado->bindParam(':email', $email);
-                $resultado->bindParam(':phone', $phone);
-                $resultado->bindParam(':cellphone', $cellphone);
-                $resultado->bindParam(':id_rol_member', $id_rol_member);
-                $resultado->bindParam(':gender', $gender);
-                $resultado->bindParam(':admission_date', $admission_date);
-                $resultado->bindParam(':id_zone', $id_zone);
-                $resultado->bindParam(':password', $password);
-                $resultado->bindParam(':image_path', $image_path);
 
             } else {
                 //Fallo en el upload del file
@@ -602,13 +624,12 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
             }
         }
 
-        if ($resultado->execute()) {
+        if ($resultado = mysqli_query($link, $sql)) {
             //Eliminan relaciones de tipo actuales
             $sql = "DELETE FROM tb_type_members 
             WHERE member_code = $member_code";
 
-            $resultado = $db->prepare($sql);
-            if(!$resultado->execute()){
+            if(!$resultado = mysqli_query($link, $sql)){
                 $out['ok'] = 1;
                 $out['result'] = 0;
                 $out['message'] = "No se han podido eliminar las relaciones de tipo miembro";
@@ -620,13 +641,9 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
             foreach ($type_member as $value) {
                 # code...
                 $sql = "INSERT INTO tb_type_members
-                (id_type, member_code) VALUES (:id_type, :member_code)";
+                (id_type, member_code) VALUES ('$id_type', '$member_code')";
 
-                $resultado = $db->prepare($sql);
-                $resultado->bindParam(':id_type', $value);
-                $resultado->bindParam(':member_code', $member_code);
-
-                $resultado->execute();
+                $resultado = mysqli_query($link, $sql);
             }
             $result = 1;
             $message = "Miembro Editado Exitosamente!";
@@ -641,64 +658,8 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
-});
-
-//PUT Subir foto
-$app->post('/api/miembro_foto/{id}', function(Request $request, Response $response){
-    //Seteo del pais o cuenta
-    $selecteddb = json_decode($request->getHeaderLine('Country'));
-    //
-    $id_member = $request->getAttribute('id');
-    $message = '';
-    $result = 0;
-
-    try {
-        $db = new db($selecteddb);
-        $db = $db->dbConnection();
-
-        $directory = $this->get('upload_directory_members');
-        $uploadedFiles = $request->getUploadedFiles();
-        // handle single input with single file upload
-            $uploadedFile = $uploadedFiles['files'];
-            //Comprobacion del upload
-            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                //Se mueve el file a la ubicacion
-                $filename = moveUploadedFileMembers($directory, $uploadedFile);
-                //Generacion del nuevo path
-                $image_path = $directory.'/'.$filename;
-
-                //Query de edicion con cambio de imagen
-                $sql = "UPDATE tb_members SET
-                img_url = :image_path
-                WHERE id_member = $id_member
-                LIMIT 1";
-
-                $resultado = $db->prepare($sql);
-                $resultado->bindParam(':image_path', $image_path);
-
-            } else {
-                //Fallo en el upload del file
-                $out['ok'] = 1;
-                $out['result'] = 0;
-                $out['message'] = "No ha sido posible editar el miembro, error al guardar imagen!";
-                echo json_encode($out, JSON_UNESCAPED_UNICODE);
-                die();
-            }
-
-        if ($resultado->execute()) {
-            $result = 1;
-            $message = "Miembro Editado Exitosamente!";
-        } else {
-            $result = 0;
-            $message = "No ha sido posible editar el miembro!";
-        }
-        $out['ok'] = 1;
-        $out['result'] = $result;
-        $out['message'] = $message;
-        echo json_encode($out, JSON_UNESCAPED_UNICODE);
-    } catch (PDOException $e) {
-        echo '{"error" : {"text":'.$e.getMessage().'}';
-    }
+    // Close connection
+    $link->close();
 });
 
 // PUT Editar status de un miembro
@@ -711,32 +672,19 @@ $app->put('/api/miembro_delete/{id}', function(Request $request, Response $respo
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-
-        //Seleccion del path actual
-        // $sql = "SELECT img_url
-        // FROM tb_members
-        // WHERE id_member = $id_member";
-
-        // $resultado = $db->query($sql);
-        // $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
-        // //Eliminando imagen
-        // unlink($oldImagePath[0]->image_path);
-        //
+        $link = $db->dbConnection();
 
         $sql = "UPDATE tb_members
         SET status = 0
         WHERE id_member = $id_member
         LIMIT 1";
 
-        $resultado = $db->prepare($sql);
-
-        if ($resultado->execute()) {
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Miembro Eliminado Exitosamente!";
+            $message = "Miembro eliminado exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible eliminar el miembro!";
+            $message = "No ha sido posible eliminar el Miembro!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -745,6 +693,8 @@ $app->put('/api/miembro_delete/{id}', function(Request $request, Response $respo
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 function moveUploadedFileMembers($directory, UploadedFile $uploadedFile)

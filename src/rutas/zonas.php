@@ -32,14 +32,20 @@ $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Respo
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $zonas = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1;
-        } else {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $zonas[] = $row;
+                }
+                $message = 'Si hay zonas registradas';
+                $result = 1;
+            } else {
             $result  = 0;
             $message = 'No hay zonas registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
@@ -50,6 +56,8 @@ $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Respo
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 
 // GET Obtener las zonas por filtro
@@ -70,18 +78,25 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
 			FROM tb_zone 
 			WHERE status = 1
 			ORDER BY id_zone ASC
-			LIMIT 10 OFFSET $index;";
+            LIMIT 10 OFFSET $index;";
     
     try {
+        
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $zonas = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1;
-        } else {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $zonas[] = $row;
+                }
+                $message = 'Si hay zonas registradas';
+                $result = 1;
+            } else {
             $result  = 0;
             $message = 'No hay zonas registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
@@ -92,6 +107,8 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();   
 });
 
 // GET Obtener las zonas por region
@@ -111,14 +128,20 @@ $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $zonas = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1;
-        } else {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $zonas[] = $row;
+                }
+                $message = 'Si hay zonas registradas';
+                $result = 1;
+            } else {
             $result  = 0;
             $message = 'No hay zonas registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
@@ -129,6 +152,8 @@ $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 
 // POST Agregar una zona
@@ -141,20 +166,14 @@ $app->post('/api/zona_add', function(Request $request, Response $response){
     
 
     $sql = "INSERT INTO tb_zone (id_zone, description, id_region)
-    VALUES (:id_zone, :description, :id_region);";
+    VALUES ('$description', '$description', '$id_region');";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':id_zone', $description);
-        $resultado->bindParam(':description', $description);
-        $resultado->bindParam(':id_region', $id_region);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Zona Agregada Exitosamente!";
+            $message = "Zona agregada exitosamente!";
         } else {
             $result = 0;
             $message = "No ha sido posible agregar la zona!";
@@ -166,6 +185,8 @@ $app->post('/api/zona_add', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 
 // PUT Editar una zona
@@ -178,22 +199,17 @@ $app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
     $id_region = $request->getParam('id_region');
 
     $sql = "UPDATE tb_zone SET 
-    description = :description
-    ,id_region = :id_region
+    description = '$description'
+    ,id_region = '$id_region'
     WHERE id_zone = '$id_zone'
     LIMIT 1";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':description', $description);
-        $resultado->bindParam(':id_region', $id_region);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Zona Editada Exitosamente!";
+            $message = "Zona editada exitosamente!";
         } else {
             $result = 0;
             $message = "No ha sido posible editar la zona!";
@@ -205,6 +221,8 @@ $app->put('/api/zona_edit/{id}', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 
 // PUT Editar status de una zona
@@ -216,23 +234,19 @@ $app->put('/api/zona_delete/{id}', function(Request $request, Response $response
     $status = 0;
 
     $sql = "UPDATE tb_zone SET 
-    status = :status
+    status = $status
     WHERE id_zone = '$id_zone'
     LIMIT 1";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':status',$status);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Region Eliminada Exitosamente!";
+            $message = "Zona eliminada exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible eliminar el region!";
+            $message = "No ha sido posible eliminar la zona!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -241,4 +255,6 @@ $app->put('/api/zona_delete/{id}', function(Request $request, Response $response
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });

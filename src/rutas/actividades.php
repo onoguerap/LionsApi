@@ -6,6 +6,7 @@ use Slim\Http\UploadedFile;
 //$app = new \Slim\App;
 $container = $app->getContainer();
 $container['upload_directory_activities'] = __DIR__ . '/uploads/actividades';
+$container['base_url_activities'] = 'http://138.68.239.185/uploads/actividades/';
 
 // GET Obtener los miembros por filtro o la totalidad
 $app->get('/api/actividades', function(Request $request, Response $response){
@@ -22,14 +23,20 @@ $app->get('/api/actividades', function(Request $request, Response $response){
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $activities = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1;
-        } else {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $activities[] = $row;
+                }
+                $message = 'Si hay actividades registradas';
+                $result = 1;
+            } else {
             $result  = 0;
             $message = 'No hay actividades registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
@@ -40,6 +47,8 @@ $app->get('/api/actividades', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // POST Agregar una actividad
@@ -52,58 +61,56 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
     $description = $request->getParam('description');
 
     $sql = "INSERT INTO tb_activities (id_activity, title, schedule, description)
-    VALUES (null, :title, :schedule, :description);";
+    VALUES (null, '$title', '$schedule', '$description');";
 
     // $this->db->beginTransaction(); , $this->db->commit(); and $this->db->rollBack();
 
     try {
+ 
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
+        $link = $db->dbConnection();
 
-        $resultado->bindParam(':title', $title);
-        $resultado->bindParam(':schedule', $schedule);
-        $resultado->bindParam(':description', $description);
-
-        $directory = $this->get('upload_directory_activities');
+        // $directory = $this->get('upload_directory_activities');
+        $directory = $this->get('base_url_activities');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
-        if(!isset($uploadedFiles['files'])) {
+        if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
             $result = 0;
             $message = "No ha sido posible agregar la actividad, imagen no enviada!";
         } else {
             $uploadedFile = $uploadedFiles['files'];
 
-            $db->beginTransaction();
+            mysqli_begin_transaction($link, MYSQLI_TRANS_START_READ_WRITE);
 
-            if ($resultado->execute()) {
+            if ($resultado = mysqli_query($link, $sql)) {
                 //
                 if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                    $filename = moveUploadedFile($directory, $uploadedFile);
 
-                    $image_path = $directory.'/'.$filename;
-                    $lastInsertId = $db->lastInsertId();
+                   
+                    $filename = moveUploadedFileActivities($directory, $uploadedFile);
+
+                    $image_path = $directory.''.$filename;
+                    echo $image_path;
+                    $lastInsertId = mysqli_insert_id($link);
+                    echo $lastInsertId;
                     $sql = "UPDATE tb_activities
-                    SET image_path = :image_path
+                    SET image_path = '$image_path'
                     WHERE id_activity = $lastInsertId
                     LIMIT 1";
 
-                    $resultado = $db->prepare($sql);
-                    $resultado->bindParam(':image_path', $image_path);
-
-                    if ($resultado->execute()) {
-                        $db->commit();
+                    if ($resultado = mysqli_query($link, $sql)) {
+                        mysqli_commit($link);
                         $result = 1;
                         $message = "Actividad Agregada Exitosamente!";
                     } else {
                         $result = 0;
                         $message = "No ha sido posible agregar la actividad!";
-                        $db->rollBack();
+                        mysqli_rollback($link);
                     }
                 } else {
                     $result = 0;
                     $message = "No ha sido posible agregar la actividad!";
-                    $db->rollBack();
+                    mysqli_rollback($link);
                 }
                 //
             } else {
@@ -119,6 +126,8 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // PUT Editar una actividad
@@ -134,25 +143,26 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
+        $link = $db->dbConnection();
 
-        $directory = $this->get('upload_directory_activities');
+        // $directory = $this->get('upload_directory_activities');
+        $directory = $this->get('base_url_activities');
         $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
         if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
             //Query de edicion sin cambio de imagen
             $sql = "UPDATE tb_activities SET
-            title = :title,
-            schedule = :schedule,
-            description = :description
+            title = '$title',
+            schedule = '$schedule',
+            description = '$description'
             WHERE id_activity = $id_activity
             LIMIT 1";
 
-            $resultado = $db->prepare($sql);
+            // $resultado = $db->prepare($sql);
 
-            $resultado->bindParam(':title', $title);
-            $resultado->bindParam(':schedule', $schedule);
-            $resultado->bindParam(':description', $description);
+            // $resultado->bindParam(':title', $title);
+            // $resultado->bindParam(':schedule', $schedule);
+            // $resultado->bindParam(':description', $description);
 
         } else {
             $uploadedFile = $uploadedFiles['files'];
@@ -161,34 +171,36 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
                 //Se mueve el file a la ubicacion
                 $filename = moveUploadedFileActivities($directory, $uploadedFile);
                 //Generacion del nuevo path
-                $image_path = $directory.'/'.$filename;
+                $image_path = $directory.''.$filename;
 
                 //Seleccion del path actual
                 $sql = "SELECT image_path
                 FROM tb_activities
                 WHERE id_activity = $id_activity";
 
-                $resultado = $db->query($sql);
-                $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
-                unlink($oldImagePath[0]->image_path);
+                $resultado = mysqli_query($link, $sql);
+                $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+                // $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
+                unlink($row['image_path']);
+                mysqli_free_result($resultado);
 
                 //Se elimina el file actual
 
                 //Query de edicion con cambio de imagen
                 $sql = "UPDATE tb_activities SET
-                title = :title,
-                schedule = :schedule,
-                description = :description,
-                image_path = :image_path
+                title = '$title',
+                schedule = '$schedule',
+                description = '$description',
+                image_path = '$image_path'
                 WHERE id_activity = $id_activity
                 LIMIT 1";
 
-                $resultado = $db->prepare($sql);
+                $resultado = mysqli_query($link, $sql);
 
-                $resultado->bindParam(':title', $title);
-                $resultado->bindParam(':schedule', $schedule);
-                $resultado->bindParam(':description', $description);
-                $resultado->bindParam(':image_path', $image_path);
+                // $resultado->bindParam(':title', $title);
+                // $resultado->bindParam(':schedule', $schedule);
+                // $resultado->bindParam(':description', $description);
+                // $resultado->bindParam(':image_path', $image_path);
 
             } else {
                 //Fallo en el upload del file
@@ -200,7 +212,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
             }
         }
 
-        if ($resultado->execute()) {
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
             $message = "Actividad Editada Exitosamente!";
         } else {
@@ -214,6 +226,8 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // DELETE Editar status de una zona
@@ -226,31 +240,31 @@ $app->delete('/api/actividad_delete/{id}', function(Request $request, Response $
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
+        $link = $db->dbConnection();
 
         //Seleccion del path actual
         $sql = "SELECT image_path
         FROM tb_activities
         WHERE id_activity = $id_activity";
 
-        $resultado = $db->query($sql);
-        $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
+        $resultado = mysqli_query($link, $sql);
+        $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+        // $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
         //Eliminando imagen
-        unlink($oldImagePath[0]->image_path);
+        unlink($row['image_path']);
         //
 
         $sql = "DELETE FROM tb_activities
         WHERE id_activity = '$id_activity'
         LIMIT 1";
 
-        $resultado = $db->prepare($sql);
-
-        if ($resultado->execute()) {
+       
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Actividad Eliminada Exitosamente!";
+            $message = "Actividad eliminada exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible eliminar la actividad!";
+            $message = "No ha sido posible eliminar la Actividad!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -259,6 +273,8 @@ $app->delete('/api/actividad_delete/{id}', function(Request $request, Response $
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 

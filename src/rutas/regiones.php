@@ -31,14 +31,20 @@ $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Re
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $regiones = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1;
-        } else {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $regiones[] = $row;
+                }
+                $message = 'Si hay regiones registradas';
+                $result = 1;
+            } else {
             $result  = 0;
             $message = 'No hay regiones registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
@@ -72,14 +78,20 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $regiones = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1;
-        } else {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $regiones[] = $row;
+                }
+                $message = 'Si hay regiones registradas';
+                $result = 1;
+            } else {
             $result  = 0;
             $message = 'No hay regiones registradas';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
@@ -90,6 +102,8 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 // POST Agregar una region
 $app->post('/api/region_add', function(Request $request, Response $response){
@@ -99,19 +113,14 @@ $app->post('/api/region_add', function(Request $request, Response $response){
     $description = $request->getParam('description');
 
     $sql = "INSERT INTO tb_region (id_region, description)
-    VALUES (:id_region, :description);";
+    VALUES ('$description', '$description');";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':id_region', $description);
-        $resultado->bindParam(':description', $description);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Region Agregada Exitosamente!";
+            $message = "Region agregada exitosamente!";
         } else {
             $result = 0;
             $message = "No ha sido posible agregar la region!";
@@ -123,6 +132,8 @@ $app->post('/api/region_add', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 
 // PUT Editar una region
@@ -134,20 +145,16 @@ $app->put('/api/region_edit/{id}', function(Request $request, Response $response
     $description = $request->getParam('description');
 
     $sql = "UPDATE tb_region SET 
-    description = :description
+    description = '$description'
     WHERE id_region = '$id_region'
     LIMIT 1";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':description', $description);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Region Editada Exitosamente!";
+            $message = "Region editada exitosamente!";
         } else {
             $result = 0;
             $message = "No ha sido posible editar la region!";
@@ -159,6 +166,8 @@ $app->put('/api/region_edit/{id}', function(Request $request, Response $response
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });
 
 // PUT Editar status de una region
@@ -170,23 +179,19 @@ $app->put('/api/region_delete/{id}', function(Request $request, Response $respon
     $status = 0;
 
     $sql = "UPDATE tb_region SET 
-    status = :status
+    status = $status
     WHERE id_region = '$id_region'
     LIMIT 1";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':status',$status);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Region Eliminada Exitosamente!";
+            $message = "Region eliminada exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible eliminar el region!";
+            $message = "No ha sido posible eliminar la region!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -195,4 +200,6 @@ $app->put('/api/region_delete/{id}', function(Request $request, Response $respon
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close(); 
 });

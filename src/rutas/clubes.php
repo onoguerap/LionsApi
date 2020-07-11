@@ -33,14 +33,20 @@ $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Resp
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $clubs = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros!";
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $clubs[] = $row;
+                }
+                $message = 'Si hay clubs registrados';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay clubs registrados';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -50,6 +56,8 @@ $app->get('/api/clubes_search/{search}/{index}', function(Request $request, Resp
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener los clubes
@@ -77,14 +85,20 @@ $app->get('/api/clubes/{index}', function(Request $request, Response $response, 
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $clubs = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron miembros!";
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $clubs[] = $row;
+                }
+                $message = 'Si hay clubs registrados';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay clubs registrados';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -94,6 +108,8 @@ $app->get('/api/clubes/{index}', function(Request $request, Response $response, 
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // GET Obtener la información del club
@@ -132,20 +148,43 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         AND T.isClub = 1;";
     
     try {
+        // $db = new db($selecteddb);
+        // $db = $db->dbConnection();
+        // $resultado = $db->query($sql);
+        // if ($resultado->rowCount() > 0) {
+        //     $clubs = $resultado->fetchAll(PDO::FETCH_OBJ);
+        //     //
+        //     $resultado = $db->query($sql2);
+        //     if ($resultado->rowCount() > 0) {
+        //         $club_government = $resultado->fetchAll(PDO::FETCH_OBJ);
+        //     }
+        //     $result  = 1;
+        // } else {
+        //     $result = 0;
+        //     $message = "No se encontraron clubes con ese ID!";
+        // }
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $clubs = $resultado->fetchAll(PDO::FETCH_OBJ);
-            //
-            $resultado = $db->query($sql2);
-            if ($resultado->rowCount() > 0) {
-                $club_government = $resultado->fetchAll(PDO::FETCH_OBJ);
-            }
-            $result  = 1;
-        } else {
-            $result = 0;
-            $message = "No se encontraron clubes con ese ID!";
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $clubs[] = $row;
+                }
+                if ($resultado = mysqli_query($link, $sql2)) {
+                    if (mysqli_num_rows($resultado) > 0) {
+                        while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                            $club_government[] = $row;
+                        }
+                    }
+                }
+                $message = 'Si hay clubs registrados';
+                $result = 1;
+            } else {
+            $result  = 0;
+            $message = 'No hay clubs registrados';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -156,6 +195,8 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // POST Agregar un club
@@ -169,31 +210,21 @@ $app->post('/api/club_add', function(Request $request, Response $response){
     $meeting_hour = $request->getParam('meeting_hour');
     $id_region = $request->getParam('id_region');
     $id_zone = $request->getParam('id_zone');
+    date_default_timezone_set('America/Costa_Rica');
     $today = date('Y-m-d h:i:s');
 
     $sql = "INSERT INTO tb_clubs (id_club, name_club, club_code, creation_date, meeting_date, meeting_hour, id_region, id_zone)
-    VALUES (null, :name_club, :club_code, :creation_date, :meeting_date, :meeting_hour, :id_region, :id_zone);";
+    VALUES (null, '$name_club', '$club_code', '$today', '$meeting_date', '$meeting_hour', '$id_region', '$id_zone');";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':name_club', $name_club);
-        $resultado->bindParam(':club_code', $club_code);
-        $resultado->bindParam(':creation_date', $today);
-        $resultado->bindParam(':meeting_date', $meeting_date);
-        $resultado->bindParam(':meeting_hour', $meeting_hour);
-        $resultado->bindParam(':id_region', $id_region);
-        $resultado->bindParam(':id_zone', $id_zone);
-
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Club Agregado Exitosamente!";
+            $message = "Club agregado exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible agregar el club!";
+            $message = "No ha sido posible agregar el Club!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -202,6 +233,8 @@ $app->post('/api/club_add', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // PUT Editar un club
@@ -218,33 +251,24 @@ $app->put('/api/club_edit/{id}', function(Request $request, Response $response){
     $id_zone = $request->getParam('id_zone');
 
     $sql = "UPDATE tb_clubs SET 
-    name_club = :name_club, 
-    club_code = :club_code, 
-    meeting_date = :meeting_date, 
-    meeting_hour = :meeting_hour, 
-    id_region = :id_region,
-    id_zone = :id_zone
+    name_club = '$name_club', 
+    club_code = '$club_code', 
+    meeting_date = '$meeting_date', 
+    meeting_hour = '$meeting_hour', 
+    id_region = '$id_region',
+    id_zone = '$id_zone'
     WHERE id_club = $id_club
     LIMIT 1";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':name_club', $name_club);
-        $resultado->bindParam(':club_code', $club_code);
-        $resultado->bindParam(':meeting_date', $meeting_date);
-        $resultado->bindParam(':meeting_hour', $meeting_hour);
-        $resultado->bindParam(':id_region', $id_region);
-        $resultado->bindParam(':id_zone', $id_zone);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Club Editado Exitosamente!";
+            $message = "Club editado exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible editar el club!";
+            $message = "No ha sido posible editar el Club!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -253,6 +277,8 @@ $app->put('/api/club_edit/{id}', function(Request $request, Response $response){
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });
 
 // PUT Editar status de un club
@@ -264,22 +290,18 @@ $app->put('/api/club_delete/{id}', function(Request $request, Response $response
     $status = 0;
 
     $sql = "UPDATE tb_clubs SET 
-    status = :status
+    status = $status
     WHERE id_club = $id_club";
 
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->prepare($sql);
-
-        $resultado->bindParam(':status',$status);
-
-        if ($resultado->execute()) {
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
             $result = 1;
-            $message = "Club Eliminado Exitosamente!";
+            $message = "Club eliminado exitosamente!";
         } else {
             $result = 0;
-            $message = "No ha sido posible eliminar el club!";
+            $message = "No ha sido posible eliminar el Club!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
@@ -288,4 +310,6 @@ $app->put('/api/club_delete/{id}', function(Request $request, Response $response
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
+    // Close connection
+    $link->close();
 });

@@ -3,7 +3,6 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 //$app = new \Slim\App;
-session_start();
 // GET User for member code
 $app->get('/api/login/{member_code}/{password}', function(Request $request, Response $response, array $args)  {
     //Seteo del pais o cuenta
@@ -15,40 +14,46 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
         $result = 0;
 		$member = array();
 		
-		if ($password != 0) {
-			$sql = "SELECT * 
-			FROM tb_members 
-			WHERE member_code = $member_code 
-			AND password = $password
-			AND id_rol_member = 1 OR id_rol_member = 2
-            AND status = 1
-			ORDER BY member_code DESC LIMIT 1";
-		} else {
-			$sql = "SELECT * 
-			FROM tb_members 
-			WHERE member_code = $member_code 
-			AND id_rol_member = 3
-            AND status = 1
-			ORDER BY member_code DESC LIMIT 1";
-		}
-
+        $sql = "SELECT * 
+        FROM tb_members 
+        WHERE member_code = $member_code 
+        AND password = '$password'
+        AND status = 1
+        ORDER BY member_code DESC LIMIT 1";
     
     try {
         $db = new db($selecteddb);
-        $db = $db->dbConnection();
-        $resultado = $db->query($sql);
-        if ($resultado->rowCount() > 0) {
-            $member = $resultado->fetchAll(PDO::FETCH_OBJ);
-            $result = 1; 
-        } else {
+        $link = $db->dbConnection();
+        $directory = $this->get('base_url_members');
+
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+                $member = $row;
+                $member['img_url'] = $directory.''.$member['img_url'];
+                $sql = "SELECT *
+                FROM tb_countries
+                WHERE id_country = $selecteddb";
+
+                if ($resultado = mysqli_query($link, $sql)) {
+                    $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+                    $country = $row;
+                    $message = 'Usuario Logueado';
+                    $result = 1;
+                }
+            } else {
             $result  = 0;
-            $message = 'El número de miembro es Inválido';
+            $message = 'Usuario NO Logueado';
+        }
+        /* liberar el conjunto de resultados */
+        mysqli_free_result($resultado);  
         }
 
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
-        $out['data'] = $member;
+        $out['data']['member'] = $member;
+        $out['data']['country'] = $country;
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';

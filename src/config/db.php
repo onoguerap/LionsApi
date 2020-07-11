@@ -1,8 +1,9 @@
 <?php
     class db{
-        private $dbHost = 'localhost';
-        private $dbUser = 'root';
-        private $dbPass = '';
+        private $dbHost = 'mysql-10842-0.cloudclusters.net';
+        private $dbPort = '10880';
+        private $dbUser = 'lions';
+        private $dbPass = 'Kongo2020$';
         private $dbName = '';
 
         function __construct()
@@ -28,11 +29,15 @@
             }
         }
 
-        //conexión
         public function dbConnection() {
-            $mysqlConnect = "mysql:host = $this->dbHost;dbname=$this->dbName";
-            $dbConnection = new PDO($mysqlConnect, $this->dbUser, $this->dbPass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES  \'UTF8\''));
-            $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $dbConnection;
+        $link = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPass, $this->dbName, $this->dbPort);
+
+        if (!$link) {
+            echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+            echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
+            echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
+            exit;
+        }        
+        return $link;
         }
     }
