@@ -1,7 +1,6 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use Slim\Http\UploadedFile;
 
 // GET Obtener los tipos
 $app->get('/api/paises', function(Request $request, Response $response, array $args){

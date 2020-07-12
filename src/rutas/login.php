@@ -7,7 +7,6 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/api/login/{member_code}/{password}', function(Request $request, Response $response, array $args)  {
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
-    $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
 		$member_code = $args['member_code'];
         $password = $args['password'];
@@ -16,12 +15,21 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
         $member = array();
         $country = array();
 		
-        $sql = "SELECT * 
-        FROM tb_members 
-        WHERE member_code = $member_code 
-        AND password = '$password'
-        AND status = 1
-        ORDER BY member_code DESC LIMIT 1";
+        $sql = "SELECT M.*, C.name_club
+        , GROUP_CONCAT(T.description)  type_member
+        , GROUP_CONCAT(T.id_type)  type_member_id
+        , R.description rol_member
+        , R.id_rol_member
+        FROM tb_members M
+        INNER JOIN tb_clubs C ON M.club_code = C.club_code
+        INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
+        INNER JOIN tb_type T ON TM.id_type = T.id_type
+        INNER JOIN tb_rol R ON M.id_rol_member = R.id_rol_member 
+        WHERE M.member_code = '$member_code' 
+        AND M.password = '$password'
+        AND M.status = 1
+        GROUP BY id_member, name_club
+        ORDER BY M.member_code DESC LIMIT 1";
     
     try {
         $db = new db($selecteddb);

@@ -218,8 +218,6 @@ $app->post('/api/club_add', function(Request $request, Response $response){
 
     $sql = "INSERT INTO tb_clubs (id_club, name_club, club_code, creation_date, meeting_date, meeting_hour, id_region, id_zone)
     VALUES (null, '$name_club', '$club_code', '$today', '$meeting_date', '$meeting_hour', '$id_region', '$id_zone');";
- 
- echo $sql;
 
     try {
         $db = new db($selecteddb);

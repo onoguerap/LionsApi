@@ -137,6 +137,7 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
 		
 		$sql = "SELECT M.*, C.name_club
     , GROUP_CONCAT(T.description)  type_member
+    , GROUP_CONCAT(T.id_type)  type_member_id
     , R.description rol_member
 		FROM tb_members M
 		INNER JOIN tb_clubs C ON M.club_code = C.club_code
@@ -694,6 +695,53 @@ $app->put('/api/miembro_delete/{id}', function(Request $request, Response $respo
         } else {
             $result = 0;
             $message = "No ha sido posible eliminar el Miembro!";
+        }
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+    // Close connection
+    $link->close();
+});
+// PUT Editar un miembro
+$app->put('/api/miembro_edit_perfil/{id}', function(Request $request, Response $response){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
+    $id_member = $request->getAttribute('id');
+    $birthday = $request->getParam('birthday');
+    $email = $request->getParam('email');
+    $phone = $request->getParam('phone');
+    $cellphone = $request->getParam('cellphone');
+    $admission_date = date('Y-m-d h:i:s');
+
+    $message = '';
+    $result = 0;
+
+    try {
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
+        
+            //Query de edicion sin cambio de imagen
+            $sql = "UPDATE tb_members SET
+            birthday = '$birthday',
+            email = '$email',
+            phone = '$phone',
+            cellphone = '$cellphone',
+            admission_date = '$admission_date'
+            WHERE id_member = $id_member
+            LIMIT 1";
+
+        if ($resultado = mysqli_query($link, $sql)) {
+            $result = 1;
+            $message = "Miembro Editado Exitosamente!";
+        } else {
+            $result = 0;
+            $message = "No ha sido posible editar el miembro!";
         }
         $out['ok'] = 1;
         $out['result'] = $result;
