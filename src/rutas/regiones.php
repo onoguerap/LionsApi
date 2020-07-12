@@ -62,11 +62,11 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
-		$index = $args['index'];
+    $index = $args['index'];
 
-		if (!isset($index)){
-			$index = 0;
-		}
+    if (!isset($index)){
+        $index = 0;
+    }
 
     $message = '';
     $regiones = array();
@@ -88,11 +88,11 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
                 $message = 'Si hay regiones registradas';
                 $result = 1;
             } else {
-            $result  = 0;
-            $message = 'No hay regiones registradas';
-        }
-        /* liberar el conjunto de resultados */
-        mysqli_free_result($resultado);  
+                $result  = 0;
+                $message = 'No hay regiones registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
         }
 
         $out['ok'] = 1;
@@ -104,7 +104,56 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
     // Close connection
-    $link->close(); 
+    $link->close();
+});
+// GET Obtener la region para edicion
+$app->get('/api/region/{id_region}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
+    $id_region = $args['id_region'];
+
+    if (!isset($id_region)){
+        $id_region = 0;
+    }
+
+    $message = '';
+    $regiones = array();
+
+    $sql = "SELECT * 
+		FROM tb_region 
+		WHERE status = 1
+		AND id_region = '$id_region'
+		LIMIT 1;";
+
+    try {
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $regiones[] = $row;
+                }
+                $message = 'Si hay regiones registradas';
+                $result = 1;
+            } else {
+                $result  = 0;
+                $message = 'No hay regiones registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
+        }
+
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        $out['data'] = $regiones;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+    // Close connection
+    $link->close();
 });
 // GET Obtener las todas las regiones
 $app->get('/api/todas_regiones', function(Request $request, Response $response, array $args){
