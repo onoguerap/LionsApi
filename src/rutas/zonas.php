@@ -66,23 +66,23 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
-		$index = $args['index'];
+    $index = $args['index'];
 
-		if (!isset($index)){
-			$index = 0;
-		}
+    if (!isset($index)){
+        $index = 0;
+    }
 
     $message = '';
     $zonas = array();
 
-			$sql = "SELECT * 
+    $sql = "SELECT * 
 			FROM tb_zone 
 			WHERE status = 1
 			ORDER BY id_zone ASC
             LIMIT 10 OFFSET $index;";
-    
+
     try {
-        
+
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
@@ -94,11 +94,11 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
                 $message = 'Si hay zonas registradas';
                 $result = 1;
             } else {
-            $result  = 0;
-            $message = 'No hay zonas registradas';
-        }
-        /* liberar el conjunto de resultados */
-        mysqli_free_result($resultado);  
+                $result  = 0;
+                $message = 'No hay zonas registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
         }
 
         $out['ok'] = 1;
@@ -110,9 +110,109 @@ $app->get('/api/zonas/{index}', function(Request $request, Response $response, a
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
     // Close connection
-    $link->close();   
+    $link->close();
 });
+// GET Obtener la zona por id de zona
+$app->get('/api/zona/{id_zona}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
+    $id_zona = $args['id_zona'];
 
+    if (!isset($id_zona)){
+        $id_zona = 0;
+    }
+
+    $message = '';
+    $zonas = array();
+
+    $sql = "SELECT * 
+			FROM tb_zone 
+			WHERE status = 1
+			AND id_zone = '$id_zona'";
+
+    try {
+
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $zonas[] = $row;
+                }
+                $message = 'Si hay zonas registradas';
+                $result = 1;
+            } else {
+                $result  = 0;
+                $message = 'No hay zonas registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
+        }
+
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        $out['data'] = $zonas;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+    // Close connection
+    $link->close();
+});
+// GET Obtener todas las zonas
+$app->get('/api/todas_zonas/{id_region}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+
+    $id_region = $args['id_region'];
+
+    if (!isset($id_region)){
+        $id_region = 0;
+    }
+
+    $message = '';
+    $zonas = array();
+
+    $sql = "SELECT * 
+			FROM tb_zone 
+			WHERE status = 1
+			AND id_region = '$id_region'
+			ORDER BY id_zone ASC;";
+
+    try {
+
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $zonas[] = $row;
+                }
+                $message = 'Si hay zonas registradas';
+                $result = 1;
+            } else {
+                $result  = 0;
+                $message = 'No hay zonas registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
+        }
+
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        $out['data'] = $zonas;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+    // Close connection
+    $link->close();
+});
 // GET Obtener las zonas por region
 $app->get('/api/zonas_region/{id_region}', function(Request $request, Response $response, array $args){
     //Seteo del pais o cuenta

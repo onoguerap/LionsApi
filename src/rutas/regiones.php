@@ -57,7 +57,7 @@ $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Re
         echo '{"error" : {"text":'.$e.getMessage().'}';
     }
 });
-// GET Obtener las regiones
+// GET Obtener las regiones con offset
 $app->get('/api/regiones/{index}', function(Request $request, Response $response, array $args){
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
@@ -105,6 +105,48 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
     }
     // Close connection
     $link->close(); 
+});
+// GET Obtener las todas las regiones
+$app->get('/api/todas_regiones', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+
+    $message = '';
+    $regiones = array();
+
+    $sql = "SELECT * 
+		FROM tb_region 
+		WHERE status = 1
+		ORDER BY id_region ASC;";
+
+    try {
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $regiones[] = $row;
+                }
+                $message = 'Si hay regiones registradas';
+                $result = 1;
+            } else {
+                $result  = 0;
+                $message = 'No hay regiones registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
+        }
+
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        $out['data'] = $regiones;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+    // Close connection
+    $link->close();
 });
 // POST Agregar una region
 $app->post('/api/region_add', function(Request $request, Response $response){
