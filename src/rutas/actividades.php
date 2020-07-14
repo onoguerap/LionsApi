@@ -35,11 +35,64 @@ $app->get('/api/actividades', function(Request $request, Response $response){
                 $message = 'Si hay actividades registradas';
                 $result = 1;
             } else {
-            $result  = 0;
-            $message = 'No hay actividades registradas';
+                $result  = 0;
+                $message = 'No hay actividades registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
         }
-        /* liberar el conjunto de resultados */
-        mysqli_free_result($resultado);  
+
+        $out['ok'] = 1;
+        $out['result'] = $result;
+        $out['message'] = $message;
+        $out['data'] = $activities;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
+    // Close connection
+    $link->close();
+});
+
+// GET Obtener una actividad por medio del id
+$app->get('/api/actividad/{id_activity}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
+
+    $id_actividad = $args['id_activity'];
+
+    if (!isset($id_actividad)){
+        $id_actividad = 0;
+    }
+
+    $message = '';
+    $activities = array();
+
+    $sql = "SELECT * 
+		FROM tb_activities 
+		WHERE id_activity = $id_actividad
+		LIMIT 1";
+
+    try {
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
+        $base_url = $this->get('base_url_activities');
+        if ($resultado = mysqli_query($link, $sql)) {
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+                    $row['image_path'] = $base_url.''.$row['image_path'];
+                    $activities[] = $row;
+                }
+                $message = 'Si hay actividades registradas';
+                $result = 1;
+            } else {
+                $result  = 0;
+                $message = 'No hay actividades registradas';
+            }
+            /* liberar el conjunto de resultados */
+            mysqli_free_result($resultado);
         }
 
         $out['ok'] = 1;
@@ -218,7 +271,7 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
 });
 
 // DELETE Editar status de una zona
-$app->delete('/api/actividad_delete/{id}', function(Request $request, Response $response){
+$app->put('/api/actividad_delete/{id}', function(Request $request, Response $response){
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
@@ -238,11 +291,11 @@ $app->delete('/api/actividad_delete/{id}', function(Request $request, Response $
         $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
         // $oldImagePath = $resultado->fetchAll(PDO::FETCH_OBJ);
         //Eliminando imagen
-        unlink($row['image_path']);
+        //unlink($row['image_path']);
         //
 
         $sql = "DELETE FROM tb_activities
-        WHERE id_activity = '$id_activity'
+        WHERE id_activity = $id_activity
         LIMIT 1";
 
        
