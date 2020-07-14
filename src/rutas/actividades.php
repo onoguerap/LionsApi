@@ -66,60 +66,61 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
     $sql = "INSERT INTO tb_activities (id_activity, title, schedule, description)
     VALUES (null, '$title', '$schedule', '$description');";
 
-    // $this->db->beginTransaction(); , $this->db->commit(); and $this->db->rollBack();
-
     try {
  
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
-        // $directory = $this->get('upload_directory_activities');
         $directory = $this->get('upload_directory_activities');
-        $uploadedFiles = $request->getUploadedFiles();
+
+
         // handle single input with single file upload
-        if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
+        if(!isset($_FILES['foto1']) || strlen($_FILES['foto1']['name']) == 0) {
+
             $result = 0;
             $message = "No ha sido posible agregar la actividad, imagen no enviada!";
+            $out['mensaje'] = 'No se ha enviado la imagen';
+            $out['error'] = false;
         } else {
-            $uploadedFile = $uploadedFiles['files'];
 
             mysqli_begin_transaction($link, MYSQLI_TRANS_START_READ_WRITE);
 
             if ($resultado = mysqli_query($link, $sql)) {
                 //
-                if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                    $target = $directory .'/'. $_FILES['foto1']['name']; //Genera la ruta
+                    $result = 1;
 
-                   
-                    $filename = moveUploadedFileActivities($directory, $uploadedFile);
+                    if (move_uploaded_file($_FILES['foto1']['tmp_name'], $target)) { //Guarda el archivo
 
-                    $image_path = $filename;
-                    echo $image_path;
-                    $lastInsertId = mysqli_insert_id($link);
-                    echo $lastInsertId;
-                    $sql = "UPDATE tb_activities
-                    SET image_path = '$image_path'
-                    WHERE id_activity = $lastInsertId
-                    LIMIT 1";
+                        $image_path = $_FILES['foto1']['name'];
+                        $lastInsertId = mysqli_insert_id($link);
+                        $sql = "UPDATE tb_activities
+                        SET image_path = '$image_path'
+                        WHERE id_activity = $lastInsertId
+                        LIMIT 1";
 
-                    if ($resultado = mysqli_query($link, $sql)) {
-                        mysqli_commit($link);
-                        $result = 1;
-                        $message = "Actividad Agregada Exitosamente!";
+                        if ($resultado = mysqli_query($link, $sql)) {
+                            mysqli_commit($link);
+                            $result = 1;
+                            $message = "Actividad Agregada Exitosamente!";
+                            
+                        } else {
+                            $result = 0;
+                            $message = "No ha sido posible agregar la actividad!";
+                            mysqli_rollback($link);
+                        }
                     } else {
                         $result = 0;
                         $message = "No ha sido posible agregar la actividad!";
                         mysqli_rollback($link);
                     }
-                } else {
-                    $result = 0;
-                    $message = "No ha sido posible agregar la actividad!";
-                    mysqli_rollback($link);
-                }
                 //
             } else {
                 $db->rollBack();
                 $result = 0;
                 $message = "No ha sido posible agregar la actividad!";
+                $out['mensaje'] = 'No se agrego un carajo perro, tomatela!';
+                $out['error'] = false;
             }
         }
         $out['ok'] = 1;
@@ -148,11 +149,9 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
-        // $directory = $this->get('upload_directory_activities');
         $directory = $this->get('upload_directory_activities');
-        $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
-        if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
+        if(!isset($_FILES['foto1']) || strlen($_FILES['foto1']['name']) == 0) {
             //Query de edicion sin cambio de imagen
             $sql = "UPDATE tb_activities SET
             title = '$title',
@@ -161,18 +160,12 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
             WHERE id_activity = $id_activity
             LIMIT 1";
 
-            // $resultado = $db->prepare($sql);
-
-            // $resultado->bindParam(':title', $title);
-            // $resultado->bindParam(':schedule', $schedule);
-            // $resultado->bindParam(':description', $description);
-
         } else {
-            $uploadedFile = $uploadedFiles['files'];
-            //Comprobacion del upload
-            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                //Se mueve el file a la ubicacion
-                $filename = moveUploadedFileActivities($directory, $uploadedFile);
+
+            $target = $directory .'/'. $_FILES['foto1']['name']; //Genera la ruta
+            $filename = $_FILES['foto1']['name'];
+
+            if (move_uploaded_file($_FILES['foto1']['tmp_name'], $target)) { //Guarda el archivo
 
                 //Seleccion del path actual
                 $sql = "SELECT image_path
@@ -197,11 +190,6 @@ $app->post('/api/actividad_edit/{id}', function(Request $request, Response $resp
                 LIMIT 1";
 
                 $resultado = mysqli_query($link, $sql);
-
-                // $resultado->bindParam(':title', $title);
-                // $resultado->bindParam(':schedule', $schedule);
-                // $resultado->bindParam(':description', $description);
-                // $resultado->bindParam(':image_path', $image_path);
 
             } else {
                 //Fallo en el upload del file

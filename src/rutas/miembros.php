@@ -457,14 +457,13 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
         $directory = $this->get('upload_directory_members');
-        $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
-        if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
+        if(!isset($_FILES['foto1']) || strlen($_FILES['foto1']['name']) == 0) {
             if ($resultado = mysqli_query($link, $sql)) {
                 foreach ($type_member as $value) {
                     # code...
                     $sql = "INSERT INTO tb_type_members
-                    (id_type, member_code) VALUES ('$id_type', '$member_code')";
+                    (id_type, member_code) VALUES ('$value', '$member_code')";
 
                     $resultado = mysqli_query($link, $sql);
                 }
@@ -475,16 +474,16 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
                 $message = "No ha sido posible agregar el miembro!";
             }
         } else {
-            $uploadedFile = $uploadedFiles['files'];
-
+            
             mysqli_begin_transaction($link, MYSQLI_TRANS_START_READ_WRITE);
             if ($resultado = mysqli_query($link, $sql)) {
                 //
-                if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                    $filename = moveUploadedFileMembers($directory, $uploadedFile);
+                $target = $directory .'/'. $_FILES['foto1']['name']; //Genera la ruta
+                    $result = 1;
+                if (move_uploaded_file($_FILES['foto1']['tmp_name'], $target)) { //Guarda el archivo
 
                     // $image_path = $directory.'/'.$filename;
-                    $image_path = $filename;
+                    $image_path = $_FILES['foto1']['name'];
                     $lastInsertId = mysqli_insert_id($link);
                     $sql = "UPDATE tb_members
                     SET img_url = '$image_path'
@@ -495,7 +494,7 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
                         foreach ($type_member as $value) {
                             # code...
                             $sql = "INSERT INTO tb_type_members
-                            (id_type, member_code) VALUES ('$id_type', '$member_code')";
+                            (id_type, member_code) VALUES ('$value', '$member_code')";
         
                             $resultado = mysqli_query($link, $sql);
                         }
@@ -561,10 +560,8 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
         $directory = $this->get('upload_directory_members');
-        //$directory = $this->get('base_url_members');
-        $uploadedFiles = $request->getUploadedFiles();
         // handle single input with single file upload
-        if(!isset($uploadedFiles['files']) || strlen($uploadedFiles['files']->file) == 0) {
+        if(!isset($_FILES['foto1']) || strlen($_FILES['foto1']['name']) == 0) {
             //Query de edicion sin cambio de imagen
             $sql = "UPDATE tb_members SET
             name = '$name',
@@ -584,11 +581,10 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
             LIMIT 1";
 
         } else {
-            $uploadedFile = $uploadedFiles['files'];
+            $target = $directory .'/'. $_FILES['foto1']['name']; //Genera la ruta
+            $filename = $_FILES['foto1']['name'];
             //Comprobacion del upload
-            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                //Se mueve el file a la ubicacion
-                $filename = moveUploadedFileMembers($directory, $uploadedFile);
+            if (move_uploaded_file($_FILES['foto1']['tmp_name'], $target)) { //Guarda el archivo
 
                 //Seleccion del path actual
                 $sql = "SELECT img_url
@@ -650,7 +646,7 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
             foreach ($type_member as $value) {
                 # code...
                 $sql = "INSERT INTO tb_type_members
-                (id_type, member_code) VALUES ('$id_type', '$member_code')";
+                (id_type, member_code) VALUES ('$value', '$member_code')";
 
                 $resultado = mysqli_query($link, $sql);
             }
