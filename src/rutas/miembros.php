@@ -32,7 +32,9 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
 			$sql = "SELECT M.*, C.name_club 
 			FROM tb_members M
 			INNER JOIN tb_clubs C ON M.club_code = C.club_code
-			WHERE M.name LIKE '%$search%' OR M.last_name LIKE '%$search%' OR M.cellphone LIKE '%$search%' OR C.name_club LIKE '%$search%'
+            INNER JOIN tb_zone Z ON M.id_zone = Z.id_zone
+			WHERE M.name LIKE '%$search%' OR M.last_name LIKE '%$search%' OR M.cellphone LIKE '%$search%' OR C.name_club LIKE '%$search%' OR C.club_code LIKE '%$search%'
+            OR Z.description LIKE '%$search%' OR M.email LIKE '%$search%'
 			AND M.status = 1
 			LIMIT 10 OFFSET $index;";	
     
