@@ -117,7 +117,7 @@ $app->post('/api/actividad_add', function(Request $request, Response $response){
     $description = $request->getParam('description');
 
     $sql = "INSERT INTO tb_activities (id_activity, title, schedule, description, image_path)
-    VALUES (null, '$title', '$schedule', '$description', 'default.jpeg');";
+    VALUES (null, '$title', '$schedule', '$description', 'default.jpg');";
 
     try {
  

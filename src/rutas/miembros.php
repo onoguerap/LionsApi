@@ -138,12 +138,13 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
 		$sql = "SELECT M.*, C.name_club
     , GROUP_CONCAT(T.description)  type_member
     , GROUP_CONCAT(T.id_type)  type_member_id
-    , R.description rol_member
+    , R.description rol_member, Z.description zone_description
 		FROM tb_members M
 		INNER JOIN tb_clubs C ON M.club_code = C.club_code
 		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
 		INNER JOIN tb_type T ON TM.id_type = T.id_type
 		INNER JOIN tb_rol R ON M.id_rol_member = R.id_rol_member
+        INNER JOIN tb_zone Z ON M.id_zone = Z.id_zone
 		WHERE M.status = 1
 		AND M.id_member = $id_member
         GROUP BY name_club

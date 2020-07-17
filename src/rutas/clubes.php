@@ -150,21 +150,7 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         AND T.isClub = 1;";
     
     try {
-        // $db = new db($selecteddb);
-        // $db = $db->dbConnection();
-        // $resultado = $db->query($sql);
-        // if ($resultado->rowCount() > 0) {
-        //     $clubs = $resultado->fetchAll(PDO::FETCH_OBJ);
-        //     //
-        //     $resultado = $db->query($sql2);
-        //     if ($resultado->rowCount() > 0) {
-        //         $club_government = $resultado->fetchAll(PDO::FETCH_OBJ);
-        //     }
-        //     $result  = 1;
-        // } else {
-        //     $result = 0;
-        //     $message = "No se encontraron clubes con ese ID!";
-        // }
+
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
@@ -294,20 +280,32 @@ $app->put('/api/club_delete/{id}', function(Request $request, Response $response
     $id_club = $request->getAttribute('id');
     $status = 0;
 
-    $sql = "UPDATE tb_clubs SET 
-    status = $status
-    WHERE id_club = $id_club";
-
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
-        if ($resultado = mysqli_query($link, $sql)) {
-            $result = 1;
-            $message = "Club eliminado exitosamente!";
-        } else {
+
+        $sql_verify_members = "SELECT M.id_member
+        FROM tb_members M
+        INNER JOIN tb_clubs C ON M.club_code = C.club_code
+        WHERE C.id_club = '$id_club'";
+        $resultado_verify_members = mysqli_query($link, $sql_verify_members);
+
+        if(mysqli_num_rows($resultado_verify_members) > 0) {
             $result = 0;
-            $message = "No ha sido posible eliminar el Club!";
+            $message = "No ha sido posible eliminar, existen miembros que pertenecen a este club.";
+        } else {
+            $sql = "UPDATE tb_clubs SET 
+            status = $status
+            WHERE id_club = $id_club";
+
+            if ($resultado = mysqli_query($link, $sql)) {
+                $result = 1;
+                $message = "Club eliminado exitosamente!";
+            } else {
+                $result = 0;
+                $message = "No ha sido posible eliminar el Club!";
+            }
         }
         $out['ok'] = 1;
         $out['result'] = $result;

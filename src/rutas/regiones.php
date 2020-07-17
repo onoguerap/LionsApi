@@ -24,7 +24,7 @@ $app->get('/api/regiones_search/{search}/{index}', function(Request $request, Re
 
     $sql = "SELECT * 
 		FROM tb_region 
-		WHERE id_region LIKE '%$search%'
+		WHERE id_region LIKE '%$search%' OR description LIKE '%$search%'
 		AND status = 1
 		ORDER BY id_region ASC
 		LIMIT 10 OFFSET $index;";
@@ -80,6 +80,7 @@ $app->get('/api/regiones/{index}', function(Request $request, Response $response
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -129,6 +130,7 @@ $app->get('/api/region/{id_region}', function(Request $request, Response $respon
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -171,6 +173,7 @@ $app->get('/api/todas_regiones', function(Request $request, Response $response, 
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -272,22 +275,44 @@ $app->put('/api/region_delete/{id}', function(Request $request, Response $respon
     $id_region = $request->getAttribute('id');
     $status = 0;
 
-    $sql = "UPDATE tb_region SET 
-    status = $status
-    WHERE id_region = '$id_region'
-    LIMIT 1";
-
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
-        if ($resultado = mysqli_query($link, $sql)) {
-            $result = 1;
-            $message = "Region eliminada exitosamente!";
-        } else {
+
+        $sql_verify_clubs = "SELECT id_club
+        FROM tb_clubs
+        WHERE id_region = '$id_region'";
+        $resultado_verify_clubs = mysqli_query($link, $sql_verify_clubs);
+
+        $sql_verify_zones = "SELECT id_zone
+        FROM tb_zone
+        WHERE id_region = '$id_region'";
+        $resultado_verify_zones = mysqli_query($link, $sql_verify_zones);
+
+        if(mysqli_num_rows($resultado_verify_clubs) > 0) {
             $result = 0;
-            $message = "No ha sido posible eliminar la region!";
+            $message = "No ha sido posible eliminar, existen clubes que poseen está región.";
+        } else {
+            if(mysqli_num_rows($resultado_verify_zones) > 0) {
+                $result = 0;
+                $message = "No ha sido posible eliminar, existen zonas que poseen está región.";
+            } else {
+                $sql = "UPDATE tb_region SET 
+                status = $status
+                WHERE id_region = '$id_region'
+                LIMIT 1";
+
+                if ($resultado = mysqli_query($link, $sql)) {
+                    $result = 1;
+                    $message = "Region eliminada exitosamente.";
+                } else {
+                    $result = 0;
+                    $message = "No ha sido posible eliminar la region.";
+                }
+            }
         }
+        
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;

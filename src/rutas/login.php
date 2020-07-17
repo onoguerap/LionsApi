@@ -14,6 +14,8 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
         $result = 0;
         $member = array();
         $country = array();
+        date_default_timezone_set('America/Costa_Rica');
+        $today = date('Y-m-d h:i:s');
 		
         $sql = "SELECT M.*, C.name_club
         , GROUP_CONCAT(T.description)  type_member
@@ -49,12 +51,19 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
                 if ($resultado = mysqli_query($link, $sql)) {
                     $row = mysqli_fetch_array($resultado, MYSQLI_ASSOC);
                     $country = $row;
-                    $message = 'Usuario Logueado';
+                    $message = 'Código aceptado';
                     $result = 1;
+
+                    // Update last login member
+                    $sql = "UPDATE tb_members
+                    SET last_view = $today
+                    WHERE member_code = '$member_code'
+                    LIMIT 1";
+                    mysqli_query($sql);
                 }
             } else {
             $result  = 0;
-            $message = 'Usuario NO Logueado';
+            $message = 'Código de miembro inválido';
         }
         /* liberar el conjunto de resultados */
         mysqli_free_result($resultado);  
@@ -65,6 +74,7 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
         $out['message'] = $message;
         $out['data']['member'] = $member;
         $out['data']['country'] = $country;
+        $out['data']['appversion'] = 'v1.1';
         echo json_encode($out, JSON_UNESCAPED_UNICODE);
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e.getMessage().'}';

@@ -23,11 +23,12 @@ $app->get('/api/zonas_search/{search}/{index}', function(Request $request, Respo
     $zonas = array();
 
 		
-			$sql = "SELECT * 
-			FROM tb_zone 
-			WHERE id_zone LIKE '%$search%' OR id_region LIKE '%$search%'
-			AND status = 1
-			ORDER BY id_zone ASC
+			$sql = "SELECT Z.* 
+			FROM tb_zone Z
+            INNER JOIN tb_region R ON Z.id_region = R.id_region
+			WHERE Z.id_zone LIKE '%$search%' OR Z.id_region LIKE '%$search%' OR R.description LIKE '%$search%' OR Z.description LIKE '%$search%'
+			AND Z.status = 1
+			ORDER BY Z.id_zone ASC
 			LIMIT 10 OFFSET $index;";
     
     try {
@@ -338,22 +339,44 @@ $app->put('/api/zona_delete/{id}', function(Request $request, Response $response
     $id_zone = $request->getAttribute('id');
     $status = 0;
 
-    $sql = "UPDATE tb_zone SET 
-    status = $status
-    WHERE id_zone = '$id_zone'
-    LIMIT 1";
-
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
-        if ($resultado = mysqli_query($link, $sql)) {
-            $result = 1;
-            $message = "Zona eliminada exitosamente!";
-        } else {
+
+        $sql_verify_clubs = "SELECT id_club
+        FROM tb_clubs
+        WHERE id_zone = '$id_zone'";
+        $resultado_verify_clubs = mysqli_query($link, $sql_verify_clubs);
+
+        $sql_verify_members = "SELECT id_member
+        FROM tb_members
+        WHERE id_zone = '$id_zone'";
+        $resultado_verify_members = mysqli_query($link, $sql_verify_members);
+
+        if(mysqli_num_rows($resultado_verify_clubs) > 0) {
             $result = 0;
-            $message = "No ha sido posible eliminar la zona!";
+            $message = "No ha sido posible eliminar, existen clubes que poseen está zona.";
+        } else {
+            if(mysqli_num_rows($resultado_verify_members) > 0) {
+                $result = 0;
+                $message = "No ha sido posible eliminar, existen miembros que poseen está zona.";
+            } else {
+                $sql = "UPDATE tb_zone SET 
+                status = $status
+                WHERE id_zone = '$id_zone'
+                LIMIT 1";
+
+                if ($resultado = mysqli_query($link, $sql)) {
+                    $result = 1;
+                    $message = "Zona eliminada exitosamente.";
+                } else {
+                    $result = 0;
+                    $message = "No ha sido posible eliminar la zona.";
+                }
+            }
         }
+        
         $out['ok'] = 1;
         $out['result'] = $result;
         $out['message'] = $message;
