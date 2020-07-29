@@ -147,7 +147,8 @@ $app->get('/api/club/{id_club}', function(Request $request, Response $response, 
         INNER JOIN tb_members M ON TM.member_code = M.member_code
         INNER JOIN tb_clubs C ON M.club_code = C.club_code
         WHERE C.id_club = $id_club
-        AND T.isClub = 1;";
+        AND T.isClub = 1
+        ORDER BY T.order ASC;";
     
     try {
 

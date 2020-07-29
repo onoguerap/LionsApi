@@ -244,7 +244,7 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
 		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
 		INNER JOIN tb_type T ON TM.id_type = T.id_type
 		WHERE T.isGovernment = 1
-		ORDER BY T.id_type ASC;";	
+		ORDER BY T.order ASC;";	
     
     try {
         $db = new db($selecteddb);

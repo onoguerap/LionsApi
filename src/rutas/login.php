@@ -56,10 +56,10 @@ $app->get('/api/login/{member_code}/{password}', function(Request $request, Resp
 
                     // Update last login member
                     $sql = "UPDATE tb_members
-                    SET last_view = $today
+                    SET last_view = '$today
                     WHERE member_code = '$member_code'
                     LIMIT 1";
-                    mysqli_query($sql);
+                    mysqli_query($link, $sql);
                 }
             } else {
             $result  = 0;
