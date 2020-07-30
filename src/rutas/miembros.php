@@ -712,10 +712,12 @@ $app->put('/api/miembro_edit_perfil/{id}', function(Request $request, Response $
     //
     $id_member = $request->getAttribute('id');
     $birthday = $request->getParam('birthday');
+    $birthday = date("Y-m-d", strtotime($birthday));
     $email = $request->getParam('email');
     $phone = $request->getParam('phone');
     $cellphone = $request->getParam('cellphone');
-    $admission_date = date('Y-m-d h:i:s');
+    $admission_date = $request->getParam('admission_date');
+    $admission_date = date("Y-m-d", strtotime($admission_date));
 
     $message = '';
     $result = 0;
