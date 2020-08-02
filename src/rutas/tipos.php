@@ -10,7 +10,7 @@ $app->get('/api/tipos', function(Request $request, Response $response, array $ar
     //
 
     $message = '';
-    $zonas = array();
+    $tipos = array();
 
     $sql = "SELECT * 
     FROM tb_type";
