@@ -33,8 +33,8 @@ $app->get('/api/miembros_search/{search}/{index}', function(Request $request, Re
 			FROM tb_members M
 			INNER JOIN tb_clubs C ON M.club_code = C.club_code
             INNER JOIN tb_zone Z ON M.id_zone = Z.id_zone
-			WHERE M.name LIKE '%$search%' OR M.last_name LIKE '%$search%' OR M.cellphone LIKE '%$search%' OR C.name_club LIKE '%$search%' OR C.club_code LIKE '%$search%'
-            OR Z.description LIKE '%$search%' OR M.email LIKE '%$search%'
+			WHERE (M.name LIKE '%$search%' OR M.last_name LIKE '%$search%' OR M.cellphone LIKE '%$search%' OR C.name_club LIKE '%$search%' OR C.club_code LIKE '%$search%'
+            OR Z.description LIKE '%$search%' OR M.email LIKE '%$search%')
 			AND M.status = 1
 			LIMIT 10 OFFSET $index;";	
     
@@ -448,7 +448,12 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
     $type_member = explode(',', $type_member);
     
     $message = '';
-    $result = 0;  
+    $result = 0; 
+
+    $sql2 = "SELECT club_code 
+    FROM tb_clubs 
+    WHERE club_code = '$club_code'";
+
     
     $sql = "INSERT INTO tb_members (id_member, name, last_name, birthday, member_code, club_code
     , email, phone, cellphone, id_rol_member, gender, admission_date, id_zone, password) 
@@ -462,6 +467,17 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
         $directory = $this->get('upload_directory_members');
         // handle single input with single file upload
         if(!isset($_FILES['foto1']) || strlen($_FILES['foto1']['name']) == 0) {
+
+            if($valid = mysqli_query($link, $sql2)){
+                if (mysqli_num_rows($valid) == 0) {
+                    $out['ok'] = 1;
+                    $out['result'] = 0;
+                    $out['message'] = 'No existe un club con ese código, intente nuevamente!';
+                    echo json_encode($out, JSON_UNESCAPED_UNICODE);
+                    die();
+                }
+            }
+
             if ($resultado = mysqli_query($link, $sql)) {
                 foreach ($type_member as $value) {
                     # code...
@@ -477,7 +493,7 @@ $app->post('/api/miembro_add', function(Request $request, Response $response){
                 $message = "No ha sido posible agregar el miembro!";
             }
         } else {
-            
+
             mysqli_begin_transaction($link, MYSQLI_TRANS_START_READ_WRITE);
             if ($resultado = mysqli_query($link, $sql)) {
                 //
@@ -558,6 +574,10 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
     $message = '';
     $result = 0;
 
+    $sql2 = "SELECT club_code 
+    FROM tb_clubs 
+    WHERE club_code = '$club_code'";
+
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
@@ -565,6 +585,17 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
         $directory = $this->get('upload_directory_members');
         // handle single input with single file upload
         if(!isset($_FILES['foto1']) || strlen($_FILES['foto1']['name']) == 0) {
+
+            if ($resultado = mysqli_query($link, $sql2)) {
+                if (mysqli_num_rows($resultado) == 0) {
+                    $out['ok'] = 1;
+                    $out['result'] = 0;
+                    $out['message'] = 'No existe un club con ese código, intente nuevamente!';
+                    echo json_encode($out, JSON_UNESCAPED_UNICODE);
+                    die();
+                }
+            }
+
             //Query de edicion sin cambio de imagen
             $sql = "UPDATE tb_members SET
             name = '$name',
@@ -584,6 +615,7 @@ $app->post('/api/miembro_edit/{id}', function(Request $request, Response $respon
             LIMIT 1";
 
         } else {
+
             $target = $directory .'/'. $_FILES['foto1']['name']; //Genera la ruta
             $filename = $_FILES['foto1']['name'];
             //Comprobacion del upload
@@ -753,6 +785,42 @@ $app->put('/api/miembro_edit_perfil/{id}', function(Request $request, Response $
     }
     // Close connection
     $link->close();
+});
+
+// GET Obtener los tipos
+$app->get('/api/appversion/{member_code}', function(Request $request, Response $response, array $args){
+    //Seteo del pais o cuenta
+    $selecteddb = json_decode($request->getHeaderLine('Country'));
+    //
+    $member_code = $args['member_code'];
+    date_default_timezone_set('America/Costa_Rica');
+    $today = date('Y-m-d h:i:s');
+
+    $message = '';
+    $result = 0;
+    $version = array();
+    try{
+        $db = new db($selecteddb);
+        $link = $db->dbConnection();
+        mysqli_query($link, "SET NAMES 'utf8'");
+        $version['appversion'] = 'v1.1';
+
+
+         // Update last login member
+         $sql = "UPDATE tb_members
+         SET last_view = '$today'
+         WHERE member_code = '$member_code'
+         LIMIT 1";
+         mysqli_query($link, $sql);
+
+        $out['ok'] = 1;
+        $out['result'] = 1;
+        $out['message'] = $message;
+        $out['data'] = $version;
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo '{"error" : {"text":'.$e.getMessage().'}';
+    }
 });
 
 function moveUploadedFileMembers($directory, UploadedFile $uploadedFile)
