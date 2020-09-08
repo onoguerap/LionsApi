@@ -188,22 +188,28 @@ $app->get('/api/miembro/{id_member}', function(Request $request, Response $respo
 $app->get('/api/birthdays', function(Request $request, Response $response){
     //Seteo del pais o cuenta
     $selecteddb = json_decode($request->getHeaderLine('Country'));
+
+    date_default_timezone_set('America/Costa_Rica');
+    $dateMonth = date('m');
+    $dateDay = date('d');
     //
 		
     $message = '';
     $result = 0;
 		$members = array();
 		
-		$sql = "SELECT CONCAT_WS(' ', name, last_name) fullname, DATE_FORMAT(birthday, '%d/%m') min_date, IF(DATE_FORMAT(birthday, '%d') = DATE_FORMAT(SYSDATE(), '%d'), 1, 0) is_today
+		$sql = "SELECT CONCAT_WS(' ', name, last_name) fullname, DATE_FORMAT(birthday, '%d/%m') min_date
+        , IF(DATE_FORMAT(birthday, '%d') = '$dateDay', 1, 0) is_today
 		FROM tb_members
-		WHERE DATE_FORMAT(birthday, '%m') = DATE_FORMAT(SYSDATE(), '%m')
-		AND DATE_FORMAT(birthday, '%d') >= DATE_FORMAT(SYSDATE(), '%d')
+		WHERE DATE_FORMAT(birthday, '%m') = '$dateMonth'
+		AND DATE_FORMAT(birthday, '%d') >= '$dateDay'
 		ORDER BY DATE_FORMAT(birthday, '%d/%m') ASC;";	
     
     try {
         $db = new db($selecteddb);
         $link = $db->dbConnection();
         mysqli_query($link, "SET NAMES 'utf8'");
+        mysqli_query($link, "SET time_zone = 'America/Costa_Rica'");
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -244,6 +250,7 @@ $app->get('/api/gobernacion', function(Request $request, Response $response){
 		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
 		INNER JOIN tb_type T ON TM.id_type = T.id_type
 		WHERE T.isGovernment = 1
+        AND M.status = 1
 		ORDER BY T.order ASC;";	
     
     try {
@@ -294,6 +301,7 @@ $app->get('/api/jefes_region', function(Request $request, Response $response){
 		INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
 		INNER JOIN tb_type T ON TM.id_type = T.id_type
 		WHERE T.id_type = 10
+        AND M.status = 1
 		ORDER BY SUBSTRING(M.id_zone,1,1) ASC";	
     
     try {
@@ -343,6 +351,7 @@ $app->get('/api/jefes_zona', function(Request $request, Response $response){
     INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
     INNER JOIN tb_type T ON TM.id_type = T.id_type
     WHERE T.id_type = 11
+    AND M.status = 1
     ORDER BY M.id_zone ASC";	
     
     try {
@@ -391,7 +400,8 @@ $app->get('/api/asesores', function(Request $request, Response $response){
     FROM tb_members M
     INNER JOIN tb_type_members TM ON M.member_code = TM.member_code
     INNER JOIN tb_type T ON TM.id_type = T.id_type
-    WHERE T.id_type = 12;";	
+    WHERE T.id_type = 12
+    AND M.status = 1;";	
     
     try {
         $db = new db($selecteddb);
