@@ -753,6 +753,8 @@ $app->put('/api/miembro_edit_perfil/{id}', function(Request $request, Response $
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
     $id_member = $request->getAttribute('id');
+    $name = $request->getParam('name$name');
+    $last_name = $request->getParam('last_name');
     $birthday = $request->getParam('birthday');
     $birthday = date("Y-m-d", strtotime($birthday));
     $email = $request->getParam('email');
@@ -771,6 +773,8 @@ $app->put('/api/miembro_edit_perfil/{id}', function(Request $request, Response $
         
             //Query de edicion sin cambio de imagen
             $sql = "UPDATE tb_members SET
+            name = '$name',
+            last_name = '$last_name',
             birthday = '$birthday',
             email = '$email',
             phone = '$phone',
