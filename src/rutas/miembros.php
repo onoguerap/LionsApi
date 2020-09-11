@@ -753,7 +753,7 @@ $app->put('/api/miembro_edit_perfil/{id}', function(Request $request, Response $
     $selecteddb = json_decode($request->getHeaderLine('Country'));
     //
     $id_member = $request->getAttribute('id');
-    $name = $request->getParam('name$name');
+    $name = $request->getParam('name');
     $last_name = $request->getParam('last_name');
     $birthday = $request->getParam('birthday');
     $birthday = date("Y-m-d", strtotime($birthday));
