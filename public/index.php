@@ -29,6 +29,9 @@ require '../src/rutas/roles.php';
 require '../src/rutas/tipos.php';
 // Rutas para tipos
 require '../src/rutas/paises.php';
+// GRILL API
+// Rutas para test
+require '../src/rutas_grill/test.php';
 
 $app->run();
 
