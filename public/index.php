@@ -4,6 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
 require '../src/config/db.php';
+require '../src/config/grilldb.php';
 
 $app = new \Slim\App;
 
@@ -31,7 +32,7 @@ require '../src/rutas/tipos.php';
 require '../src/rutas/paises.php';
 // GRILL API
 // Rutas para test
-require '../src/rutas_grill/test.php';
+require '../src/rutas_grill/grill.php';
 
 $app->run();
 
