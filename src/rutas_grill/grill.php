@@ -3,7 +3,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Slim\Http\UploadedFile;
 
-$container['base_url_products'] = 'http://138.68.239.185/uploads/products/';
+$container['base_url_products'] = 'http://138.68.239.185/uploads/grill/';
 
 // GET Obtener los cortes por busqueda
 $app->get('/api/product_search/{search}/{index}', function(Request $request, Response $response, array $args){
@@ -38,7 +38,7 @@ $app->get('/api/product_search/{search}/{index}', function(Request $request, Res
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-										$row['url'] = $base_url.'home/'.$row['url'];
+										$row['url'] = $base_url.''.$row['url'];
                     $cortes[] = $row;
                 }
                 $message = 'Si hay cortes registrados';
@@ -90,7 +90,7 @@ $app->get('/api/products/{index}', function(Request $request, Response $response
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-										$row['url'] = $base_url.'home/'.$row['url'];
+										$row['url'] = $base_url.''.$row['url'];
                     $cortes[] = $row;
                 }
                 $message = 'Si hay cortes registrados';
