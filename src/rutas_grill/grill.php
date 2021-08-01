@@ -185,6 +185,7 @@ $app->get('/api/product_thickness/{index}', function(Request $request, Response 
         if ($resultado = mysqli_query($link, $sql)) {
             if (mysqli_num_rows($resultado) > 0) {
                 while ($row = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+										$row['size'] = $row['size'].'cm';
                     $grosores[] = $row;
                 }
                 $message = 'Si hay grosores registrados';
