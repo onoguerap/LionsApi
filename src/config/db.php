@@ -1,10 +1,10 @@
 <?php
     class db{
-        private $dbHost = 'mysql-10842-0.cloudclusters.net';
-        private $dbPort = '10880';
-        private $dbUser = 'lions';
-        private $dbPass = 'Kongo2020$';
-        private $dbName = '';
+        private $dbHost = 'mysql-42007-0.cloudclusters.net';
+        private $dbPort = '15404';
+        private $dbUser = 'api-dbVSP';
+        private $dbPass = 'dbVsp2021$';
+        private $dbName = 'dbVSP';
 
         function __construct()
         {
@@ -17,16 +17,16 @@
        
         function __construct1($a1)
         {
-            if($a1 == 1){
-                $this->dbName = 'lionsdbcrc';
-            }else if($a1 == 2){
-                $this->dbName = 'lionsdbhon';
-            }else if($a1 == 3){
-                $this->dbName = 'lionsdbpan';
-            }else {
-                echo "fallo comparacion";
-                die();
-            }
+            // if($a1 == 1){
+            //     $this->dbName = 'lionsdbcrc';
+            // }else if($a1 == 2){
+            //     $this->dbName = 'lionsdbhon';
+            // }else if($a1 == 3){
+            //     $this->dbName = 'lionsdbpan';
+            // }else {
+            //     echo "fallo comparacion";
+            //     die();
+            // }
         }
 
         public function dbConnection() {
